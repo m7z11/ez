@@ -164,6 +164,10 @@
             padding-bottom: 10px;
             border-bottom: 2px solid var(--border-color);
         }
+        .card h3 {
+            color: var(--accent-color);
+            margin: 20px 0;
+        }
         .level-selector { 
             display: flex; 
             gap: 12px; 
@@ -200,6 +204,51 @@
         .level-B2.active { background: linear-gradient(135deg, #9C27B0, #7B1FA2); color: white; border-color: #9C27B0; }
         .level-C1 { border-color: #FFD700; }
         .level-C1.active { background: linear-gradient(135deg, #FFD700, #FFA500); color: white; border-color: #FFD700; }
+        
+        .test-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            background: var(--input-bg);
+            border-radius: 10px;
+        }
+        .test-letter-btn {
+            padding: 12px 8px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--card-bg);
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .test-letter-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .test-letter-btn.active {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            color: white;
+            border-color: var(--accent-color);
+        }
+        
+        select {
+            padding: 14px;
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+            font-size: 1.05em;
+            margin: 5px;
+            background: var(--input-bg);
+            color: var(--text-color);
+            width: calc(100% - 10px);
+            cursor: pointer;
+        }
+        
         input, button { 
             padding: 14px; 
             border-radius: 10px; 
@@ -213,7 +262,7 @@
         input { 
             width: calc(50% - 10px); 
         }
-        input:focus {
+        input:focus, select:focus {
             outline: none;
             border-color: var(--accent-color);
             box-shadow: 0 0 15px rgba(102, 126, 234, 0.4);
@@ -500,6 +549,9 @@
             .top-buttons { top: 12px; left: 12px; }
             .sidebar { width: 280px; right: -300px; }
             body { padding-top: 100px; }
+            .test-selector {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            }
         }
     </style>
 </head>
@@ -572,6 +624,35 @@
                     <button class="level-btn level-B2" onclick="selectLevel('B2')">B2</button>
                     <button class="level-btn level-C1" onclick="selectLevel('C1')">👑 C1</button>
                 </div>
+                <h3>اختر الاختبار القصير:</h3>
+                <select id="test-letter-select">
+                    <option value="A">اختبار حرف A</option>
+                    <option value="B">اختبار حرف B</option>
+                    <option value="C">اختبار حرف C</option>
+                    <option value="D">اختبار حرف D</option>
+                    <option value="E">اختبار حرف E</option>
+                    <option value="F">اختبار حرف F</option>
+                    <option value="G">اختبار حرف G</option>
+                    <option value="H">اختبار حرف H</option>
+                    <option value="I">اختبار حرف I</option>
+                    <option value="J">اختبار حرف J</option>
+                    <option value="K">اختبار حرف K</option>
+                    <option value="L">اختبار حرف L</option>
+                    <option value="M">اختبار حرف M</option>
+                    <option value="N">اختبار حرف N</option>
+                    <option value="O">اختبار حرف O</option>
+                    <option value="P">اختبار حرف P</option>
+                    <option value="Q">اختبار حرف Q</option>
+                    <option value="R">اختبار حرف R</option>
+                    <option value="S">اختبار حرف S</option>
+                    <option value="T">اختبار حرف T</option>
+                    <option value="U">اختبار حرف U</option>
+                    <option value="V">اختبار حرف V</option>
+                    <option value="W">اختبار حرف W</option>
+                    <option value="X">اختبار حرف X</option>
+                    <option value="Y">اختبار حرف Y</option>
+                    <option value="Z">اختبار حرف Z</option>
+                </select>
                 <input type="text" id="englishWord" placeholder="الكلمة بالإنجليزي">
                 <input type="text" id="arabicWord" placeholder="المعنى بالعربي">
                 <button onclick="addWord()">➕ إضافة الكلمة</button>
@@ -616,12 +697,9 @@
                     </div>
                     <div id="test-types" class="hidden">
                         <h3 style="margin-top: 20px;">اختر نوع الاختبار:</h3>
+                        <div class="test-selector" id="test-letters"></div>
                         <div class="test-type-selector">
-                            <button class="test-btn" onclick="startTest('short', 1)">اختبار قصير 1</button>
-                            <button class="test-btn" onclick="startTest('short', 2)">اختبار قصير 2</button>
-                            <button class="test-btn" onclick="startTest('short', 3)">اختبار قصير 3</button>
-                            <button class="test-btn" onclick="startTest('short', 4)">اختبار قصير 4</button>
-                            <button class="test-btn" onclick="startTest('final', 0)">الاختبار النهائي</button>
+                            <button class="test-btn" onclick="startTest('final', '')" style="background: linear-gradient(135deg, #9C27B0, #7B1FA2); font-size: 1.2em; padding: 20px 40px;">🏆 الاختبار النهائي (جميع الكلمات)</button>
                         </div>
                     </div>
                 </div>
@@ -663,9 +741,31 @@
     </div>
     
     <script>
-        let words = {}, errors = [], stats = { correct: 0, wrong: 0 }, currentTest = [], currentIndex = 0, currentLevel = 'A1', testLevel = '', testDirection = 'ar-en', selectedDirection = 'random', wordsLevel = 'A1';
-        let deleteWordData = { level: '', index: -1 };
+        let words = {};
+        let errors = [];
+        let stats = { correct: 0, wrong: 0 };
+        let currentTest = [];
+        let currentIndex = 0;
+        let currentLevel = 'A1';
+        let testLevel = '';
+        let testDirection = 'ar-en';
+        let selectedDirection = 'random';
+        let wordsLevel = 'A1';
+        let selectedTestLetter = '';
+        let deleteWordData = { level: '', index: -1, letter: '' };
         let deleteErrorIndex = -1;
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+        
+        function initializeWords() {
+            if (!words[currentLevel]) {
+                words[currentLevel] = {};
+            }
+            letters.forEach(letter => {
+                if (!words[currentLevel][letter]) {
+                    words[currentLevel][letter] = [];
+                }
+            });
+        }
         
         function loadData() {
             const stored = localStorage.getItem('englishApp');
@@ -675,6 +775,12 @@
                 errors = data.errors || []; 
                 stats = data.stats || { correct: 0, wrong: 0 }; 
             }
+            ['A1', 'A2', 'B1', 'B2', 'C1'].forEach(level => {
+                if (!words[level]) words[level] = {};
+                letters.forEach(letter => {
+                    if (!words[level][letter]) words[level][letter] = [];
+                });
+            });
             const darkMode = localStorage.getItem('darkMode');
             if (darkMode === 'true') { 
                 document.body.classList.add('dark-mode'); 
@@ -695,6 +801,7 @@
         
         function selectLevel(level) { 
             currentLevel = level; 
+            initializeWords();
             document.querySelectorAll('#page-add .level-selector .level-btn').forEach(btn => btn.classList.remove('active')); 
             event.target.classList.add('active'); 
         }
@@ -717,13 +824,34 @@
         function selectDirection(direction) { 
             selectedDirection = direction; 
             document.getElementById('test-types').classList.remove('hidden'); 
+            createTestLetterButtons();
+        }
+        
+        function createTestLetterButtons() {
+            const container = document.getElementById('test-letters');
+            container.innerHTML = '';
+            letters.forEach(letter => {
+                const count = words[testLevel] && words[testLevel][letter] ? words[testLevel][letter].length : 0;
+                const btn = document.createElement('button');
+                btn.className = 'test-letter-btn';
+                btn.textContent = letter + ' (' + count + ')';
+                btn.onclick = () => startTest('short', letter);
+                if (count === 0) btn.disabled = true;
+                container.appendChild(btn);
+            });
         }
         
         function addWord() {
-            const eng = document.getElementById('englishWord').value.trim(), ara = document.getElementById('arabicWord').value.trim();
-            const engInput = document.getElementById('englishWord'), araInput = document.getElementById('arabicWord'), msg = document.getElementById('addMessage');
+            const eng = document.getElementById('englishWord').value.trim();
+            const ara = document.getElementById('arabicWord').value.trim();
+            const selectedLetter = document.getElementById('test-letter-select').value;
+            const engInput = document.getElementById('englishWord');
+            const araInput = document.getElementById('arabicWord');
+            const msg = document.getElementById('addMessage');
+            
             engInput.classList.remove('error'); 
             araInput.classList.remove('error');
+            
             if (!eng || !ara) { 
                 if (!eng) engInput.classList.add('error'); 
                 if (!ara) araInput.classList.add('error'); 
@@ -731,20 +859,21 @@
                 msg.style.color = '#f44336'; 
                 return; 
             }
-            if (!words[currentLevel]) words[currentLevel] = [];
-            words[currentLevel].push({ english: eng, arabic: ara }); 
+            
+            initializeWords();
+            words[currentLevel][selectedLetter].push({ english: eng, arabic: ara }); 
             saveData(); 
             engInput.value = ''; 
             araInput.value = ''; 
-            msg.textContent = '✅ تمت إضافة الكلمة بنجاح!'; 
+            msg.textContent = '✅ تمت إضافة الكلمة بنجاح في اختبار حرف ' + selectedLetter + '!'; 
             msg.style.color = '#4CAF50'; 
             setTimeout(() => msg.textContent = '', 3000); 
             updateStats();
         }
         
-        function showDeleteWordModal(level, index) {
-            deleteWordData = { level, index };
-            const word = words[level][index];
+        function showDeleteWordModal(level, letter, index) {
+            deleteWordData = { level, letter, index };
+            const word = words[level][letter][index];
             document.getElementById('word-to-delete').textContent = word.english + ' ←→ ' + word.arabic;
             document.getElementById('delete-word-modal').classList.add('active');
         }
@@ -754,7 +883,7 @@
         }
         
         function confirmDeleteWord() {
-            words[deleteWordData.level].splice(deleteWordData.index, 1);
+            words[deleteWordData.level][deleteWordData.letter].splice(deleteWordData.index, 1);
             saveData();
             hideDeleteWordModal();
             displayWords();
@@ -783,15 +912,28 @@
             const wordsList = document.getElementById('words-list');
             const searchTerm = document.getElementById('search-box').value.toLowerCase();
             
-            if (!words[wordsLevel] || words[wordsLevel].length === 0) {
+            let allWords = [];
+            let totalCount = 0;
+            
+            letters.forEach(letter => {
+                if (words[wordsLevel] && words[wordsLevel][letter]) {
+                    words[wordsLevel][letter].forEach((word, index) => {
+                        allWords.push({ ...word, letter, originalIndex: index });
+                        totalCount++;
+                    });
+                }
+            });
+            
+            if (totalCount === 0) {
                 wordsList.innerHTML = '<p style="text-align: center; color: var(--accent-color); font-size: 1.2em; padding: 30px;">📝 لا توجد كلمات في هذا المستوى</p>';
                 document.getElementById('words-count').textContent = '0 كلمة';
                 return;
             }
             
-            let filteredWords = words[wordsLevel].filter(w => 
+            let filteredWords = allWords.filter(w => 
                 w.english.toLowerCase().includes(searchTerm) || 
-                w.arabic.includes(searchTerm)
+                w.arabic.includes(searchTerm) ||
+                w.letter.toLowerCase().includes(searchTerm)
             );
             
             document.getElementById('words-count').textContent = filteredWords.length + ' كلمة';
@@ -801,15 +943,15 @@
                 return;
             }
             
-            wordsList.innerHTML = filteredWords.map((word, index) => {
-                const originalIndex = words[wordsLevel].indexOf(word);
+            wordsList.innerHTML = filteredWords.map(word => {
                 return `<div class="word-item">
                     <div class="word-content">
+                        <span style="background: var(--accent-color); color: white; padding: 5px 12px; border-radius: 8px; margin-left: 10px; font-weight: bold;">${word.letter}</span>
                         <strong>${word.english}</strong>
                         <span>←→</span>
                         <strong>${word.arabic}</strong>
                     </div>
-                    <button class="delete-btn" onclick="showDeleteWordModal('${wordsLevel}', ${originalIndex})">🗑️ حذف</button>
+                    <button class="delete-btn" onclick="showDeleteWordModal('${wordsLevel}', '${word.letter}', ${word.originalIndex})">🗑️ حذف</button>
                 </div>`;
             }).join('');
         }
@@ -822,29 +964,41 @@
             return text.trim().toLowerCase().replace(/\s+/g, ' ').replace(/[^\w\s\u0600-\u06FF]/g, ''); 
         }
         
-        function startTest(type, num) {
-            if (!words[testLevel] || words[testLevel].length === 0) { 
-                alert('⚠️ لا توجد كلمات في هذا المستوى!'); 
-                return; 
+        function startTest(type, letter) {
+            if (type === 'short') {
+                if (!words[testLevel] || !words[testLevel][letter] || words[testLevel][letter].length === 0) { 
+                    alert('⚠️ لا توجد كلمات في اختبار حرف ' + letter + '!'); 
+                    return; 
+                }
+                currentTest = [...words[testLevel][letter]];
+                selectedTestLetter = letter;
+            } else {
+                let allWords = [];
+                letters.forEach(letter => {
+                    if (words[testLevel] && words[testLevel][letter]) {
+                        allWords = allWords.concat(words[testLevel][letter]);
+                    }
+                });
+                if (allWords.length === 0) {
+                    alert('⚠️ لا توجد كلمات في هذا المستوى!');
+                    return;
+                }
+                currentTest = allWords;
+                selectedTestLetter = 'النهائي';
             }
+            
             if (selectedDirection === 'random') { 
                 testDirection = Math.random() > 0.5 ? 'ar-en' : 'en-ar'; 
-            }
-            else { 
+            } else { 
                 testDirection = selectedDirection; 
             }
-            let allWords = [...words[testLevel]];
-            if (type === 'short') { 
-                const start = (num - 1) * 60; 
-                currentTest = allWords.slice(start, start + 60); 
-            } else { 
-                currentTest = allWords; 
-            }
+            
             currentTest = currentTest.sort(() => Math.random() - 0.5); 
             currentIndex = 0;
             document.getElementById('test-card').classList.remove('hidden'); 
             let directionText = testDirection === 'ar-en' ? '🇸🇦 عربي → إنجليزي 🇬🇧' : '🇬🇧 إنجليزي → عربي 🇸🇦';
-            document.getElementById('test-title').textContent = (type === 'short' ? 'اختبار قصير ' + num : 'الاختبار النهائي') + ' - ' + directionText;
+            let testName = type === 'short' ? 'اختبار حرف ' + letter : 'الاختبار النهائي';
+            document.getElementById('test-title').textContent = testName + ' - ' + directionText;
             showQuestion();
         }
         
@@ -857,11 +1011,11 @@
                 document.getElementById('next-btn').classList.add('hidden'); 
                 return;
             }
-            const word = currentTest[currentIndex], q = document.getElementById('question');
+            const word = currentTest[currentIndex];
+            const q = document.getElementById('question');
             if (testDirection === 'ar-en') { 
                 q.innerHTML = '<strong>ترجم إلى الإنجليزية:</strong><br><span style="font-size: 1.4em; color: var(--accent-color); font-weight: bold; margin-top: 10px; display: block;">' + word.arabic + '</span>'; 
-            }
-            else { 
+            } else { 
                 q.innerHTML = '<strong>ترجم إلى العربية:</strong><br><span style="font-size: 1.4em; color: var(--accent-color); font-weight: bold; margin-top: 10px; display: block;">' + word.english + '</span>'; 
             }
             const answerInput = document.getElementById('answer');
@@ -871,7 +1025,8 @@
             answerInput.focus();
             document.getElementById('result').innerHTML = ''; 
             document.getElementById('next-btn').classList.add('hidden');
-            const checkBtn = document.getElementById('check-btn'), skipBtn = document.querySelector('#test-card button[onclick="skipQuestion()"]');
+            const checkBtn = document.getElementById('check-btn');
+            const skipBtn = document.querySelector('#test-card button[onclick="skipQuestion()"]');
             checkBtn.classList.remove('hidden'); 
             skipBtn.classList.remove('hidden'); 
             checkBtn.disabled = false; 
@@ -879,19 +1034,23 @@
         }
         
         function checkAnswer() {
-            const word = currentTest[currentIndex], userAnswer = document.getElementById('answer').value;
+            const word = currentTest[currentIndex];
+            const userAnswer = document.getElementById('answer').value;
             const normalizedUserAnswer = normalizeText(userAnswer);
             const normalizedCorrect = testDirection === 'ar-en' ? normalizeText(word.english) : normalizeText(word.arabic);
-            const correctAnswer = testDirection === 'ar-en' ? word.english : word.arabic, result = document.getElementById('result');
+            const correctAnswer = testDirection === 'ar-en' ? word.english : word.arabic;
+            const result = document.getElementById('result');
             const isCorrect = normalizedUserAnswer === normalizedCorrect;
+            
             if (isCorrect) { 
                 result.innerHTML = '<div class="result correct">✅ إجابة صحيحة! ممتاز!</div>'; 
                 stats.correct++; 
-            }
-            else { 
+            } else { 
                 result.innerHTML = '<div class="result incorrect">❌ خطأ! الإجابة الصحيحة: <strong>' + correctAnswer + '</strong></div>'; 
                 stats.wrong++; 
-                if (!errors.find(e => e.english === word.english && e.arabic === word.arabic)) errors.push(word); 
+                if (!errors.find(e => e.english === word.english && e.arabic === word.arabic)) {
+                    errors.push(word); 
+                }
             }
             saveData(); 
             updateStats(); 
@@ -899,9 +1058,14 @@
             document.getElementById('check-btn').disabled = true;
         }
         
-        function skipQuestion() { nextQuestion(); }
+        function skipQuestion() { 
+            nextQuestion(); 
+        }
         
-        function nextQuestion() { currentIndex++; showQuestion(); }
+        function nextQuestion() { 
+            currentIndex++; 
+            showQuestion(); 
+        }
         
         function updateProgress() { 
             const percent = ((currentIndex + 1) / currentTest.length) * 100; 
@@ -918,8 +1082,7 @@
             currentIndex = 0; 
             if (selectedDirection === 'random') { 
                 testDirection = Math.random() > 0.5 ? 'ar-en' : 'en-ar'; 
-            }
-            else { 
+            } else { 
                 testDirection = selectedDirection; 
             }
             showPage('test'); 
@@ -931,7 +1094,11 @@
         
         function updateStats() {
             let total = 0; 
-            for (let level in words) total += words[level].length;
+            for (let level in words) {
+                for (let letter in words[level]) {
+                    total += words[level][letter].length;
+                }
+            }
             document.getElementById('total-words').textContent = total; 
             document.getElementById('correct-answers').textContent = stats.correct; 
             document.getElementById('wrong-answers').textContent = stats.wrong;
@@ -939,8 +1106,7 @@
             const errorsList = document.getElementById('errors-list');
             if (errors.length === 0) {
                 errorsList.innerHTML = '<p style="text-align: center; color: #4CAF50; font-size: 1.3em; padding: 40px;">🎉 لا توجد أخطاء! ممتاز!</p>';
-            }
-            else {
+            } else {
                 errorsList.innerHTML = '<div style="margin-top: 20px;">' + errors.map((e, index) => 
                     '<div class="word-item"><div class="word-content"><strong>' + e.english + 
                     '</strong> <span>←→</span> <strong>' + e.arabic + 
@@ -950,9 +1116,16 @@
             
             const levelStats = document.getElementById('level-stats'); 
             let html = '<h3 style="margin-top: 35px; margin-bottom: 25px; color: var(--accent-color);">📊 كلمات كل مستوى:</h3>';
-            const levels = ['A1', 'A2', 'B1', 'B2', 'C1'], levelColors = { 'A1': '#4CAF50', 'A2': '#2196F3', 'B1': '#FF9800', 'B2': '#9C27B0', 'C1': '#FFD700' };
+            const levels = ['A1', 'A2', 'B1', 'B2', 'C1'];
+            const levelColors = { 'A1': '#4CAF50', 'A2': '#2196F3', 'B1': '#FF9800', 'B2': '#9C27B0', 'C1': '#FFD700' };
+            
             levels.forEach(level => { 
-                const count = words[level] ? words[level].length : 0; 
+                let count = 0;
+                if (words[level]) {
+                    for (let letter in words[level]) {
+                        count += words[level][letter].length;
+                    }
+                }
                 html += '<div style="background: var(--input-bg); padding: 18px; margin: 12px 0; border-radius: 12px; border-right: 5px solid ' + levelColors[level] + '; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 3px 10px rgba(0,0,0,0.1); transition: transform 0.3s;" onmouseover="this.style.transform=\'translateX(-5px)\'" onmouseout="this.style.transform=\'translateX(0)\'"><strong style="font-size: 1.3em; color: var(--text-color);">' + level + '</strong><span style="background: linear-gradient(135deg, ' + levelColors[level] + ', ' + levelColors[level] + 'dd); color: white; padding: 8px 20px; border-radius: 25px; font-weight: bold; box-shadow: 0 3px 8px rgba(0,0,0,0.2);">' + count + ' كلمة</span></div>'; 
             });
             levelStats.innerHTML = html;
@@ -972,6 +1145,7 @@
             errors = []; 
             stats = { correct: 0, wrong: 0 }; 
             localStorage.removeItem('englishApp'); 
+            loadData();
             updateStats(); 
             document.getElementById('englishWord').value = ''; 
             document.getElementById('arabicWord').value = ''; 
@@ -1002,8 +1176,11 @@
         document.getElementById('answer').addEventListener('keypress', function(e) { 
             if (e.key === 'Enter') { 
                 const nextBtn = document.getElementById('next-btn'); 
-                if (!nextBtn.classList.contains('hidden')) nextQuestion(); 
-                else checkAnswer(); 
+                if (!nextBtn.classList.contains('hidden')) {
+                    nextQuestion(); 
+                } else {
+                    checkAnswer(); 
+                }
             } 
         });
         
