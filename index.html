@@ -5,146 +5,1263 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Easy - تعلم الإنجليزية</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}:root{--bg-start:#667eea;--bg-end:#764ba2;--card-bg:white;--text:#333;--border:#ddd;--shadow:rgba(0,0,0,0.1);--input-bg:white}body.dark-mode{--bg-start:#1a1a2e;--bg-end:#16213e;--card-bg:#0f3460;--text:#eaeaea;--border:#533483;--shadow:rgba(0,0,0,0.5);--input-bg:#1a1a2e}body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,var(--bg-start),var(--bg-end));min-height:100vh;padding:20px;direction:rtl}header{text-align:center;color:white;margin-bottom:30px;position:relative;z-index:1001}h1{font-size:3em;text-shadow:2px 2px 4px rgba(0,0,0,0.3);font-weight:bold;animation:glow 2s ease-in-out infinite alternate}@keyframes glow{from{text-shadow:0 0 10px #fff,0 0 20px #fff,0 0 30px #667eea,0 0 40px #667eea}to{text-shadow:0 0 20px #fff,0 0 30px #764ba2,0 0 40px #764ba2,0 0 50px #764ba2}}.top-buttons{position:fixed;top:20px;right:20px;display:flex;gap:10px;z-index:1002}.menu-btn,.dark-mode-btn{background:white;border:none;padding:10px 15px;border-radius:8px;cursor:pointer;font-size:1.2em;box-shadow:0 4px 6px rgba(0,0,0,0.2)}body.dark-mode .menu-btn,body.dark-mode .dark-mode-btn{background:var(--card-bg);color:var(--text)}.sidebar-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:998;opacity:0;visibility:hidden;transition:all 0.3s}.sidebar-overlay.active{opacity:1;visibility:visible}.sidebar{position:fixed;top:0;right:-300px;width:300px;height:100%;background:white;box-shadow:-2px 0 10px rgba(0,0,0,0.3);transition:right 0.3s;z-index:999;overflow-y:auto;padding:20px}body.dark-mode .sidebar{background:var(--card-bg);color:var(--text)}.sidebar.active{right:0}.sidebar h3{margin-bottom:20px;color:#667eea}.sidebar button{width:100%;padding:12px;margin-bottom:10px;border:none;border-radius:8px;background:#667eea;color:white;cursor:pointer;transition:all 0.3s}.card{background:var(--card-bg);color:var(--text);border-radius:15px;padding:25px;margin-bottom:20px;box-shadow:0 8px 16px var(--shadow);max-width:1200px;margin:20px auto;animation:slideIn 0.5s ease-out;transition:all 0.3s}@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}.card:hover{transform:translateY(-10px);box-shadow:0 15px 30px var(--shadow)}.level-selector{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}.level-btn{padding:10px 20px;border:2px solid var(--border);border-radius:8px;background:var(--card-bg);color:var(--text);cursor:pointer;transition:all 0.3s}.level-A1{border-color:#4CAF50}.level-A1.active,.level-A1:hover{background:#4CAF50;color:white;transform:scale(1.1);box-shadow:0 0 20px rgba(76,175,80,0.5)}.level-A2{border-color:#2196F3}.level-A2.active,.level-A2:hover{background:#2196F3;color:white;transform:scale(1.1);box-shadow:0 0 20px rgba(33,150,243,0.5)}.level-B1{border-color:#FF9800}.level-B1.active,.level-B1:hover{background:#FF9800;color:white;transform:scale(1.1);box-shadow:0 0 20px rgba(255,152,0,0.5)}.level-B2{border-color:#9C27B0}.level-B2.active,.level-B2:hover{background:#9C27B0;color:white;transform:scale(1.1);box-shadow:0 0 20px rgba(156,39,176,0.5)}.level-C1{border-color:#FFD700;position:relative;overflow:hidden}.level-C1::before{content:'👑';position:absolute;top:5px;right:5px;font-size:1.2em;animation:bounce 1s infinite}.level-C1.active,.level-C1:hover{background:linear-gradient(135deg,#FFD700,#FFA500);color:white;transform:scale(1.1);box-shadow:0 0 30px rgba(255,215,0,0.8)}@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}input,button{padding:12px;border-radius:8px;border:2px solid var(--border);font-size:1em;margin:5px;background:var(--input-bg);color:var(--text)}input{width:calc(50% - 10px)}button{background:#667eea;color:white;border:none;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden}button::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;border-radius:50%;background:rgba(255,255,255,0.3);transform:translate(-50%,-50%);transition:width 0.6s,height 0.6s}button:hover::before{width:300px;height:300px}button:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(0,0,0,0.3)}.stat-box{background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:20px;border-radius:10px;text-align:center;margin:10px}.test-question{font-size:1.5em;margin:20px 0;text-align:center}.test-input{width:80%;padding:15px;font-size:1.2em;text-align:center;border:3px solid #667eea}.result{padding:15px;margin:15px 0;border-radius:8px;text-align:center;animation:popIn 0.5s cubic-bezier(0.68,-0.55,0.265,1.55)}@keyframes popIn{0%{opacity:0;transform:scale(0.3) rotate(-10deg)}50%{transform:scale(1.1) rotate(5deg)}100%{opacity:1;transform:scale(1) rotate(0)}}.correct{background:#4CAF50;color:white;box-shadow:0 0 20px rgba(76,175,80,0.5)}.incorrect{background:#f44336;color:white;box-shadow:0 0 20px rgba(244,67,54,0.5)}.letter-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(60px,1fr));gap:10px;margin:20px 0}.letter-btn{padding:15px;background:#667eea;color:white;border:none;border-radius:8px;cursor:pointer;font-size:1.2em;font-weight:bold;transition:all 0.3s;position:relative;overflow:hidden}.letter-btn::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent);transition:left 0.5s}.letter-btn:hover::after{left:100%}.letter-btn:hover{background:#764ba2;transform:scale(1.2) rotate(5deg);box-shadow:0 10px 20px rgba(0,0,0,0.3)}.hidden{display:none}.progress-bar{width:100%;height:20px;background:var(--border);border-radius:10px;overflow:hidden;margin:20px 0}.progress-fill{height:100%;background:linear-gradient(90deg,#4CAF50,#2196F3,#9C27B0,#FFD700);transition:width 0.3s;animation:shimmer 2s infinite}@keyframes shimmer{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:2000;justify-content:center;align-items:center}.modal.active{display:flex}.modal-content{background:var(--card-bg);color:var(--text);padding:30px;border-radius:15px;text-align:center}.word-item{background:var(--input-bg);padding:15px;margin:10px 0;border-radius:8px;border-right:4px solid #667eea;display:flex;justify-content:space-between;transition:all 0.3s;animation:fadeInLeft 0.5s ease}.word-item:hover{transform:translateX(-10px) scale(1.02);box-shadow:0 5px 15px rgba(102,126,234,0.3);border-right-width:8px}@keyframes fadeInLeft{from{opacity:0;transform:translateX(50px)}to{opacity:1;transform:translateX(0)}}.search-box{width:100%;padding:12px;margin-bottom:15px;border-radius:8px}@media (max-width:768px){input{width:100%}.letter-grid{grid-template-columns:repeat(auto-fill,minmax(50px,1fr))}}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-start: #667eea;
+  --bg-end: #764ba2;
+  --card-bg: white;
+  --text: #333;
+  --border: #ddd;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --input-bg: white;
+  --sidebar-bg: #f8f9fa;
+  --accent: #667eea;
+}
+
+body.dark-mode {
+  --bg-start: #1a1a2e;
+  --bg-end: #16213e;
+  --card-bg: #0f3460;
+  --text: #eaeaea;
+  --border: #533483;
+  --shadow: rgba(0, 0, 0, 0.5);
+  --input-bg: #1a1a2e;
+  --sidebar-bg: #0a1929;
+  --accent: #764ba2;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+  min-height: 100vh;
+  padding: 20px;
+  direction: rtl;
+}
+
+header {
+  text-align: center;
+  color: white;
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 100;
+}
+
+h1 {
+  font-size: 3em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px var(--accent);
+  }
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px var(--accent), 0 0 40px var(--accent);
+  }
+}
+
+.top-buttons {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+  z-index: 1002;
+}
+
+.menu-btn, .dark-mode-btn {
+  background: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.3em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.menu-btn:hover, .dark-mode-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .menu-btn,
+body.dark-mode .dark-mode-btn {
+  background: var(--card-bg);
+  color: var(--text);
+}
+
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 998;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  backdrop-filter: blur(2px);
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -320px;
+  width: 320px;
+  height: 100%;
+  background: var(--sidebar-bg);
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+  transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 999;
+  overflow-y: auto;
+  padding: 30px 20px;
+}
+
+body.dark-mode .sidebar {
+  background: var(--sidebar-bg);
+  color: var(--text);
+}
+
+.sidebar.active {
+  right: 0;
+}
+
+.sidebar h3 {
+  margin-bottom: 25px;
+  color: var(--accent);
+  font-size: 1.6em;
+  text-align: center;
+  padding-bottom: 15px;
+  border-bottom: 2px solid var(--accent);
+}
+
+.sidebar button {
+  width: 100%;
+  padding: 15px 20px;
+  margin-bottom: 12px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.1em;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar button:hover {
+  transform: translateX(-5px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.sidebar button.reset-btn {
+  background: linear-gradient(135deg, #f44336, #d32f2f);
+  margin-top: 20px;
+}
+
+.card {
+  background: var(--card-bg);
+  color: var(--text);
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 30px var(--shadow);
+  max-width: 1200px;
+  margin: 20px auto;
+  animation: slideIn 0.5s ease-out;
+  transition: all 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px var(--shadow);
+}
+
+.level-selector {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+  justify-content: center;
+}
+
+.level-btn {
+  padding: 12px 24px;
+  border: 3px solid var(--border);
+  border-radius: 12px;
+  background: var(--card-bg);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 1.1em;
+}
+
+.level-A1 { border-color: #4CAF50; }
+.level-A1.active, .level-A1:hover {
+  background: #4CAF50;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 0 25px rgba(76, 175, 80, 0.6);
+}
+
+.level-A2 { border-color: #2196F3; }
+.level-A2.active, .level-A2:hover {
+  background: #2196F3;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 0 25px rgba(33, 150, 243, 0.6);
+}
+
+.level-B1 { border-color: #FF9800; }
+.level-B1.active, .level-B1:hover {
+  background: #FF9800;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 0 25px rgba(255, 152, 0, 0.6);
+}
+
+.level-B2 { border-color: #9C27B0; }
+.level-B2.active, .level-B2:hover {
+  background: #9C27B0;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 0 25px rgba(156, 39, 176, 0.6);
+}
+
+.level-C1 {
+  border-color: #FFD700;
+  position: relative;
+  overflow: hidden;
+}
+
+.level-C1::before {
+  content: '👑';
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 1.2em;
+  animation: bounce 1s infinite;
+}
+
+.level-C1.active, .level-C1:hover {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+input, button {
+  padding: 14px;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+  font-size: 1.05em;
+  margin: 8px;
+  background: var(--input-bg);
+  color: var(--text);
+}
+
+input {
+  width: calc(50% - 16px);
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+}
+
+button {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  font-weight: 600;
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+
+.add-options {
+  background: var(--input-bg);
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px 0;
+  border: 2px solid var(--border);
+}
+
+.add-options h3 {
+  color: var(--accent);
+  margin-bottom: 15px;
+  font-size: 1.2em;
+}
+
+.letter-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  gap: 8px;
+  margin: 15px 0;
+}
+
+.letter-select-btn {
+  padding: 10px;
+  background: var(--input-bg);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  color: var(--text);
+  margin: 0;
+}
+
+.letter-select-btn:hover {
+  background: var(--accent);
+  color: white;
+  transform: scale(1.1);
+}
+
+.letter-select-btn.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.stat-box {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+  margin: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.test-question {
+  font-size: 1.6em;
+  margin: 25px 0;
+  text-align: center;
+  font-weight: 600;
+}
+
+.test-input {
+  width: 80%;
+  padding: 18px;
+  font-size: 1.3em;
+  text-align: center;
+  border: 3px solid var(--accent);
+}
+
+.result {
+  padding: 18px;
+  margin: 18px 0;
+  border-radius: 12px;
+  text-align: center;
+  animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(-10deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+.correct {
+  background: #4CAF50;
+  color: white;
+  box-shadow: 0 0 25px rgba(76, 175, 80, 0.6);
+}
+
+.incorrect {
+  background: #f44336;
+  color: white;
+  box-shadow: 0 0 25px rgba(244, 67, 54, 0.6);
+}
+
+.letter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
+  gap: 12px;
+  margin: 25px 0;
+}
+
+.letter-btn {
+  padding: 18px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.3em;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin: 0;
+}
+
+.letter-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s;
+}
+
+.letter-btn:hover::after {
+  left: 100%;
+}
+
+.letter-btn:hover {
+  transform: scale(1.15) rotate(5deg);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+}
+
+.hidden {
+  display: none;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 24px;
+  background: var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 25px 0;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4CAF50, #2196F3, #9C27B0, #FFD700);
+  transition: width 0.5s ease;
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: var(--card-bg);
+  color: var(--text);
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+  animation: popIn 0.4s ease;
+  max-width: 400px;
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  font-size: 1.8em;
+}
+
+.modal-content p {
+  margin-bottom: 25px;
+  font-size: 1.1em;
+}
+
+.word-item {
+  background: var(--input-bg);
+  padding: 18px;
+  margin: 12px 0;
+  border-radius: 12px;
+  border-right: 5px solid var(--accent);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  animation: fadeInLeft 0.5s ease;
+}
+
+.word-item:hover {
+  transform: translateX(-8px) scale(1.02);
+  box-shadow: 0 6px 18px rgba(102, 126, 234, 0.3);
+  border-right-width: 8px;
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.search-box {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  font-size: 1.1em;
+}
+
+@media (max-width: 768px) {
+  input { width: 100%; }
+  .letter-grid { grid-template-columns: repeat(auto-fill, minmax(55px, 1fr)); }
+  .letter-selector { grid-template-columns: repeat(auto-fill, minmax(45px, 1fr)); }
+  .sidebar { width: 280px; right: -280px; }
+  h1 { font-size: 2.2em; }
+}
 </style>
 </head>
 <body>
 <div class="sidebar-overlay" id="overlay" onclick="toggleMenu()"></div>
+
 <div class="top-buttons">
-<button class="dark-mode-btn" onclick="toggleDark()">🌙</button>
-<button class="menu-btn" onclick="toggleMenu()">☰</button>
+  <button class="dark-mode-btn" onclick="toggleDark()">🌙</button>
+  <button class="menu-btn" onclick="toggleMenu()">☰</button>
 </div>
+
 <div class="sidebar" id="sidebar">
-<h3>القائمة</h3>
-<button onclick="showPage('add')">📝 إضافة</button>
-<button onclick="showPage('words')">📖 الكلمات</button>
-<button onclick="showPage('test')">📊 الاختبارات</button>
-<button onclick="showPage('errors')">❌ الأخطاء</button>
-<button onclick="showPage('stats')">📈 الإحصائيات</button>
-<button onclick="showReset()" style="background:#f44336">🔄 إعادة ضبط</button>
+  <h3>📋 القائمة</h3>
+  <button onclick="showPage('add')">
+    <span>➕</span> إضافة كلمة
+  </button>
+  <button onclick="showPage('words')">
+    <span>📚</span> قائمة الكلمات
+  </button>
+  <button onclick="showPage('test')">
+    <span>📝</span> الاختبارات
+  </button>
+  <button onclick="showPage('errors')">
+    <span>❌</span> الأخطاء
+  </button>
+  <button onclick="showPage('stats')">
+    <span>📊</span> الإحصائيات
+  </button>
+  <button onclick="showReset()" class="reset-btn">
+    <span>🔄</span> إعادة ضبط
+  </button>
 </div>
+
 <div class="modal" id="modal">
-<div class="modal-content">
-<h2>⚠️ تحذير</h2>
-<p>سيتم حذف كل البيانات المضافة</p>
-<button onclick="hideModal()" style="background:#4CAF50">إلغاء</button>
-<button onclick="confirmReset()" style="background:#f44336">موافق</button>
+  <div class="modal-content">
+    <h2>⚠️ تحذير</h2>
+    <p>سيتم حذف جميع البيانات المضافة ولن يمكن استرجاعها</p>
+    <button onclick="hideModal()" style="background: linear-gradient(135deg, #4CAF50, #45a049); margin: 5px;">
+      إلغاء
+    </button>
+    <button onclick="confirmReset()" style="background: linear-gradient(135deg, #f44336, #d32f2f); margin: 5px;">
+      تأكيد الحذف
+    </button>
+  </div>
 </div>
-</div>
+
 <header>
-<h1>📚 Easy</h1>
+  <h1>📚 Easy</h1>
 </header>
+
 <div id="page-add" class="page">
-<div class="card">
-<h2>إضافة كلمة</h2>
-<div class="level-selector">
-<button class="level-btn level-A1 active" onclick="selectLevel('A1')">A1</button>
-<button class="level-btn level-A2" onclick="selectLevel('A2')">A2</button>
-<button class="level-btn level-B1" onclick="selectLevel('B1')">B1</button>
-<button class="level-btn level-B2" onclick="selectLevel('B2')">B2</button>
-<button class="level-btn level-C1" onclick="selectLevel('C1')">C1</button>
+  <div class="card">
+    <h2>➕ إضافة كلمة جديدة</h2>
+    
+    <div class="add-options">
+      <h3>🎯 اختر المستوى:</h3>
+      <div class="level-selector">
+        <button class="level-btn level-A1 active" onclick="selectLevel('A1')">A1</button>
+        <button class="level-btn level-A2" onclick="selectLevel('A2')">A2</button>
+        <button class="level-btn level-B1" onclick="selectLevel('B1')">B1</button>
+        <button class="level-btn level-B2" onclick="selectLevel('B2')">B2</button>
+        <button class="level-btn level-C1" onclick="selectLevel('C1')">C1</button>
+      </div>
+      
+      <h3>🔤 اختر الحرف الأول (اختياري):</h3>
+      <div class="letter-selector" id="add-letters"></div>
+    </div>
+
+    <input type="text" id="eng" placeholder="الكلمة بالإنجليزي">
+    <input type="text" id="ara" placeholder="المعنى بالعربي">
+    <button onclick="addWord()">✅ إضافة الكلمة</button>
+    <p id="msg" style="text-align: center; margin-top: 15px; font-size: 1.2em; font-weight: 600;"></p>
+  </div>
 </div>
-<input type="text" id="eng" placeholder="الكلمة بالإنجليزي">
-<input type="text" id="ara" placeholder="المعنى بالعربي">
-<button onclick="addWord()">إضافة</button>
-<p id="msg"></p>
-</div>
-</div>
+
 <div id="page-words" class="page hidden">
-<div class="card">
-<h2>الكلمات</h2>
-<div class="level-selector">
-<button class="level-btn level-A1 active" onclick="selectWordsLevel('A1')">A1</button>
-<button class="level-btn level-A2" onclick="selectWordsLevel('A2')">A2</button>
-<button class="level-btn level-B1" onclick="selectWordsLevel('B1')">B1</button>
-<button class="level-btn level-B2" onclick="selectWordsLevel('B2')">B2</button>
-<button class="level-btn level-C1" onclick="selectWordsLevel('C1')">C1</button>
+  <div class="card">
+    <h2>📚 قائمة الكلمات</h2>
+    <div class="level-selector">
+      <button class="level-btn level-A1 active" onclick="selectWordsLevel('A1')">A1</button>
+      <button class="level-btn level-A2" onclick="selectWordsLevel('A2')">A2</button>
+      <button class="level-btn level-B1" onclick="selectWordsLevel('B1')">B1</button>
+      <button class="level-btn level-B2" onclick="selectWordsLevel('B2')">B2</button>
+      <button class="level-btn level-C1" onclick="selectWordsLevel('C1')">C1</button>
+    </div>
+    <input type="text" class="search-box" id="search" placeholder="🔍 ابحث عن كلمة..." oninput="filterWords()">
+    <div id="words-list"></div>
+  </div>
 </div>
-<input type="text" class="search-box" id="search" placeholder="🔍 ابحث..." oninput="filterWords()">
-<div id="words-list"></div>
-</div>
-</div>
+
 <div id="page-test" class="page hidden">
-<div class="card">
-<h2>الاختبارات</h2>
-<div class="level-selector">
-<button class="level-btn level-A1" onclick="selectTestLevel('A1')">A1</button>
-<button class="level-btn level-A2" onclick="selectTestLevel('A2')">A2</button>
-<button class="level-btn level-B1" onclick="selectTestLevel('B1')">B1</button>
-<button class="level-btn level-B2" onclick="selectTestLevel('B2')">B2</button>
-<button class="level-btn level-C1" onclick="selectTestLevel('C1')">C1</button>
+  <div class="card">
+    <h2>📝 الاختبارات</h2>
+    <div class="level-selector">
+      <button class="level-btn level-A1" onclick="selectTestLevel('A1')">A1</button>
+      <button class="level-btn level-A2" onclick="selectTestLevel('A2')">A2</button>
+      <button class="level-btn level-B1" onclick="selectTestLevel('B1')">B1</button>
+      <button class="level-btn level-B2" onclick="selectTestLevel('B2')">B2</button>
+      <button class="level-btn level-C1" onclick="selectTestLevel('C1')">C1</button>
+    </div>
+    <div id="test-opt" class="hidden">
+      <button onclick="selectDir('ar-en')" style="background: linear-gradient(135deg, #4CAF50, #45a049)">
+        🇸🇦 عربي → إنجليزي 🇬🇧
+      </button>
+      <button onclick="selectDir('en-ar')" style="background: linear-gradient(135deg, #2196F3, #1976D2)">
+        🇬🇧 إنجليزي → عربي 🇸🇦
+      </button>
+      <button onclick="selectDir('random')" style="background: linear-gradient(135deg, #FF9800, #F57C00)">
+        🔀 عشوائي
+      </button>
+      <div id="letters" class="hidden">
+        <h3>🔤 اختر الحرف:</h3>
+        <div class="letter-grid" id="grid"></div>
+        <button onclick="startTest('final', '')" style="width: 100%; margin-top: 15px;">
+          🏆 الاختبار النهائي الشامل
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card hidden" id="test-card">
+    <h2 id="test-title"></h2>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress"></div>
+    </div>
+    <p id="counter" style="text-align: center; font-size: 1.2em; font-weight: 600;"></p>
+    <div class="test-question" id="q"></div>
+    <input type="text" class="test-input" id="ans" placeholder="✍️ اكتب الإجابة هنا">
+    <button id="check" onclick="checkAns()">✓ تحقق من الإجابة</button>
+    <button onclick="skip()">⏭️ تجاوز</button>
+    <button onclick="next()" class="hidden" id="next-btn">➡️ السؤال التالي</button>
+    <div id="result"></div>
+  </div>
 </div>
-<div id="test-opt" class="hidden">
-<button onclick="selectDir('ar-en')" style="background:#4CAF50">🇸🇦 عربي → إنجليزي 🇬🇧</button>
-<button onclick="selectDir('en-ar')" style="background:#2196F3">🇬🇧 إنجليزي → عربي 🇸🇦</button>
-<button onclick="selectDir('random')" style="background:#FF9800">🔀 عشوائي</button>
-<div id="letters" class="hidden">
-<h3>اختر الحرف:</h3>
-<div class="letter-grid" id="grid"></div>
-<button onclick="startTest('final','')" style="width:100%">الاختبار النهائي</button>
-</div>
-</div>
-</div>
-<div class="card hidden" id="test-card">
-<h2 id="test-title"></h2>
-<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
-<p id="counter"></p>
-<div class="test-question" id="q"></div>
-<input type="text" class="test-input" id="ans" placeholder="الإجابة">
-<button id="check" onclick="checkAns()">تحقق</button>
-<button onclick="skip()">تجاوز</button>
-<button onclick="next()" class="hidden" id="next-btn">التالي</button>
-<div id="result"></div>
-</div>
-</div>
+
 <div id="page-errors" class="page hidden">
-<div class="card">
-<h2>الأخطاء</h2>
-<button onclick="testErrors()">اختبار الأخطاء</button>
-<div id="errors-list"></div>
+  <div class="card">
+    <h2>❌ الأخطاء السابقة</h2>
+    <button onclick="testErrors()" style="width: 100%; margin-bottom: 20px;">
+      📝 اختبار الأخطاء
+    </button>
+    <div id="errors-list"></div>
+  </div>
 </div>
-</div>
+
 <div id="page-stats" class="page hidden">
-<div class="card">
-<h2>الإحصائيات</h2>
-<div class="stat-box"><h3 id="total">0</h3><p>الكلمات</p></div>
-<div class="stat-box"><h3 id="correct">0</h3><p>صحيحة</p></div>
-<div class="stat-box"><h3 id="wrong">0</h3><p>خاطئة</p></div>
-<div id="level-stats"></div>
+  <div class="card">
+    <h2>📊 الإحصائيات</h2>
+    <div class="stat-box">
+      <h3 id="total" style="font-size: 2.5em;">0</h3>
+      <p style="font-size: 1.2em;">📚 إجمالي الكلمات</p>
+    </div>
+    <div class="stat-box">
+      <h3 id="correct" style="font-size: 2.5em;">0</h3>
+      <p style="font-size: 1.2em;">✅ إجابات صحيحة</p>
+    </div>
+    <div class="stat-box">
+      <h3 id="wrong" style="font-size: 2.5em;">0</h3>
+      <p style="font-size: 1.2em;">❌ إجابات خاطئة</p>
+    </div>
+    <div id="level-stats"></div>
+  </div>
 </div>
-</div>
+
 <script>
-const D="about,عن|above,فوق|across,عبر|action,حركة|activity,نشاط|actor,ممثل|actress,ممثلة|add,يضيف|address,عنوان|adult,بالغ|advice,نصيحة|afraid,خائف|after,بعد|afternoon,بعد الظهر|again,مرة أخرى|age,عمر|ago,منذ|agree,يوافق|air,هواء|airport,مطار|all,كل|also,أيضاً|always,دائماً|amazing,مذهل|and,و|angry,غاضب|animal,حيوان|another,آخر|answer,إجابة|any,أي|anyone,أي شخص|anything,أي شيء|apartment,شقة|apple,تفاحة|April,أبريل|area,منطقة|arm,ذراع|around,حول|arrive,يصل|art,فن|article,مقال|artist,فنان|as,كـ|ask,يسال|at,في|August,أغسطس|aunt,عمة|autumn,الخريف|away,بعيداً|baby,طفل|back,خلف|bad,سيء|bag,حقيبة|ball,كرة|banana,موزة|band,فرقة|bank,بنك|bath,استحمام|bathroom,حمام|be,يكون|beach,شاطئ|beautiful,جميل|because,لأن|become,يصبح|bed,سرير|bedroom,غرفة نوم|beer,بيرة|before,قبل|begin,يبدأ|beginning,بداية|behind,خلف|believe,يعتقد|below,أسفل|best,الأفضل|better,أفضل|between,بين|bicycle,دراجة|bike,دراجة|big,كبير|bill,فاتورة|bird,طائر|birthday,عيد ميلاد|black,أسود|blog,مدونة|blonde,أشقر|blue,أزرق|boat,قارب|body,جسم|book,كتاب|boot,حذاء|bored,ملان|boring,ممل|born,وُلد|both,كلاهما|bottle,زجاجة|box,صندوق|boy,ولد|boyfriend,صديق|bread,خبز|break,يكسر|breakfast,فطور|bring,يحضر|brother,أخ|brown,بني|build,يبني|building,مبنى|bus,حافلة|business,عمل|busy,مشغول|but,لكن|butter,زبدة|buy,يشتري|by,بواسطة|cafe,مقهى|cake,كعكة|call,يتصل|camera,كاميرا|can,يستطيع|cannot,لا يستطيع|capital,عاصمة|car,سيارة|card,بطاقة|career,مهنة|carrot,جزر|carry,يحمل|cat,قطة|CD,قرص|cent,سنت|centre,مركز|century,قرن|chair,كرسي|change,يغير|chart,مخطط|cheap,رخيص|check,يفحص|cheese,جبن|chicken,دجاج|child,طفل|chocolate,شوكولاتة|choose,يختار|cinema,سينما|city,مدينة|class,فصل|classroom,غرفة الصف|clean,نظيف|climb,يتسلق|clock,ساعة|close,يغلق|clothes,ملابس|club,نادي|coat,معطف|coffee,قهوة|cold,بارد|college,كلية|colour,لون|come,يأتي|common,شائع|company,شركة|compare,يقارن|complete,يكمل|computer,كمبيوتر|concert,حفلة|conversation,محادثة|cook,يطبخ|cooking,طبخ|cool,رائع|correct,صحيح|cost,تكلفة|could,استطاع|country,بلد|course,دورة|cousin,ابن العم|cow,بقرة|cream,كريم|create,يبتكر|culture,ثقافة|cup,كوب|customer,زبون|cut,يقص|dad,أب|dance,يرقص|dancer,راقص|dancing,الرقص|dangerous,خطير|dark,مظلم|date,تاريخ|daughter,ابنة|day,يوم|dear,عزيزي|December,ديسمبر|decide,يقرر|delicious,لذيذ|describe,يصف|description,وصف|design,تصميم|desk,مكتب|detail,تفصيل|dialogue,حوار|dictionary,قاموس|die,يموت|diet,نظام غذائي|difference,اختلاف|different,مختلف|difficult,صعب|dinner,عشاء|dirty,متسخ|discuss,يناقش|dish,طبق|do,يفعل|doctor,طبيب|dog,كلب|dollar,دولار|door,باب|down,لأسفل|downstairs,الطابق السفلي|draw,يرسم|dress,فستان|drink,يشرب|drive,يقود|driver,سائق|during,خلال|DVD,قرص فيديو|each,كل واحد|ear,أذن|early,باكراً|east,شرق|easy,سهل|eat,يأكل|egg,بيضة|eight,ثمانية|eighteen,ثمانية عشر|eighty,ثمانون|elephant,فيل|eleven,أحد عشر|else,آخر|email,بريد|end,نهاية|enjoy,يستمتع|enough,كافٍ|euro,يورو|even,حتى|evening,مساء|event,حدث|ever,أبداً|every,كل|everybody,كل شخص|everyone,كل شخص|everything,كل شيء|exam,امتحان|examination,امتحان|example,مثال|excited,متحمس|exciting,مثير|exercise,تمرين|expensive,غالي|explain,يشرح|extra,إضافي|eye,عين|face,وجه|fact,حقيقة|fall,يسقط|false,خطأ|family,عائلة|famous,مشهور|fantastic,رائع|far,بعيد|farm,مزرعة|farmer,مزارع|fast,سريع|fat,سمين|father,أب|favourite,مفضل|February,فبراير|feel,يشعر|feeling,شعور|festival,مهرجان|few,قليل|fifteen,خمسة عشر|fifth,الخامس|fifty,خمسون|fill,يملأ|film,فيلم|final,نهائي|finally,أخيراً|find,يجد|fine,بخير|finish,ينهي|fire,نار|first,أول|fish,سمك|five,خمسة|flat,شقة|flight,رحلة طيران|floor,أرضية|flower,زهرة|fly,يطير|follow,يتبع|food,طعام|foot,قدم|football,كرة قدم|for,لأجل|forget,ينسى|form,استمارة|four,أربعة|fourteen,أربعة عشر|fourth,الرابع|free,حر|Friday,الجمعة|friend,صديق|friendly,ودود|from,من|front,أمامي|fruit,فاكهة|full,ممتلئ|fun,مرح|funny,مضحك|future,مستقبل|game,لعبة|garden,حديقة|geography,جغرافيا|get,يحصل|girl,بنت|girlfriend,صديقة|give,يعطي|glass,زجاج|go,يذهب|good,جيد|goodbye,وداعاً|grandfather,جد|grandmother,جدة|grandparent,جد|great,عظيم|green,أخضر|grey,رمادي|group,مجموعة|grow,ينمو|guess,يخمن|guitar,قيثارة|gym,صالة رياضية|hair,شعر|half,نصف|hand,يد|happen,يحدث|happy,سعيد|hard,صعب|hat,قبعة|hate,يكره|have,يملك|he,هو|head,رأس|health,صحة|healthy,صحي|hear,يسمع|hello,مرحباً|hi,أهلاً|hey,أهلاً|help,يساعد|her,لها|hers,لها|here,هنا|high,مرتفع|him,هو|his,له|history,تاريخ|hobby,هواية|holiday,عطلة|home,منزل|homework,واجب|hope,يأمل|horse,حصان|hospital,مستشفى|hot,حار|hotel,فندق|hour,ساعة|house,بيت|how,كيف|however,ومع ذلك|hundred,مئة|hungry,جائع|husband,زوج|I,أنا|ice,ثلج|idea,فكرة|if,إذا|imagine,يتخيل|important,مهم|improve,يحسن|in,في|include,يتضمن|information,معلومات|interest,اهتمام|interested,مهتم|interesting,ممتع|internet,إنترنت|interview,مقابلة|into,إلى|introduce,يقدّم|island,جزيرة|it,هو|its,ملكه|jacket,سترة|January,يناير|jeans,جينز|job,وظيفة|join,ينضم|journey,رحلة|juice,عصير|July,يوليو|June,يونيو|just,فقط|keep,يحفظ|key,مفتاح|kilometre,كيلومتر|kind,نوع|kitchen,مطبخ|know,يعرف|land,أرض|language,لغة|large,كبير|last,الأخير|late,متأخر|later,لاحقاً|laugh,يضحك|learn,يتعلم|leave,يغادر|left,يسار|leg,ساق|lesson,درس|let,يدع|letter,رسالة|library,مكتبة|lie,يكذب|life,حياة|light,ضوء|like,يحب|line,خط|lion,أسد|list,قائمة|listen,يستمع|little,صغير|live,يعيش|local,محلي|long,طويل|look,ينظر|lose,يخسر|lot,الكثير|love,يحب|lunch,غداء|machine,آلة|magazine,مجلة|main,رئيسي|make,يصنع|man,رجل|many,كثير|map,خريطة|March,مارس|market,سوق|married,متزوج|match,مباراة|May,مايو|maybe,ربما|me,أنا|meal,وجبة|mean,يعني|meaning,معنى|meat,لحم|meet,يقابل|meeting,اجتماع|member,عضو|menu,قائمة|message,رسالة|metre,متر|midnight,منتصف الليل|mile,ميل|milk,حليب|million,مليون|minute,دقيقة|miss,يفتقد|mistake,خطأ|model,نموذج|modern,حديث|moment,لحظة|Monday,الاثنين|money,مال|month,شهر|more,أكثر|morning,صباح|most,معظم|mother,أم|mountain,جبل|mouse,فأر|mouth,فم|move,يتحرك|movie,فيلم|much,كثير|mum,أمي|museum,متحف|music,موسيقى|must,يجب|my,لي|name,اسم|natural,طبيعي|near,قريب|need,يحتاج|negative,سلبي|neighbour,جار|never,أبداً|new,جديد|news,أخبار|newspaper,صحيفة|next,القادم|nice,لطيف|night,ليلة|nine,تسعة|nineteen,تسعة عشر|ninety,تسعون|no,لا|nobody,لا أحد|north,شمال|nose,أنف|not,ليس|note,ملاحظة|nothing,لا شيء|November,نوفمبر|now,الآن|number,رقم|nurse,ممرضة|object,شيء|October,أكتوبر|of,من|off,مغلق|office,مكتب|often,غالباً|oh,أوه|OK,موافق|old,قديم|on,على|once,مرة|one,واحد|onion,بصل|online,متصل|only,فقط|open,يفتح|opinion,رأي|opposite,مقابل|or,أو|orange,برتقالي|order,يطلب|other,آخر|our,لنا|out,خارج|outside,خارج|over,فوق|own,يملك|page,صفحة|paint,يلون|painting,لوحة|pair,زوج|paper,ورقة|paragraph,فقرة|parent,والد|park,حديقة|part,جزء|partner,شريك|party,حفلة|passport,جواز|past,الماضي|pay,يدفع|pen,قلم|pencil,قلم رصاص|people,ناس|pepper,فلفل|perfect,مثالي|period,فترة|person,شخص|personal,شخصي|phone,هاتف|photo,صورة|photograph,صورة|phrase,عبارة|piano,بيانو|picture,صورة|piece,قطعة|pig,خنزير|pink,وردي|place,مكان|plan,خطة|plane,طائرة|plant,نبات|play,يلعب|player,لاعب|please,من فضلك|point,نقطة|police,شرطة|policeman,شرطي|pool,مسبح|poor,فقير|popular,شعبي|positive,إيجابي|possible,ممكن|post,بريد|potato,بطاطس|pound,جنيه|practice,ممارسة|practise,يمارس|prefer,يفضل|prepare,يجهز|present,حاضر|pretty,جميل|price,سعر|probably,ربما|problem,مشكلة|product,منتج|programme,برنامج|project,مشروع|purple,أرجواني|put,يضع|quarter,ربع|question,سؤال|quick,سريع|quickly,بسرعة|quiet,هادئ|quite,تماماً|radio,راديو|rain,مطر|read,يقرأ|reader,قارئ|reading,القراءة|ready,جاهز|real,حقيقي|really,حقاً|reason,سبب|red,أحمر|relax,يسترخي|remember,يتذكر|repeat,يكرر|report,تقرير|restaurant,مطعم|result,نتيجة|return,يعود|rice,أرز|rich,غني|ride,يركب|right,يمين|river,نهر|road,طريق|room,غرفة|routine,روتين|rule,قاعدة|run,يجري|sad,حزين|salad,سلطة|salt,ملح|same,نفس|sandwich,شطيرة|Saturday,السبت|say,يقول|school,مدرسة|science,علوم|scientist,عالم|sea,بحر|second,ثانٍ|section,قسم|see,يرى|sell,يبيع|send,يرسل|sentence,جملة|September,سبتمبر|seven,سبعة|seventeen,سبعة عشر|seventy,سبعون|share,يشارك|she,هي|sheep,خروف|shirt,قميص|shoe,حذاء|shop,محل|shopping,تسوق|short,قصير|should,يجب|show,يوضح|shower,استحمام|sick,مريض|similar,مشابه|sing,يغني|singer,مغني|song,أغنية|sister,أخت|sit,يجلس|situation,موقف|six,ستة|sixteen,ستة عشر|sixty,ستون|skill,مهارة|skirt,تنورة|sleep,ينام|slow,بطيء|small,صغير|snake,ثعبان|snow,ثلج|so,لذلك|some,بعض|somebody,شخص ما|someone,شخص ما|something,شيء ما|sometimes,أحياناً|son,ابن|soon,قريباً|sorry,آسف|sound,صوت|soup,حساء|south,جنوب|space,مساحة|speak,يتحدث|special,خاص|spell,يتهجى|spelling,التهجئة|spend,يقضي|sport,رياضة|spring,الربيع|stand,يقف|star,نجم|start,يبدأ|statement,بيان|station,محطة|stay,يبقى|still,لا يزال|stop,يتوقف|story,قصة|street,شارع|strong,قوي|student,طالب|study,يدرس|style,أسلوب|subject,موضوع|success,نجاح|sugar,سكر|summer,الصيف|sun,شمس|Sunday,الأحد|supermarket,سوبر ماركت|sure,متأكد|sweater,سترة|swim,يسبح|swimming,السباحة|table,طاولة|take,يأخذ|talk,يتحدث|tall,طويل|taxi,سيارة أجرة|tea,شاي|teach,يدرّس|teacher,معلم|team,فريق|teenager,مراهق|telephone,هاتف|television,تلفاز|TV,تلفاز|tell,يخبر|ten,عشرة|tennis,تنس|terrible,فظيع|test,اختبار|text,نص|than,من|thank,يشكر|thanks,شكراً|that,ذلك|the,الـ|theatre,مسرح|their,لهم|them,هم|they,هم|then,ثم|there,هناك|thing,شيء|think,يفكر|third,الثالث|thirsty,عطشان|thirteen,ثلاثة عشر|thirty,ثلاثون|this,هذا|thousand,ألف|three,ثلاثة|through,من خلال|Thursday,الخميس|ticket,تذكرة|time,وقت|tired,متعب|title,عنوان|to,إلى|today,اليوم|together,معاً|toilet,دورة مياه|tomato,طماطم|tomorrow,غداً|tonight,الليلة|too,أيضاً|tooth,سن|topic,موضوع|tourist,سائح|town,مدينة صغيرة|traffic,حركة المرور|train,قطار|travel,يسافر|tree,شجرة|trip,رحلة|trousers,بنطال|true,صحيح|try,يحاول|T-shirt,قميص صيفي|Tuesday,الثلاثاء|turn,يدور|twelve,اثنا عشر|twenty,عشرون|twice,مرتين|two,اثنان|type,نوع|umbrella,مظلة|uncle,عم|under,تحت|understand,يفهم|university,جامعة|until,حتى|up,للأعلى|upstairs,الطابق العلوي|us,نحن|use,يستخدم|useful,مفيد|usually,عادة|vacation,إجازة|vegetable,خضار|very,جداً|video,فيديو|village,قرية|visit,يزور|visitor,زائر|wait,ينتظر|waiter,نادل|wake,يستيقظ|walk,يمشي|wall,جدار|want,يريد|warm,دافئ|wash,يغسل|watch,يشاهد|water,ماء|way,طريق|we,نحن|wear,يرتدي|weather,طقس|website,موقع|Wednesday,الأربعاء|week,أسبوع|weekend,عطلة|welcome,مرحباً|well,جيداً|west,غرب|what,ماذا|when,متى|where,أين|which,أي|white,أبيض|who,من|why,لماذا|wife,زوجة|will,سوف|win,يفوز|window,نافذة|wine,نبيذ|winter,الشتاء|with,مع|without,بدون|woman,امرأة|wonderful,رائع|word,كلمة|work,يعمل|worker,عامل|world,عالم|would,وددت|write,يكتب|writer,كاتب|writing,كتابة|wrong,خطأ|yeah,نعم|yes,نعم|year,سنة|yellow,أصفر|yesterday,أمس|you,أنت|your,ملكك|yourself,نفسك|young,شاب|zero,صفر|zoo,حديقة حيوان";
-const A1=D.split("|").map(w=>{const[e,a]=w.split(",");return{english:e,arabic:a}});
-let words={},errors=[],stats={correct:0,wrong:0},test=[],idx=0,lvl='A1',testLvl='',dir='ar-en',selDir='random',wLvl='A1';
-function init(){const s=localStorage.getItem('app');if(!s){words.A1=[...A1];save();}else{const d=JSON.parse(s);words=d.w||{};errors=d.e||[];stats=d.s||{correct:0,wrong:0};}const dm=localStorage.getItem('dark');if(dm==='true'){document.body.classList.add('dark-mode');document.querySelector('.dark-mode-btn').textContent='☀️';}}
-function save(){localStorage.setItem('app',JSON.stringify({w:words,e:errors,s:stats}));}
-function toggleDark(){document.body.classList.toggle('dark-mode');const isDark=document.body.classList.contains('dark-mode');document.querySelector('.dark-mode-btn').textContent=isDark?'☀️':'🌙';localStorage.setItem('dark',isDark);}
-function selectLevel(l){lvl=l;document.querySelectorAll('#page-add .level-btn').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');}
-function selectWordsLevel(l){wLvl=l;document.querySelectorAll('#page-words .level-btn').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');displayWords();}
-function selectTestLevel(l){testLvl=l;document.querySelectorAll('#page-test .level-btn').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');document.getElementById('test-opt').classList.remove('hidden');document.getElementById('letters').classList.add('hidden');createLetters();}
-function selectDir(d){selDir=d;document.getElementById('letters').classList.remove('hidden');}
-function createLetters(){const g=document.getElementById('grid');if(!words[testLvl]||words[testLvl].length===0){g.innerHTML='<p style="color:#f44336">لا توجد كلمات</p>';return;}const lets={};words[testLvl].forEach(w=>{const f=w.english[0].toUpperCase();if(!lets[f])lets[f]=0;lets[f]++;});g.innerHTML='';Object.keys(lets).sort().forEach(l=>{const b=document.createElement('button');b.className='letter-btn';b.textContent=l;b.onclick=()=>startTest('letter',l);g.appendChild(b);});}
-function addWord(){const e=document.getElementById('eng').value.trim(),a=document.getElementById('ara').value.trim();const m=document.getElementById('msg');if(!e||!a){m.textContent='⚠️ املأ الحقول';m.style.color='#f44336';return;}if(!words[lvl])words[lvl]=[];words[lvl].push({english:e,arabic:a});save();document.getElementById('eng').value='';document.getElementById('ara').value='';m.textContent='✅ تمت الإضافة';m.style.color='#4CAF50';setTimeout(()=>m.textContent='',3000);updateStats();}
-function displayWords(){const list=document.getElementById('words-list');const s=document.getElementById('search').value.toLowerCase();if(!words[wLvl]||words[wLvl].length===0){list.innerHTML='<p style="text-align:center;color:#667eea">لا توجد كلمات</p>';return;}let filtered=words[wLvl].filter(w=>w.english.toLowerCase().includes(s)||w.arabic.includes(s));if(filtered.length===0){list.innerHTML='<p style="text-align:center;color:#f44336">لا نتائج</p>';return;}list.innerHTML=filtered.map((w,i)=>{const oi=words[wLvl].indexOf(w);return `<div class="word-item"><div><strong>${w.english}</strong> ← <strong>${w.arabic}</strong></div><button style="background:#f44336;padding:8px;border-radius:5px;color:white;border:none;cursor:pointer" onclick="delWord('${wLvl}',${oi})">🗑️</button></div>`;}).join('');}
-function filterWords(){displayWords();}
-function delWord(l,i){if(confirm('حذف الكلمة؟')){words[l].splice(i,1);save();displayWords();updateStats();}}
-function norm(t){return t.trim().toLowerCase().replace(/\s+/g,' ').replace(/[^\w\s\u0600-\u06FF]/g,'');}
-function startTest(type,p){if(!words[testLvl]||words[testLvl].length===0){alert('لا توجد كلمات');return;}if(selDir==='random'){dir=Math.random()>0.5?'ar-en':'en-ar';}else{dir=selDir;}let all=[...words[testLvl]];if(type==='letter'){test=all.filter(w=>w.english[0].toUpperCase()===p);}else{test=all;}test=test.sort(()=>Math.random()-0.5);idx=0;document.getElementById('test-card').classList.remove('hidden');let dt=dir==='ar-en'?'عربي → إنجليزي':'إنجليزي → عربي';document.getElementById('test-title').textContent=(type==='letter'?'حرف '+p:'النهائي')+' - '+dt;showQ();}
-function showQ(){if(idx>=test.length){document.getElementById('q').innerHTML='<h2>🎉 انتهى!</h2>';document.getElementById('ans').classList.add('hidden');document.getElementById('check').classList.add('hidden');document.getElementById('next-btn').classList.add('hidden');return;}const w=test[idx];if(dir==='ar-en'){document.getElementById('q').innerHTML='<strong>ترجم:</strong><br>'+w.arabic;}else{document.getElementById('q').innerHTML='<strong>ترجم:</strong><br>'+w.english;}const a=document.getElementById('ans');a.value='';a.classList.remove('hidden');a.disabled=false;a.focus();document.getElementById('result').innerHTML='';document.getElementById('next-btn').classList.add('hidden');document.getElementById('check').classList.remove('hidden');document.getElementById('check').disabled=false;const p=((idx+1)/test.length)*100;document.getElementById('progress').style.width=p+'%';document.getElementById('counter').textContent='السؤال '+(idx+1)+' من '+test.length;}
-function checkAns(){const w=test[idx],u=document.getElementById('ans').value;const nu=norm(u);const nc=dir==='ar-en'?norm(w.english):norm(w.arabic);const cor=dir==='ar-en'?w.english:w.arabic,r=document.getElementById('result');if(nu===nc){r.innerHTML='<div class="result correct">✅ صحيح</div>';stats.correct++;}else{r.innerHTML='<div class="result incorrect">❌ خطأ! الصحيح: <strong>'+cor+'</strong></div>';stats.wrong++;if(!errors.find(e=>e.english===w.english))errors.push(w);}save();updateStats();document.getElementById('next-btn').classList.remove('hidden');document.getElementById('check').disabled=true;document.getElementById('ans').disabled=true;}
-function skip(){next();}
-function next(){idx++;showQ();}
-function testErrors(){if(errors.length===0){alert('لا أخطاء!');return;}test=[...errors].sort(()=>Math.random()-0.5);idx=0;if(selDir==='random'){dir=Math.random()>0.5?'ar-en':'en-ar';}else{dir=selDir;}showPage('test');document.getElementById('test-card').classList.remove('hidden');let dt=dir==='ar-en'?'عربي → إنجليزي':'إنجليزي → عربي';document.getElementById('test-title').textContent='الأخطاء - '+dt;showQ();}
-function updateStats(){let t=0;for(let l in words)t+=words[l].length;document.getElementById('total').textContent=t;document.getElementById('correct').textContent=stats.correct;document.getElementById('wrong').textContent=stats.wrong;const el=document.getElementById('errors-list');if(errors.length===0){el.innerHTML='<p style="text-align:center;color:#4CAF50">🎉 لا أخطاء</p>';}else{el.innerHTML=errors.map((e,i)=>'<div class="word-item"><div><strong>'+e.english+'</strong> ← <strong>'+e.arabic+'</strong></div><button style="background:#f44336;padding:8px;border-radius:5px;color:white;border:none;cursor:pointer" onclick="delErr('+i+')">🗑️</button></div>').join('');}const ls=document.getElementById('level-stats');let h='<h3 style="margin-top:20px">الكلمات:</h3>';const levs=['A1','A2','B1','B2','C1'],cols={'A1':'#4CAF50','A2':'#2196F3','B1':'#FF9800','B2':'#9C27B0','C1':'#FFD700'};levs.forEach(l=>{const c=words[l]?words[l].length:0;h+='<div style="background:var(--input-bg);padding:15px;margin:10px 0;border-radius:8px;border-right:5px solid '+cols[l]+';display:flex;justify-content:space-between"><strong>'+l+'</strong><span style="background:'+cols[l]+';color:white;padding:5px 15px;border-radius:20px">'+c+'</span></div>';});ls.innerHTML=h;}
-function delErr(i){if(confirm('حذف الخطأ؟')){errors.splice(i,1);save();updateStats();}}
-function showReset(){document.getElementById('modal').classList.add('active');toggleMenu();}
-function hideModal(){document.getElementById('modal').classList.remove('active');}
-function confirmReset(){const uw={};for(let l in words){if(l!=='A1'){uw[l]=words[l];}else{const de=A1.map(w=>w.english);uw.A1=words.A1.filter(w=>!de.includes(w.english));}}words=uw;if(words.A1&&words.A1.length>0){words.A1=[...A1,...words.A1];}else{words.A1=[...A1];}errors=[];stats={correct:0,wrong:0};save();updateStats();document.getElementById('eng').value='';document.getElementById('ara').value='';document.getElementById('test-card').classList.add('hidden');hideModal();showPage('add');const m=document.getElementById('msg');m.textContent='✅ تم إعادة الضبط';m.style.color='#4CAF50';setTimeout(()=>m.textContent='',3000);}
-function toggleMenu(){document.getElementById('sidebar').classList.toggle('active');document.getElementById('overlay').classList.toggle('active');}
-function showPage(p){document.querySelectorAll('.page').forEach(pg=>pg.classList.add('hidden'));document.getElementById('page-'+p).classList.remove('hidden');toggleMenu();updateStats();if(p==='words'){displayWords();}}
-document.getElementById('ans').addEventListener('keypress',function(e){if(e.key==='Enter'){const nb=document.getElementById('next-btn');if(!nb.classList.contains('hidden'))next();else checkAns();}});
-init();updateStats();
+const DEFAULT_DATA = "about,عن|above,فوق|across,عبر|action,حركة|activity,نشاط|add,يضيف|address,عنوان|advice,نصيحة|afraid,خائف|after,بعد|afternoon,بعد الظهر|again,مرة أخرى|age,عمر|air,هواء|airport,مطار|all,كل|also,أيضاً|always,دائماً|and,و|angry,غاضب|animal,حيوان|answer,إجابة|any,أي|apple,تفاحة|April,أبريل|area,منطقة|arm,ذراع|around,حول|arrive,يصل|art,فن|as,كـ|ask,يسال|at,في|August,أغسطس|autumn,الخريف|away,بعيداً|baby,طفل|back,خلف|bad,سيء|bag,حقيبة|ball,كرة|banana,موزة|bank,بنك|bath,استحمام|be,يكون|beach,شاطئ|beautiful,جميل|because,لأن|become,يصبح|bed,سرير|bedroom,غرفة نوم|before,قبل|begin,يبدأ|behind,خلف|best,الأفضل|better,أفضل|between,بين|big,كبير|bike,دراجة|bird,طائر|birthday,عيد ميلاد|black,أسود|blue,أزرق|boat,قارب|body,جسم|book,كتاب|boy,ولد|bread,خبز|break,يكسر|breakfast,فطور|brother,أخ|brown,بني|bus,حافلة|business,عمل|busy,مشغول|but,لكن|buy,يشتري|by,بواسطة|cafe,مقهى|cake,كعكة|call,يتصل|camera,كاميرا|can,يستطيع|car,سيارة|card,بطاقة|cat,قطة|chair,كرسي|change,يغير|cheap,رخيص|cheese,جبن|chicken,دجاج|child,طفل|city,مدينة|class,فصل|clean,نظيف|clock,ساعة|close,يغلق|clothes,ملابس|coffee,قهوة|cold,بارد|come,يأتي|computer,كمبيوتر|cook,يطبخ|cool,رائع|country,بلد|cup,كوب|dad,أب|dance,يرقص|dangerous,خطير|dark,مظلم|date,تاريخ|day,يوم|December,ديسمبر|delicious,لذيذ|desk,مكتب|dictionary,قاموس|difficult,صعب|dinner,عشاء|dirty,متسخ|do,يفعل|doctor,طبيب|dog,كلب|door,باب|down,لأسفل|draw,يرسم|dream,حلم|dress,فستان|drink,يشرب|drive,يقود|ear,أذن|early,باكراً|easy,سهل|eat,يأكل|egg,بيضة|eight,ثمانية|elephant,فيل|eleven,أحد عشر|email,بريد|end,نهاية|enjoy,يستمتع|evening,مساء|every,كل|eye,عين|face,وجه|family,عائلة|famous,مشهور|far,بعيد|farm,مزرعة|fast,سريع|father,أب|February,فبراير|feel,يشعر|fifteen,خمسة عشر|fifty,خمسون|find,يجد|fine,بخير|finish,ينهي|fire,نار|first,أول|fish,سمك|five,خمسة|flat,شقة|floor,أرضية|flower,زهرة|fly,يطير|food,طعام|foot,قدم|for,لأجل|forget,ينسى|four,أربعة|fourteen,أربعة عشر|free,حر|Friday,الجمعة|friend,صديق|from,من|fruit,فاكهة|full,ممتلئ|fun,مرح|funny,مضحك|game,لعبة|garden,حديقة|get,يحصل|girl,بنت|give,يعطي|glass,زجاج|go,يذهب|good,جيد|grandfather,جد|grandmother,جدة|great,عظيم|green,أخضر|hair,شعر|hand,يد|happy,سعيد|hard,صعب|hat,قبعة|have,يملك|he,هو|head,رأس|healthy,صحي|hear,يسمع|hello,مرحباً|help,يساعد|her,لها|here,هنا|high,مرتفع|him,هو|his,له|home,منزل|homework,واجب|horse,حصان|hospital,مستشفى|hot,حار|hotel,فندق|hour,ساعة|house,بيت|how,كيف|hundred,مئة|hungry,جائع|I,أنا|ice,ثلج|idea,فكرة|if,إذا|important,مهم|in,في|interesting,ممتع|internet,إنترنت|is,يكون|island,جزيرة|it,هو|jacket,سترة|January,يناير|job,وظيفة|juice,عصير|July,يوليو|June,يونيو|just,فقط|keep,يحفظ|key,مفتاح|kind,نوع|kitchen,مطبخ|know,يعرف|language,لغة|large,كبير|last,الأخير|late,متأخر|laugh,يضحك|learn,يتعلم|leave,يغادر|left,يسار|lesson,درس|letter,رسالة|library,مكتبة|life,حياة|light,ضوء|like,يحب|listen,يستمع|little,صغير|live,يعيش|long,طويل|look,ينظر|love,يحب|lunch,غداء|make,يصنع|man,رجل|many,كثير|map,خريطة|March,مارس|May,مايو|me,أنا|milk,حليب|minute,دقيقة|Monday,الاثنين|money,مال|month,شهر|more,أكثر|morning,صباح|mother,أم|mountain,جبل|mouth,فم|movie,فيلم|music,موسيقى|my,لي|name,اسم|near,قريب|new,جديد|news,أخبار|next,القادم|nice,لطيف|night,ليلة|nine,تسعة|nineteen,تسعة عشر|ninety,تسعون|no,لا|north,شمال|nose,أنف|not,ليس|November,نوفمبر|now,الآن|number,رقم|October,أكتوبر|of,من|office,مكتب|old,قديم|on,على|one,واحد|open,يفتح|or,أو|orange,برتقالي|our,لنا|out,خارج|page,صفحة|paper,ورقة|parent,والد|park,حديقة|party,حفلة|pen,قلم|people,ناس|phone,هاتف|photo,صورة|picture,صورة|pink,وردي|place,مكان|play,يلعب|please,من فضلك|police,شرطة|pool,مسبح|poor,فقير|price,سعر|question,سؤال|quick,سريع|quiet,هادئ|rain,مطر|read,يقرأ|ready,جاهز|red,أحمر|remember,يتذكر|restaurant,مطعم|rice,أرز|rich,غني|right,يمين|river,نهر|road,طريق|room,غرفة|run,يجري|sad,حزين|salt,ملح|same,نفس|Saturday,السبت|say,يقول|school,مدرسة|sea,بحر|second,ثانٍ|see,يرى|sell,يبيع|send,يرسل|September,سبتمبر|seven,سبعة|seventeen,سبعة عشر|seventy,سبعون|she,هي|shirt,قميص|shoe,حذاء|shop,محل|short,قصير|show,يوضح|sing,يغني|sister,أخت|sit,يجلس|six,ستة|sixteen,ستة عشر|sixty,ستون|sleep,ينام|slow,بطيء|small,صغير|snow,ثلج|so,لذلك|some,بعض|son,ابن|song,أغنية|soon,قريباً|sorry,آسف|south,جنوب|speak,يتحدث|sport,رياضة|spring,الربيع|stand,يقف|start,يبدأ|station,محطة|stop,يتوقف|store,متجر|story,قصة|street,شارع|strong,قوي|student,طالب|study,يدرس|summer,الصيف|sun,شمس|Sunday,الأحد|swim,يسبح|table,طاولة|take,يأخذ|talk,يتحدث|tall,طويل|tea,شاي|teach,يدرّس|teacher,معلم|team,فريق|telephone,هاتف|television,تلفاز|tell,يخبر|ten,عشرة|test,اختبار|than,من|thank,يشكر|that,ذلك|the,الـ|their,لهم|them,هم|then,ثم|there,هناك|they,هم|thing,شيء|think,يفكر|thirsty,عطشان|thirteen,ثلاثة عشر|thirty,ثلاثون|this,هذا|three,ثلاثة|Thursday,الخميس|time,وقت|tired,متعب|to,إلى|today,اليوم|together,معاً|tomorrow,غداً|too,أيضاً|town,مدينة|train,قطار|tree,شجرة|trip,رحلة|true,صحيح|try,يحاول|Tuesday,الثلاثاء|twelve,اثنا عشر|twenty,عشرون|two,اثنان|under,تحت|understand,يفهم|university,جامعة|up,للأعلى|us,نحن|use,يستخدم|very,جداً|video,فيديو|visit,يزور|wait,ينتظر|wake,يستيقظ|walk,يمشي|want,يريد|warm,دافئ|wash,يغسل|watch,يشاهد|water,ماء|way,طريق|we,نحن|wear,يرتدي|weather,طقس|Wednesday,الأربعاء|week,أسبوع|weekend,عطلة|well,جيداً|west,غرب|what,ماذا|when,متى|where,أين|white,أبيض|who,من|why,لماذا|wife,زوجة|window,نافذة|winter,الشتاء|with,مع|woman,امرأة|work,يعمل|world,عالم|write,يكتب|year,سنة|yellow,أصفر|yes,نعم|yesterday,أمس|you,أنت|young,شاب|zero,صفر";
+
+const A1_WORDS = DEFAULT_DATA.split("|").map(w => {
+  const [e, a] = w.split(",");
+  return { english: e, arabic: a };
+});
+
+let words = {};
+let errors = [];
+let stats = { correct: 0, wrong: 0 };
+let test = [];
+let idx = 0;
+let lvl = 'A1';
+let testLvl = '';
+let dir = 'ar-en';
+let selDir = 'random';
+let wLvl = 'A1';
+let selectedLetter = '';
+
+function init() {
+  const saved = localStorage.getItem('easyApp');
+  if (!saved) {
+    words.A1 = [...A1_WORDS];
+    save();
+  } else {
+    const data = JSON.parse(saved);
+    words = data.w || {};
+    errors = data.e || [];
+    stats = data.s || { correct: 0, wrong: 0 };
+  }
+  
+  const darkMode = localStorage.getItem('darkMode');
+  if (darkMode === 'true') {
+    document.body.classList.add('dark-mode');
+    document.querySelector('.dark-mode-btn').textContent = '☀️';
+  }
+  
+  createAddLetters();
+}
+
+function save() {
+  localStorage.setItem('easyApp', JSON.stringify({ w: words, e: errors, s: stats }));
+}
+
+function toggleDark() {
+  document.body.classList.toggle('dark-mode');
+  const isDark = document.body.classList.contains('dark-mode');
+  document.querySelector('.dark-mode-btn').textContent = isDark ? '☀️' : '🌙';
+  localStorage.setItem('darkMode', isDark);
+}
+
+function createAddLetters() {
+  const container = document.getElementById('add-letters');
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  container.innerHTML = '';
+  
+  letters.forEach(letter => {
+    const btn = document.createElement('button');
+    btn.className = 'letter-select-btn';
+    btn.textContent = letter;
+    btn.onclick = () => selectAddLetter(letter);
+    container.appendChild(btn);
+  });
+  
+  const anyBtn = document.createElement('button');
+  anyBtn.className = 'letter-select-btn active';
+  anyBtn.textContent = 'الكل';
+  anyBtn.onclick = () => selectAddLetter('');
+  anyBtn.style.gridColumn = 'span 2';
+  container.appendChild(anyBtn);
+}
+
+function selectAddLetter(letter) {
+  selectedLetter = letter;
+  document.querySelectorAll('#add-letters .letter-select-btn').forEach(b => {
+    b.classList.remove('active');
+  });
+  event.target.classList.add('active');
+  
+  const engInput = document.getElementById('eng');
+  if (letter && letter !== 'الكل') {
+    engInput.placeholder = 'كلمة تبدأ بحرف ' + letter;
+  } else {
+    engInput.placeholder = 'الكلمة بالإنجليزي';
+  }
+}
+
+function selectLevel(l) {
+  lvl = l;
+  document.querySelectorAll('#page-add .level-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function selectWordsLevel(l) {
+  wLvl = l;
+  document.querySelectorAll('#page-words .level-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  displayWords();
+}
+
+function selectTestLevel(l) {
+  testLvl = l;
+  document.querySelectorAll('#page-test .level-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('test-opt').classList.remove('hidden');
+  document.getElementById('letters').classList.add('hidden');
+  createLetters();
+}
+
+function selectDir(d) {
+  selDir = d;
+  document.getElementById('letters').classList.remove('hidden');
+}
+
+function createLetters() {
+  const grid = document.getElementById('grid');
+  
+  if (!words[testLvl] || words[testLvl].length === 0) {
+    grid.innerHTML = '<p style="color: #f44336; text-align: center; padding: 20px;">❌ لا توجد كلمات في هذا المستوى</p>';
+    return;
+  }
+  
+  const letterCounts = {};
+  words[testLvl].forEach(w => {
+    const first = w.english[0].toUpperCase();
+    if (!letterCounts[first]) letterCounts[first] = 0;
+    letterCounts[first]++;
+  });
+  
+  grid.innerHTML = '';
+  Object.keys(letterCounts).sort().forEach(letter => {
+    const btn = document.createElement('button');
+    btn.className = 'letter-btn';
+    btn.innerHTML = letter + '<br><small style="font-size: 0.7em;">(' + letterCounts[letter] + ')</small>';
+    btn.onclick = () => startTest('letter', letter);
+    grid.appendChild(btn);
+  });
+}
+
+function addWord() {
+  const eng = document.getElementById('eng').value.trim();
+  const ara = document.getElementById('ara').value.trim();
+  const msg = document.getElementById('msg');
+  
+  if (!eng || !ara) {
+    msg.textContent = '⚠️ يرجى ملء جميع الحقول';
+    msg.style.color = '#f44336';
+    setTimeout(() => msg.textContent = '', 3000);
+    return;
+  }
+  
+  if (selectedLetter && selectedLetter !== 'الكل') {
+    const firstLetter = eng[0].toUpperCase();
+    if (firstLetter !== selectedLetter) {
+      msg.textContent = '⚠️ الكلمة يجب أن تبدأ بحرف ' + selectedLetter;
+      msg.style.color = '#f44336';
+      setTimeout(() => msg.textContent = '', 3000);
+      return;
+    }
+  }
+  
+  if (!words[lvl]) words[lvl] = [];
+  
+  const duplicate = words[lvl].find(w => w.english.toLowerCase() === eng.toLowerCase());
+  if (duplicate) {
+    msg.textContent = '⚠️ هذه الكلمة موجودة بالفعل';
+    msg.style.color = '#FF9800';
+    setTimeout(() => msg.textContent = '', 3000);
+    return;
+  }
+  
+  words[lvl].push({ english: eng, arabic: ara });
+  save();
+  
+  document.getElementById('eng').value = '';
+  document.getElementById('ara').value = '';
+  
+  msg.textContent = '✅ تمت إضافة الكلمة بنجاح!';
+  msg.style.color = '#4CAF50';
+  setTimeout(() => msg.textContent = '', 3000);
+  
+  updateStats();
+}
+
+function displayWords() {
+  const list = document.getElementById('words-list');
+  const searchTerm = document.getElementById('search').value.toLowerCase();
+  
+  if (!words[wLvl] || words[wLvl].length === 0) {
+    list.innerHTML = '<p style="text-align: center; color: var(--accent); padding: 30px; font-size: 1.2em;">📚 لا توجد كلمات في هذا المستوى</p>';
+    return;
+  }
+  
+  let filtered = words[wLvl].filter(w =>
+    w.english.toLowerCase().includes(searchTerm) ||
+    w.arabic.includes(searchTerm)
+  );
+  
+  if (filtered.length === 0) {
+    list.innerHTML = '<p style="text-align: center; color: #f44336; padding: 30px; font-size: 1.2em;">🔍 لا توجد نتائج للبحث</p>';
+    return;
+  }
+  
+  list.innerHTML = filtered.map((w, i) => {
+    const originalIndex = words[wLvl].indexOf(w);
+    return '<div class="word-item"><div><strong style="font-size: 1.1em; color: var(--accent);">' + w.english + '</strong><span style="margin: 0 10px;">←</span><strong style="font-size: 1.1em;">' + w.arabic + '</strong></div><button style="background: linear-gradient(135deg, #f44336, #d32f2f); padding: 10px 15px; border-radius: 8px; color: white; border: none; cursor: pointer; transition: all 0.3s; margin: 0;" onclick="delWord(\'' + wLvl + '\', ' + originalIndex + ')" onmouseover="this.style.transform=\'scale(1.1)\'" onmouseout="this.style.transform=\'scale(1)\'">🗑️</button></div>';
+  }).join('');
+}
+
+function filterWords() {
+  displayWords();
+}
+
+function delWord(level, index) {
+  if (confirm('⚠️ هل أنت متأكد من حذف هذه الكلمة؟')) {
+    words[level].splice(index, 1);
+    save();
+    displayWords();
+    updateStats();
+  }
+}
+
+function normalize(text) {
+  return text.trim().toLowerCase().replace(/\s+/g, ' ').replace(/[^\w\s\u0600-\u06FF]/g, '');
+}
+
+function startTest(type, param) {
+  if (!words[testLvl] || words[testLvl].length === 0) {
+    alert('❌ لا توجد كلمات في هذا المستوى للاختبار');
+    return;
+  }
+  
+  if (selDir === 'random') {
+    dir = Math.random() > 0.5 ? 'ar-en' : 'en-ar';
+  } else {
+    dir = selDir;
+  }
+  
+  let allWords = [...words[testLvl]];
+  
+  if (type === 'letter') {
+    test = allWords.filter(w => w.english[0].toUpperCase() === param);
+    if (test.length === 0) {
+      alert('❌ لا توجد كلمات تبدأ بهذا الحرف');
+      return;
+    }
+  } else {
+    test = allWords;
+  }
+  
+  test = test.sort(() => Math.random() - 0.5);
+  idx = 0;
+  
+  document.getElementById('test-card').classList.remove('hidden');
+  
+  const dirText = dir === 'ar-en' ? '🇸🇦 عربي → إنجليزي 🇬🇧' : '🇬🇧 إنجليزي → عربي 🇸🇦';
+  const testType = type === 'letter' ? 'حرف ' + param : '🏆 الاختبار النهائي';
+  document.getElementById('test-title').textContent = testType + ' - ' + dirText;
+  
+  showQuestion();
+}
+
+function showQuestion() {
+  if (idx >= test.length) {
+    const percentage = Math.round((stats.correct / (stats.correct + stats.wrong)) * 100) || 0;
+    document.getElementById('q').innerHTML = '<h2 style="color: #4CAF50; margin-bottom: 20px;">🎉 انتهى الاختبار!</h2><p style="font-size: 1.3em; margin: 10px 0;">عدد الأسئلة: <strong>' + test.length + '</strong></p><p style="font-size: 1.3em; margin: 10px 0; color: #4CAF50;">الإجابات الصحيحة: <strong>' + stats.correct + '</strong> ✅</p><p style="font-size: 1.3em; margin: 10px 0; color: #f44336;">الإجابات الخاطئة: <strong>' + stats.wrong + '</strong> ❌</p><p style="font-size: 1.5em; margin: 20px 0; color: var(--accent);">النسبة: <strong>' + percentage + '%</strong></p>';
+    document.getElementById('ans').classList.add('hidden');
+    document.getElementById('check').classList.add('hidden');
+    document.getElementById('next-btn').classList.add('hidden');
+    document.querySelector('button[onclick="skip()"]').classList.add('hidden');
+    return;
+  }
+  
+  const word = test[idx];
+  
+  if (dir === 'ar-en') {
+    document.getElementById('q').innerHTML = '<strong style="color: var(--accent);">ترجم إلى الإنجليزية:</strong><br><span style="font-size: 1.8em; margin-top: 15px; display: block;">' + word.arabic + '</span>';
+  } else {
+    document.getElementById('q').innerHTML = '<strong style="color: var(--accent);">ترجم إلى العربية:</strong><br><span style="font-size: 1.8em; margin-top: 15px; display: block;">' + word.english + '</span>';
+  }
+  
+  const ansInput = document.getElementById('ans');
+  ansInput.value = '';
+  ansInput.classList.remove('hidden');
+  ansInput.disabled = false;
+  ansInput.focus();
+  
+  document.getElementById('result').innerHTML = '';
+  document.getElementById('next-btn').classList.add('hidden');
+  document.getElementById('check').classList.remove('hidden');
+  document.getElementById('check').disabled = false;
+  document.querySelector('button[onclick="skip()"]').classList.remove('hidden');
+  
+  const progress = ((idx + 1) / test.length) * 100;
+  document.getElementById('progress').style.width = progress + '%';
+  document.getElementById('counter').textContent = 'السؤال ' + (idx + 1) + ' من ' + test.length;
+}
+
+function checkAns() {
+  const word = test[idx];
+  const userAnswer = document.getElementById('ans').value;
+  const normalizedUser = normalize(userAnswer);
+  const normalizedCorrect = dir === 'ar-en' ? normalize(word.english) : normalize(word.arabic);
+  const correctAnswer = dir === 'ar-en' ? word.english : word.arabic;
+  const resultDiv = document.getElementById('result');
+  
+  if (normalizedUser === normalizedCorrect) {
+    resultDiv.innerHTML = '<div class="result correct">✅ إجابة صحيحة! أحسنت!</div>';
+    stats.correct++;
+  } else {
+    resultDiv.innerHTML = '<div class="result incorrect">❌ إجابة خاطئة!<br>الإجابة الصحيحة: <strong>' + correctAnswer + '</strong></div>';
+    stats.wrong++;
+    
+    const errorExists = errors.find(e => e.english === word.english);
+    if (!errorExists) {
+      errors.push(word);
+    }
+  }
+  
+  save();
+  updateStats();
+  
+  document.getElementById('next-btn').classList.remove('hidden');
+  document.getElementById('check').disabled = true;
+  document.getElementById('ans').disabled = true;
+  document.querySelector('button[onclick="skip()"]').classList.add('hidden');
+}
+
+function skip() {
+  const word = test[idx];
+  const correctAnswer = dir === 'ar-en' ? word.english : word.arabic;
+  const resultDiv = document.getElementById('result');
+  
+  resultDiv.innerHTML = '<div class="result incorrect">⏭️ تم التجاوز!<br>الإجابة الصحيحة: <strong>' + correctAnswer + '</strong></div>';
+  
+  const errorExists = errors.find(e => e.english === word.english);
+  if (!errorExists) {
+    errors.push(word);
+  }
+  
+  save();
+  next();
+}
+
+function next() {
+  idx++;
+  showQuestion();
+}
+
+function testErrors() {
+  if (errors.length === 0) {
+    alert('🎉 رائع! لا توجد أخطاء سابقة');
+    return;
+  }
+  
+  test = [...errors].sort(() => Math.random() - 0.5);
+  idx = 0;
+  
+  if (selDir === 'random') {
+    dir = Math.random() > 0.5 ? 'ar-en' : 'en-ar';
+  } else {
+    dir = selDir;
+  }
+  
+  showPage('test');
+  document.getElementById('test-card').classList.remove('hidden');
+  
+  const dirText = dir === 'ar-en' ? '🇸🇦 عربي → إنجليزي 🇬🇧' : '🇬🇧 إنجليزي → عربي 🇸🇦';
+  document.getElementById('test-title').textContent = '❌ اختبار الأخطاء - ' + dirText;
+  
+  showQuestion();
+}
+
+function updateStats() {
+  let totalWords = 0;
+  for (let level in words) {
+    totalWords += words[level].length;
+  }
+  
+  document.getElementById('total').textContent = totalWords;
+  document.getElementById('correct').textContent = stats.correct;
+  document.getElementById('wrong').textContent = stats.wrong;
+  
+  const errorsList = document.getElementById('errors-list');
+  if (errors.length === 0) {
+    errorsList.innerHTML = '<p style="text-align: center; color: #4CAF50; padding: 30px; font-size: 1.2em;">🎉 رائع! لا توجد أخطاء</p>';
+  } else {
+    errorsList.innerHTML = errors.map((err, i) => {
+      return '<div class="word-item"><div><strong style="font-size: 1.1em; color: #f44336;">' + err.english + '</strong><span style="margin: 0 10px;">←</span><strong style="font-size: 1.1em;">' + err.arabic + '</strong></div><button style="background: linear-gradient(135deg, #f44336, #d32f2f); padding: 10px 15px; border-radius: 8px; color: white; border: none; cursor: pointer; margin: 0;" onclick="delError(' + i + ')">🗑️</button></div>';
+    }).join('');
+  }
+  
+  const levelStats = document.getElementById('level-stats');
+  const levels = ['A1', 'A2', 'B1', 'B2', 'C1'];
+  const colors = {
+    'A1': '#4CAF50',
+    'A2': '#2196F3',
+    'B1': '#FF9800',
+    'B2': '#9C27B0',
+    'C1': '#FFD700'
+  };
+  
+  let statsHTML = '<h3 style="margin-top: 30px; color: var(--text); font-size: 1.4em;">📊 الكلمات حسب المستوى:</h3>';
+  
+  levels.forEach(level => {
+    const count = words[level] ? words[level].length : 0;
+    const icon = level === 'C1' ? '👑' : '📚';
+    statsHTML += '<div style="background: var(--input-bg); padding: 20px; margin: 15px 0; border-radius: 12px; border-right: 6px solid ' + colors[level] + '; display: flex; justify-content: space-between; align-items: center; transition: all 0.3s;" onmouseover="this.style.transform=\'translateX(-5px)\'; this.style.boxShadow=\'0 5px 20px rgba(0,0,0,0.2)\'" onmouseout="this.style.transform=\'translateX(0)\'; this.style.boxShadow=\'none\'"><div style="display: flex; align-items: center; gap: 15px;"><span style="font-size: 2em;">' + icon + '</span><strong style="font-size: 1.3em;">' + level + '</strong></div><span style="background: ' + colors[level] + '; color: white; padding: 8px 20px; border-radius: 25px; font-weight: bold; font-size: 1.2em;">' + count + '</span></div>';
+  });
+  
+  levelStats.innerHTML = statsHTML;
+}
+
+function delError(index) {
+  if (confirm('⚠️ هل تريد حذف هذا الخطأ من القائمة؟')) {
+    errors.splice(index, 1);
+    save();
+    updateStats();
+  }
+}
+
+function showReset() {
+  document.getElementById('modal').classList.add('active');
+  toggleMenu();
+}
+
+function hideModal() {
+  document.getElementById('modal').classList.remove('active');
+}
+
+function confirmReset() {
+  const userWords = {};
+  
+  for (let level in words) {
+    if (level !== 'A1') {
+      userWords[level] = words[level];
+    } else {
+      const defaultEnglish = A1_WORDS.map(w => w.english);
+      userWords.A1 = words.A1.filter(w => !defaultEnglish.includes(w.english));
+    }
+  }
+  
+  words = userWords;
+  
+  if (words.A1 && words.A1.length > 0) {
+    words.A1 = [...A1_WORDS, ...words.A1];
+  } else {
+    words.A1 = [...A1_WORDS];
+  }
+  
+  errors = [];
+  stats = { correct: 0, wrong: 0 };
+  
+  save();
+  updateStats();
+  
+  document.getElementById('eng').value = '';
+  document.getElementById('ara').value = '';
+  document.getElementById('test-card').classList.add('hidden');
+  
+  hideModal();
+  showPage('add');
+  
+  const msg = document.getElementById('msg');
+  msg.textContent = '✅ تم إعادة ضبط التطبيق بنجاح';
+  msg.style.color = '#4CAF50';
+  setTimeout(() => msg.textContent = '', 3000);
+}
+
+function toggleMenu() {
+  document.getElementById('sidebar').classList.toggle('active');
+  document.getElementById('overlay').classList.toggle('active');
+}
+
+function showPage(pageName) {
+  document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
+  document.getElementById('page-' + pageName).classList.remove('hidden');
+  toggleMenu();
+  updateStats();
+  
+  if (pageName === 'words') {
+    displayWords();
+  }
+}
+
+document.getElementById('ans').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    const nextBtn = document.getElementById('next-btn');
+    if (!nextBtn.classList.contains('hidden')) {
+      next();
+    } else {
+      checkAns();
+    }
+  }
+});
+
+init();
+updateStats();
 </script>
 </body>
-</html>
+  </html>
