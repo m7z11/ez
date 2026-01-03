@@ -1,1191 +1,150 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Easy - تعلم الإنجليزية بسهولة</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --bg-gradient-start: #667eea;
-            --bg-gradient-end: #764ba2;
-            --card-bg: white;
-            --text-color: #333;
-            --border-color: #ddd;
-            --shadow-color: rgba(0,0,0,0.1);
-            --input-bg: white;
-            --accent-color: #667eea;
-            --accent-hover: #764ba2;
-        }
-        body.dark-mode {
-            --bg-gradient-start: #1a1a2e;
-            --bg-gradient-end: #16213e;
-            --card-bg: #0f3460;
-            --text-color: #eaeaea;
-            --border-color: #533483;
-            --shadow-color: rgba(0,0,0,0.5);
-            --input-bg: #1a1a2e;
-            --accent-color: #a78bfa;
-            --accent-hover: #7e22ce;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
-            min-height: 100vh;
-            padding: 20px;
-            padding-top: 80px;
-            direction: rtl;
-            transition: all 0.3s ease;
-        }
-        .container { max-width: 1200px; margin: 0 auto; }
-        header { 
-            text-align: center; 
-            color: white; 
-            margin-bottom: 30px; 
-            animation: fadeInDown 0.6s ease;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
-            padding: 15px 20px;
-            z-index: 900;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        h1 { 
-            font-size: 2em; 
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            margin: 0;
-        }
-        header p {
-            font-size: 0.9em;
-            margin-top: 5px;
-            opacity: 0.95;
-        }
-        .top-buttons { 
-            position: fixed; 
-            top: 15px; 
-            left: 20px; 
-            display: flex; 
-            gap: 10px; 
-            z-index: 1000; 
-        }
-        .menu-btn, .dark-mode-btn { 
-            background: rgba(255,255,255,0.95); 
-            border: none; 
-            padding: 12px 16px; 
-            border-radius: 10px; 
-            cursor: pointer; 
-            font-size: 1.3em; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.25); 
-            transition: all 0.3s;
-            backdrop-filter: blur(10px);
-        }
-        body.dark-mode .menu-btn, body.dark-mode .dark-mode-btn { 
-            background: rgba(15, 52, 96, 0.95); 
-            color: var(--text-color); 
-        }
-        .menu-btn:hover, .dark-mode-btn:hover { 
-            transform: scale(1.1) rotate(5deg); 
-            box-shadow: 0 6px 16px rgba(0,0,0,0.35);
-        }
-        .sidebar-overlay { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(0,0,0,0.6); 
-            z-index: 998; 
-            opacity: 0; 
-            visibility: hidden; 
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-        .sidebar-overlay.active { opacity: 1; visibility: visible; }
-        .sidebar { 
-            position: fixed; 
-            top: 0; 
-            right: -320px; 
-            width: 300px; 
-            height: 100%; 
-            background: var(--card-bg); 
-            box-shadow: -4px 0 20px rgba(0,0,0,0.3); 
-            transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
-            z-index: 999; 
-            overflow-y: auto; 
-            padding: 20px;
-        }
-        .sidebar.active { right: 0; }
-        .sidebar h3 { 
-            margin-bottom: 25px; 
-            color: var(--accent-color);
-            font-size: 1.4em;
-            padding-bottom: 15px;
-            border-bottom: 3px solid var(--accent-color);
-        }
-        .sidebar button { 
-            width: 100%; 
-            padding: 14px; 
-            margin-bottom: 12px; 
-            border: none; 
-            border-radius: 10px; 
-            background: var(--accent-color); 
-            color: white; 
-            cursor: pointer; 
-            font-size: 1.05em; 
-            transition: all 0.3s;
-            font-weight: 600;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-        }
-        .sidebar button:hover { 
-            background: var(--accent-hover); 
-            transform: translateX(-5px) scale(1.02);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        .card { 
-            background: var(--card-bg); 
-            color: var(--text-color); 
-            border-radius: 20px; 
-            padding: 30px; 
-            margin-bottom: 25px; 
-            box-shadow: 0 10px 30px var(--shadow-color); 
-            transition: all 0.3s; 
-            animation: fadeInUp 0.5s ease;
-        }
-        .card:hover { 
-            transform: translateY(-8px); 
-            box-shadow: 0 15px 40px var(--shadow-color);
-        }
-        .card h2 {
-            color: var(--accent-color);
-            margin-bottom: 20px;
-            font-size: 1.8em;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--border-color);
-        }
-        .card h3 {
-            color: var(--accent-color);
-            margin: 20px 0;
-        }
-        .level-selector { 
-            display: flex; 
-            gap: 12px; 
-            flex-wrap: wrap; 
-            margin-bottom: 25px; 
-        }
-        .level-btn { 
-            padding: 12px 24px; 
-            border: 3px solid var(--border-color); 
-            border-radius: 12px; 
-            background: var(--card-bg); 
-            color: var(--text-color); 
-            cursor: pointer; 
-            font-size: 1.05em; 
-            transition: all 0.3s;
-            font-weight: 600;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-        }
-        .level-btn:hover { 
-            transform: scale(1.08); 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        .level-btn.active { 
-            transform: scale(1.08); 
-            box-shadow: 0 6px 18px rgba(0,0,0,0.3); 
-        }
-        .level-A1 { border-color: #4CAF50; }
-        .level-A1.active { background: linear-gradient(135deg, #4CAF50, #45a049); color: white; border-color: #4CAF50; }
-        .level-A2 { border-color: #2196F3; }
-        .level-A2.active { background: linear-gradient(135deg, #2196F3, #1976D2); color: white; border-color: #2196F3; }
-        .level-B1 { border-color: #FF9800; }
-        .level-B1.active { background: linear-gradient(135deg, #FF9800, #F57C00); color: white; border-color: #FF9800; }
-        .level-B2 { border-color: #9C27B0; }
-        .level-B2.active { background: linear-gradient(135deg, #9C27B0, #7B1FA2); color: white; border-color: #9C27B0; }
-        .level-C1 { border-color: #FFD700; }
-        .level-C1.active { background: linear-gradient(135deg, #FFD700, #FFA500); color: white; border-color: #FFD700; }
-        
-        .test-selector {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-            gap: 10px;
-            margin-bottom: 20px;
-            max-height: 400px;
-            overflow-y: auto;
-            padding: 10px;
-            background: var(--input-bg);
-            border-radius: 10px;
-        }
-        .test-letter-btn {
-            padding: 12px 8px;
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
-            background: var(--card-bg);
-            color: var(--text-color);
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        .test-letter-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        .test-letter-btn.active {
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
-            color: white;
-            border-color: var(--accent-color);
-        }
-        
-        select {
-            padding: 14px;
-            border-radius: 10px;
-            border: 2px solid var(--border-color);
-            font-size: 1.05em;
-            margin: 5px;
-            background: var(--input-bg);
-            color: var(--text-color);
-            width: calc(100% - 10px);
-            cursor: pointer;
-        }
-        
-        input, button { 
-            padding: 14px; 
-            border-radius: 10px; 
-            border: 2px solid var(--border-color); 
-            font-size: 1.05em; 
-            margin: 5px; 
-            background: var(--input-bg); 
-            color: var(--text-color); 
-            transition: all 0.3s; 
-        }
-        input { 
-            width: calc(50% - 10px); 
-        }
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 15px rgba(102, 126, 234, 0.4);
-            transform: scale(1.02);
-        }
-        input.error { 
-            border-color: #f44336; 
-            animation: shake 0.5s; 
-        }
-        button { 
-            background: var(--accent-color); 
-            color: white; 
-            border: none; 
-            cursor: pointer;
-            font-weight: 600;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-        button:hover:not(:disabled) { 
-            background: var(--accent-hover); 
-            transform: translateY(-3px); 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
-        }
-        button:disabled { 
-            opacity: 0.5; 
-            cursor: not-allowed; 
-        }
-        .stats { 
-            display: flex; 
-            justify-content: space-around; 
-            gap: 20px; 
-            flex-wrap: wrap; 
-        }
-        .stat-box { 
-            flex: 1; 
-            min-width: 160px; 
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover)); 
-            color: white; 
-            padding: 25px; 
-            border-radius: 15px; 
-            text-align: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-            transition: transform 0.3s;
-        }
-        .stat-box:hover {
-            transform: translateY(-5px) scale(1.03);
-        }
-        .stat-box h3 { 
-            font-size: 2.5em; 
-            margin-bottom: 8px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-        .stat-box p {
-            font-size: 1.1em;
-            opacity: 0.95;
-        }
-        .test-area { text-align: center; }
-        .test-question { 
-            font-size: 1.6em; 
-            margin: 25px 0; 
-            color: var(--text-color);
-            padding: 20px;
-            background: var(--input-bg);
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .test-input { 
-            width: 85%; 
-            padding: 18px; 
-            font-size: 1.3em; 
-            text-align: center; 
-            border: 3px solid var(--accent-color);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .test-input:focus { 
-            border-color: var(--accent-hover); 
-            box-shadow: 0 0 20px rgba(102, 126, 234, 0.6); 
-            transform: scale(1.03); 
-        }
-        .test-input:disabled { 
-            opacity: 0.6; 
-            cursor: not-allowed; 
-        }
-        .result { 
-            padding: 18px; 
-            margin: 20px 0; 
-            border-radius: 12px; 
-            font-size: 1.2em; 
-            animation: bounceIn 0.5s ease; 
-            box-shadow: 0 6px 15px rgba(0,0,0,0.25); 
-        }
-        .correct { 
-            background: linear-gradient(135deg, #4CAF50, #45a049); 
-            color: white; 
-            border: 3px solid #2e7d32; 
-        }
-        .incorrect { 
-            background: linear-gradient(135deg, #f44336, #e53935); 
-            color: white; 
-            border: 3px solid #c62828; 
-        }
-        .incorrect strong { 
-            background: rgba(255,255,255,0.25); 
-            padding: 8px 15px; 
-            border-radius: 8px; 
-            display: inline-block; 
-            margin-top: 12px;
-            font-size: 1.1em;
-        }
-        .test-type-selector { 
-            display: flex; 
-            gap: 12px; 
-            justify-content: center; 
-            margin: 25px 0; 
-            flex-wrap: wrap; 
-        }
-        .test-btn { 
-            padding: 16px 28px; 
-            background: var(--accent-color); 
-            color: white; 
-            border: none; 
-            border-radius: 12px; 
-            cursor: pointer; 
-            font-size: 1.05em; 
-            transition: all 0.3s;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        .test-btn:hover { 
-            background: var(--accent-hover); 
-            transform: scale(1.08); 
-            box-shadow: 0 6px 18px rgba(0,0,0,0.3);
-        }
-        .hidden { display: none; }
-        .progress-bar { 
-            width: 100%; 
-            height: 25px; 
-            background: var(--border-color); 
-            border-radius: 15px; 
-            overflow: hidden; 
-            margin: 25px 0;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
-        }
-        .progress-fill { 
-            height: 100%; 
-            background: linear-gradient(90deg, #4CAF50, #2196F3, #9C27B0); 
-            transition: width 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            box-shadow: 0 0 15px rgba(76, 175, 80, 0.6);
-        }
-        .reset-btn { 
-            background: linear-gradient(135deg, #f44336, #d32f2f) !important; 
-        }
-        .reset-btn:hover { 
-            background: linear-gradient(135deg, #d32f2f, #b71c1c) !important; 
-        }
-        .modal { 
-            display: none; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(0,0,0,0.75); 
-            z-index: 2000; 
-            justify-content: center; 
-            align-items: center;
-            backdrop-filter: blur(8px);
-        }
-        .modal.active { display: flex; animation: fadeIn 0.3s ease; }
-        .modal-content { 
-            background: var(--card-bg); 
-            color: var(--text-color); 
-            padding: 40px; 
-            border-radius: 20px; 
-            max-width: 500px; 
-            text-align: center; 
-            box-shadow: 0 15px 50px rgba(0,0,0,0.4);
-            animation: scaleIn 0.3s ease;
-        }
-        .modal-content h2 { 
-            margin-bottom: 20px; 
-            color: #f44336;
-            font-size: 2em;
-        }
-        .modal-content p { 
-            margin-bottom: 25px; 
-            font-size: 1.15em;
-            line-height: 1.6;
-        }
-        .modal-buttons { 
-            display: flex; 
-            gap: 15px; 
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .modal-buttons button { 
-            padding: 14px 35px; 
-            font-size: 1.15em;
-            border-radius: 10px;
-            font-weight: 600;
-        }
-        .word-item { 
-            background: var(--input-bg); 
-            padding: 18px; 
-            margin: 12px 0; 
-            border-radius: 12px; 
-            border-right: 5px solid var(--accent-color); 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            transition: all 0.3s;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-        .word-item:hover { 
-            transform: translateX(-8px); 
-            box-shadow: 0 6px 20px var(--shadow-color); 
-        }
-        .word-content { flex: 1; }
-        .word-content strong { 
-            color: var(--accent-color); 
-            margin-left: 10px;
-            font-size: 1.1em;
-        }
-        .word-content span { 
-            color: var(--accent-hover);
-            margin: 0 8px;
-        }
-        .delete-btn { 
-            background: linear-gradient(135deg, #f44336, #d32f2f); 
-            color: white; 
-            border: none; 
-            padding: 10px 18px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-size: 0.95em; 
-            transition: all 0.3s; 
-            margin: 0;
-            font-weight: 600;
-        }
-        .delete-btn:hover { 
-            background: linear-gradient(135deg, #d32f2f, #b71c1c); 
-            transform: scale(1.08); 
-        }
-        .search-box { 
-            width: 100%; 
-            padding: 14px; 
-            margin-bottom: 20px; 
-            border-radius: 12px; 
-            border: 2px solid var(--border-color); 
-            background: var(--input-bg); 
-            color: var(--text-color); 
-            font-size: 1.05em;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-        .search-box:focus { 
-            outline: none; 
-            border-color: var(--accent-color); 
-            box-shadow: 0 0 15px rgba(102, 126, 234, 0.4); 
-        }
-        .words-header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 20px;
-            padding: 15px;
-            background: var(--input-bg);
-            border-radius: 10px;
-        }
-        .words-count { 
-            color: var(--accent-color); 
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes scaleIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes bounceIn { 0% { opacity: 0; transform: scale(0.5); } 50% { transform: scale(1.08); } 100% { opacity: 1; transform: scale(1); } }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
-        @media (max-width: 768px) { 
-            h1 { font-size: 1.5em; } 
-            header p { font-size: 0.85em; }
-            input { width: 100%; } 
-            .stats { flex-direction: column; } 
-            .top-buttons { top: 12px; left: 12px; }
-            .sidebar { width: 280px; right: -300px; }
-            body { padding-top: 100px; }
-            .test-selector {
-                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Easy - تعلم الإنجليزية</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}:root{--bg-start:#667eea;--bg-end:#764ba2;--card-bg:white;--text:#333;--border:#ddd;--shadow:rgba(0,0,0,0.1);--input-bg:white}body.dark-mode{--bg-start:#1a1a2e;--bg-end:#16213e;--card-bg:#0f3460;--text:#eaeaea;--border:#533483;--shadow:rgba(0,0,0,0.5);--input-bg:#1a1a2e}body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,var(--bg-start),var(--bg-end));min-height:100vh;padding:20px;direction:rtl}header{text-align:center;color:white;margin-bottom:30px;position:relative;z-index:1001}h1{font-size:3em;text-shadow:2px 2px 4px rgba(0,0,0,0.3);font-weight:bold;animation:glow 2s ease-in-out infinite alternate}@keyframes glow{from{text-shadow:0 0 10px #fff,0 0 20px #fff,0 0 30px #667eea,0 0 40px #667eea}to{text-shadow:0 0 20px #fff,0 0 30px #764ba2,0 0 40px #764ba2,0 0 50px #764ba2}}.top-buttons{position:fixed;top:20px;right:20px;display:flex;gap:10px;z-index:1002}.menu-btn,.dark-mode-btn{background:white;border:none;padding:10px 15px;border-radius:8px;cursor:pointer;font-size:1.2em;box-shadow:0 4px 6px rgba(0,0,0,0.2)}body.dark-mode .menu-btn,body.dark-mode .dark-mode-btn{background:var(--card-bg);color:var(--text)}.sidebar-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:998;opacity:0;visibility:hidden;transition:all 0.3s}.sidebar-overlay.active{opacity:1;visibility:visible}.sidebar{position:fixed;top:0;right:-300px;width:300px;height:100%;background:white;box-shadow:-2px 0 10px rgba(0,0,0,0.3);transition:right 0.3s;z-index:999;overflow-y:auto;padding:20px}body.dark-mode .sidebar{background:var(--card-bg);color:var(--text)}.sidebar.active{right:0}.sidebar h3{margin-bottom:20px;color:#667eea}.sidebar button{width:100%;padding:12px;margin-bottom:10px;border:none;border-radius:8px;background:#667eea;color:white;cursor:pointer;transition:all 0.3s}.card{background:var(--card-bg);color:var(--text);border-radius:15px;padding:25px;margin-bottom:20px;box-shadow:0 8px 16px var(--shadow);max-width:1200px;margin:20px auto;animation:slideIn 0.5s ease-out;transition:all 0.3s}@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}.card:hover{transform:translateY(-10px);box-shadow:0 15px 30px var(--shadow)}.level-selector{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}.level-btn{padding:10px 20px;border:2px solid var(--border);border-radius:8px;background:var(--card-bg);color:var(--text);cursor:pointer;transition:all 0.3s}.level-A1{border-color:#4CAF50}.level-A1.active,.level-A1:hover{background:#4CAF50;color:white;transform:scale(1.1);box-shadow:0 0 20px rgba(76,175,80,0.5)}.level-A2{border-color:#2196F3}.level-A2.active,.level-A2:hover{background:#2196F3;color:white;transform:scale(1.1);box-shadow:0 0 20px rgba(33,150,243,0.5)}.level-B1{border-color:#FF9800}.level-B1.active,.level-B1:hover{background:#FF9800;color:white;transform:scale(1.1);box-shadow:0 0 20px rgba(255,152,0,0.5)}.level-B2{border-color:#9C27B0}.level-B2.active,.level-B2:hover{background:#9C27B0;color:white;transform:scale(1.1);box-shadow:0 0 20px rgba(156,39,176,0.5)}.level-C1{border-color:#FFD700;position:relative;overflow:hidden}.level-C1::before{content:'👑';position:absolute;top:5px;right:5px;font-size:1.2em;animation:bounce 1s infinite}.level-C1.active,.level-C1:hover{background:linear-gradient(135deg,#FFD700,#FFA500);color:white;transform:scale(1.1);box-shadow:0 0 30px rgba(255,215,0,0.8)}@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}input,button{padding:12px;border-radius:8px;border:2px solid var(--border);font-size:1em;margin:5px;background:var(--input-bg);color:var(--text)}input{width:calc(50% - 10px)}button{background:#667eea;color:white;border:none;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden}button::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;border-radius:50%;background:rgba(255,255,255,0.3);transform:translate(-50%,-50%);transition:width 0.6s,height 0.6s}button:hover::before{width:300px;height:300px}button:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(0,0,0,0.3)}.stat-box{background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:20px;border-radius:10px;text-align:center;margin:10px}.test-question{font-size:1.5em;margin:20px 0;text-align:center}.test-input{width:80%;padding:15px;font-size:1.2em;text-align:center;border:3px solid #667eea}.result{padding:15px;margin:15px 0;border-radius:8px;text-align:center;animation:popIn 0.5s cubic-bezier(0.68,-0.55,0.265,1.55)}@keyframes popIn{0%{opacity:0;transform:scale(0.3) rotate(-10deg)}50%{transform:scale(1.1) rotate(5deg)}100%{opacity:1;transform:scale(1) rotate(0)}}.correct{background:#4CAF50;color:white;box-shadow:0 0 20px rgba(76,175,80,0.5)}.incorrect{background:#f44336;color:white;box-shadow:0 0 20px rgba(244,67,54,0.5)}.letter-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(60px,1fr));gap:10px;margin:20px 0}.letter-btn{padding:15px;background:#667eea;color:white;border:none;border-radius:8px;cursor:pointer;font-size:1.2em;font-weight:bold;transition:all 0.3s;position:relative;overflow:hidden}.letter-btn::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent);transition:left 0.5s}.letter-btn:hover::after{left:100%}.letter-btn:hover{background:#764ba2;transform:scale(1.2) rotate(5deg);box-shadow:0 10px 20px rgba(0,0,0,0.3)}.hidden{display:none}.progress-bar{width:100%;height:20px;background:var(--border);border-radius:10px;overflow:hidden;margin:20px 0}.progress-fill{height:100%;background:linear-gradient(90deg,#4CAF50,#2196F3,#9C27B0,#FFD700);transition:width 0.3s;animation:shimmer 2s infinite}@keyframes shimmer{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:2000;justify-content:center;align-items:center}.modal.active{display:flex}.modal-content{background:var(--card-bg);color:var(--text);padding:30px;border-radius:15px;text-align:center}.word-item{background:var(--input-bg);padding:15px;margin:10px 0;border-radius:8px;border-right:4px solid #667eea;display:flex;justify-content:space-between;transition:all 0.3s;animation:fadeInLeft 0.5s ease}.word-item:hover{transform:translateX(-10px) scale(1.02);box-shadow:0 5px 15px rgba(102,126,234,0.3);border-right-width:8px}@keyframes fadeInLeft{from{opacity:0;transform:translateX(50px)}to{opacity:1;transform:translateX(0)}}.search-box{width:100%;padding:12px;margin-bottom:15px;border-radius:8px}@media (max-width:768px){input{width:100%}.letter-grid{grid-template-columns:repeat(auto-fill,minmax(50px,1fr))}}
+</style>
 </head>
 <body>
-    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMenu()"></div>
-    <div class="top-buttons">
-        <button class="dark-mode-btn" onclick="toggleDarkMode()">🌙</button>
-        <button class="menu-btn" onclick="toggleMenu()">☰</button>
-    </div>
-    
-    <header>
-        <h1>📚 Easy</h1>
-        <p>تعلم وتدرب على الكلمات الإنجليزية بسهولة</p>
-    </header>
-    
-    <div class="sidebar" id="sidebar">
-        <h3>القائمة الرئيسية</h3>
-        <button onclick="showPage('add')">📝 إضافة كلمات</button>
-        <button onclick="showPage('words')">📖 قائمة الكلمات</button>
-        <button onclick="showPage('test')">📊 الاختبارات</button>
-        <button onclick="showPage('errors')">❌ قائمة الأخطاء</button>
-        <button onclick="showPage('stats')">📈 الإحصائيات</button>
-        <button onclick="showResetModal()" class="reset-btn">🔄 إعادة ضبط شاملة</button>
-    </div>
-    
-    <div class="modal" id="reset-modal">
-        <div class="modal-content">
-            <h2>⚠️ تحذير!</h2>
-            <p>هل أنت متأكد من إعادة ضبط المصنع؟</p>
-            <p><strong>سيتم حذف جميع البيانات بشكل نهائي</strong></p>
-            <div class="modal-buttons">
-                <button onclick="hideResetModal()" style="background: linear-gradient(135deg, #4CAF50, #45a049);">✅ إلغاء</button>
-                <button onclick="confirmReset()" class="reset-btn">❌ تأكيد الحذف</button>
-            </div>
-        </div>
-    </div>
-    
-    <div class="modal" id="delete-word-modal">
-        <div class="modal-content">
-            <h2>⚠️ تأكيد الحذف</h2>
-            <p>هل أنت متأكد من حذف هذه الكلمة؟</p>
-            <p id="word-to-delete" style="font-size: 1.3em; color: #667eea; font-weight: bold; margin: 15px 0;"></p>
-            <div class="modal-buttons">
-                <button onclick="hideDeleteWordModal()" style="background: linear-gradient(135deg, #4CAF50, #45a049);">✅ إلغاء</button>
-                <button onclick="confirmDeleteWord()" class="reset-btn">❌ حذف</button>
-            </div>
-        </div>
-    </div>
-    
-    <div class="modal" id="delete-error-modal">
-        <div class="modal-content">
-            <h2>⚠️ تأكيد الحذف</h2>
-            <p>هل أنت متأكد من حذف هذا الخطأ؟</p>
-            <p id="error-to-delete" style="font-size: 1.3em; color: #667eea; font-weight: bold; margin: 15px 0;"></p>
-            <div class="modal-buttons">
-                <button onclick="hideDeleteErrorModal()" style="background: linear-gradient(135deg, #4CAF50, #45a049);">✅ إلغاء</button>
-                <button onclick="confirmDeleteError()" class="reset-btn">❌ حذف</button>
-            </div>
-        </div>
-    </div>
-    
-    <div class="container">
-        <div id="page-add" class="page">
-            <div class="card">
-                <h2>إضافة كلمة جديدة</h2>
-                <div class="level-selector">
-                    <button class="level-btn level-A1 active" onclick="selectLevel('A1')">A1</button>
-                    <button class="level-btn level-A2" onclick="selectLevel('A2')">A2</button>
-                    <button class="level-btn level-B1" onclick="selectLevel('B1')">B1</button>
-                    <button class="level-btn level-B2" onclick="selectLevel('B2')">B2</button>
-                    <button class="level-btn level-C1" onclick="selectLevel('C1')">👑 C1</button>
-                </div>
-                <h3>اختر الاختبار القصير:</h3>
-                <select id="test-letter-select">
-                    <option value="A">اختبار حرف A</option>
-                    <option value="B">اختبار حرف B</option>
-                    <option value="C">اختبار حرف C</option>
-                    <option value="D">اختبار حرف D</option>
-                    <option value="E">اختبار حرف E</option>
-                    <option value="F">اختبار حرف F</option>
-                    <option value="G">اختبار حرف G</option>
-                    <option value="H">اختبار حرف H</option>
-                    <option value="I">اختبار حرف I</option>
-                    <option value="J">اختبار حرف J</option>
-                    <option value="K">اختبار حرف K</option>
-                    <option value="L">اختبار حرف L</option>
-                    <option value="M">اختبار حرف M</option>
-                    <option value="N">اختبار حرف N</option>
-                    <option value="O">اختبار حرف O</option>
-                    <option value="P">اختبار حرف P</option>
-                    <option value="Q">اختبار حرف Q</option>
-                    <option value="R">اختبار حرف R</option>
-                    <option value="S">اختبار حرف S</option>
-                    <option value="T">اختبار حرف T</option>
-                    <option value="U">اختبار حرف U</option>
-                    <option value="V">اختبار حرف V</option>
-                    <option value="W">اختبار حرف W</option>
-                    <option value="X">اختبار حرف X</option>
-                    <option value="Y">اختبار حرف Y</option>
-                    <option value="Z">اختبار حرف Z</option>
-                </select>
-                <input type="text" id="englishWord" placeholder="الكلمة بالإنجليزي">
-                <input type="text" id="arabicWord" placeholder="المعنى بالعربي">
-                <button onclick="addWord()">➕ إضافة الكلمة</button>
-                <p id="addMessage"></p>
-            </div>
-        </div>
-        
-        <div id="page-words" class="page hidden">
-            <div class="card">
-                <h2>قائمة الكلمات المضافة</h2>
-                <div class="level-selector">
-                    <button class="level-btn level-A1 active" onclick="selectWordsLevel('A1')">A1</button>
-                    <button class="level-btn level-A2" onclick="selectWordsLevel('A2')">A2</button>
-                    <button class="level-btn level-B1" onclick="selectWordsLevel('B1')">B1</button>
-                    <button class="level-btn level-B2" onclick="selectWordsLevel('B2')">B2</button>
-                    <button class="level-btn level-C1" onclick="selectWordsLevel('C1')">👑 C1</button>
-                </div>
-                <input type="text" class="search-box" id="search-box" placeholder="🔍 ابحث عن كلمة..." oninput="filterWords()">
-                <div class="words-header">
-                    <span class="words-count" id="words-count">0 كلمة</span>
-                </div>
-                <div id="words-list"></div>
-            </div>
-        </div>
-        
-        <div id="page-test" class="page hidden">
-            <div class="card">
-                <h2>اختر المستوى والاختبار</h2>
-                <div class="level-selector">
-                    <button class="level-btn level-A1" onclick="selectTestLevel('A1')">A1</button>
-                    <button class="level-btn level-A2" onclick="selectTestLevel('A2')">A2</button>
-                    <button class="level-btn level-B1" onclick="selectTestLevel('B1')">B1</button>
-                    <button class="level-btn level-B2" onclick="selectTestLevel('B2')">B2</button>
-                    <button class="level-btn level-C1" onclick="selectTestLevel('C1')">👑 C1</button>
-                </div>
-                <div id="test-options" class="hidden">
-                    <h3>اختر اتجاه الترجمة:</h3>
-                    <div class="test-type-selector">
-                        <button class="test-btn" onclick="selectDirection('ar-en')" style="background: linear-gradient(135deg, #4CAF50, #45a049);">🇸🇦 عربي → إنجليزي 🇬🇧</button>
-                        <button class="test-btn" onclick="selectDirection('en-ar')" style="background: linear-gradient(135deg, #2196F3, #1976D2);">🇬🇧 إنجليزي → عربي 🇸🇦</button>
-                        <button class="test-btn" onclick="selectDirection('random')" style="background: linear-gradient(135deg, #FF9800, #F57C00);">🔀 عشوائي</button>
-                    </div>
-                    <div id="test-types" class="hidden">
-                        <h3 style="margin-top: 20px;">اختر نوع الاختبار:</h3>
-                        <div class="test-selector" id="test-letters"></div>
-                        <div class="test-type-selector">
-                            <button class="test-btn" onclick="startTest('final', '')" style="background: linear-gradient(135deg, #9C27B0, #7B1FA2); font-size: 1.2em; padding: 20px 40px;">🏆 الاختبار النهائي (جميع الكلمات)</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card test-area hidden" id="test-card">
-                <h2 id="test-title">الاختبار</h2>
-                <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
-                <p id="question-counter"></p>
-                <div class="test-question" id="question"></div>
-                <input type="text" class="test-input" id="answer" placeholder="اكتب الإجابة هنا">
-                <div>
-                    <button id="check-btn" onclick="checkAnswer()">✓ تحقق</button>
-                    <button onclick="skipQuestion()">⏭ تجاوز</button>
-                    <button onclick="nextQuestion()" class="hidden" id="next-btn">➡ التالي</button>
-                </div>
-                <div id="result"></div>
-            </div>
-        </div>
-        
-        <div id="page-errors" class="page hidden">
-            <div class="card">
-                <h2>قائمة الأخطاء</h2>
-                <button onclick="testErrors()">📝 اختبار الأخطاء</button>
-                <div id="errors-list"></div>
-            </div>
-        </div>
-        
-        <div id="page-stats" class="page hidden">
-            <div class="card">
-                <h2>الإحصائيات</h2>
-                <div class="stats">
-                    <div class="stat-box"><h3 id="total-words">0</h3><p>إجمالي الكلمات</p></div>
-                    <div class="stat-box"><h3 id="correct-answers">0</h3><p>إجابات صحيحة</p></div>
-                    <div class="stat-box"><h3 id="wrong-answers">0</h3><p>إجابات خاطئة</p></div>
-                </div>
-                <div id="level-stats"></div>
-            </div>
-        </div>
-    </div>
-    
-    <script>
-        let words = {};
-        let errors = [];
-        let stats = { correct: 0, wrong: 0 };
-        let currentTest = [];
-        let currentIndex = 0;
-        let currentLevel = 'A1';
-        let testLevel = '';
-        let testDirection = 'ar-en';
-        let selectedDirection = 'random';
-        let wordsLevel = 'A1';
-        let selectedTestLetter = '';
-        let deleteWordData = { level: '', index: -1, letter: '' };
-        let deleteErrorIndex = -1;
-        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-        
-        function initializeWords() {
-            if (!words[currentLevel]) {
-                words[currentLevel] = {};
-            }
-            letters.forEach(letter => {
-                if (!words[currentLevel][letter]) {
-                    words[currentLevel][letter] = [];
-                }
-            });
-        }
-        
-        function loadData() {
-            const stored = localStorage.getItem('englishApp');
-            if (stored) { 
-                const data = JSON.parse(stored); 
-                words = data.words || {}; 
-                errors = data.errors || []; 
-                stats = data.stats || { correct: 0, wrong: 0 }; 
-            }
-            ['A1', 'A2', 'B1', 'B2', 'C1'].forEach(level => {
-                if (!words[level]) words[level] = {};
-                letters.forEach(letter => {
-                    if (!words[level][letter]) words[level][letter] = [];
-                });
-            });
-            const darkMode = localStorage.getItem('darkMode');
-            if (darkMode === 'true') { 
-                document.body.classList.add('dark-mode'); 
-                document.querySelector('.dark-mode-btn').textContent = '☀️'; 
-            }
-        }
-        
-        function saveData() { 
-            localStorage.setItem('englishApp', JSON.stringify({ words, errors, stats })); 
-        }
-        
-        function toggleDarkMode() { 
-            document.body.classList.toggle('dark-mode'); 
-            const isDark = document.body.classList.contains('dark-mode'); 
-            document.querySelector('.dark-mode-btn').textContent = isDark ? '☀️' : '🌙'; 
-            localStorage.setItem('darkMode', isDark); 
-        }
-        
-        function selectLevel(level) { 
-            currentLevel = level; 
-            initializeWords();
-            document.querySelectorAll('#page-add .level-selector .level-btn').forEach(btn => btn.classList.remove('active')); 
-            event.target.classList.add('active'); 
-        }
-        
-        function selectWordsLevel(level) {
-            wordsLevel = level;
-            document.querySelectorAll('#page-words .level-selector .level-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            displayWords();
-        }
-        
-        function selectTestLevel(level) { 
-            testLevel = level; 
-            document.querySelectorAll('#page-test .level-selector .level-btn').forEach(btn => btn.classList.remove('active')); 
-            event.target.classList.add('active'); 
-            document.getElementById('test-options').classList.remove('hidden'); 
-            document.getElementById('test-types').classList.add('hidden'); 
-        }
-        
-        function selectDirection(direction) { 
-            selectedDirection = direction; 
-            document.getElementById('test-types').classList.remove('hidden'); 
-            createTestLetterButtons();
-        }
-        
-        function createTestLetterButtons() {
-            const container = document.getElementById('test-letters');
-            container.innerHTML = '';
-            letters.forEach(letter => {
-                const count = words[testLevel] && words[testLevel][letter] ? words[testLevel][letter].length : 0;
-                const btn = document.createElement('button');
-                btn.className = 'test-letter-btn';
-                btn.textContent = letter + ' (' + count + ')';
-                btn.onclick = () => startTest('short', letter);
-                if (count === 0) btn.disabled = true;
-                container.appendChild(btn);
-            });
-        }
-        
-        function addWord() {
-            const eng = document.getElementById('englishWord').value.trim();
-            const ara = document.getElementById('arabicWord').value.trim();
-            const selectedLetter = document.getElementById('test-letter-select').value;
-            const engInput = document.getElementById('englishWord');
-            const araInput = document.getElementById('arabicWord');
-            const msg = document.getElementById('addMessage');
-            
-            engInput.classList.remove('error'); 
-            araInput.classList.remove('error');
-            
-            if (!eng || !ara) { 
-                if (!eng) engInput.classList.add('error'); 
-                if (!ara) araInput.classList.add('error'); 
-                msg.textContent = '⚠️ يرجى تعبئة جميع الحقول'; 
-                msg.style.color = '#f44336'; 
-                return; 
-            }
-            
-            initializeWords();
-            words[currentLevel][selectedLetter].push({ english: eng, arabic: ara }); 
-            saveData(); 
-            engInput.value = ''; 
-            araInput.value = ''; 
-            msg.textContent = '✅ تمت إضافة الكلمة بنجاح في اختبار حرف ' + selectedLetter + '!'; 
-            msg.style.color = '#4CAF50'; 
-            setTimeout(() => msg.textContent = '', 3000); 
-            updateStats();
-        }
-        
-        function showDeleteWordModal(level, letter, index) {
-            deleteWordData = { level, letter, index };
-            const word = words[level][letter][index];
-            document.getElementById('word-to-delete').textContent = word.english + ' ←→ ' + word.arabic;
-            document.getElementById('delete-word-modal').classList.add('active');
-        }
-        
-        function hideDeleteWordModal() {
-            document.getElementById('delete-word-modal').classList.remove('active');
-        }
-        
-        function confirmDeleteWord() {
-            words[deleteWordData.level][deleteWordData.letter].splice(deleteWordData.index, 1);
-            saveData();
-            hideDeleteWordModal();
-            displayWords();
-            updateStats();
-        }
-        
-        function showDeleteErrorModal(index) {
-            deleteErrorIndex = index;
-            const error = errors[index];
-            document.getElementById('error-to-delete').textContent = error.english + ' ←→ ' + error.arabic;
-            document.getElementById('delete-error-modal').classList.add('active');
-        }
-        
-        function hideDeleteErrorModal() {
-            document.getElementById('delete-error-modal').classList.remove('active');
-        }
-        
-        function confirmDeleteError() {
-            errors.splice(deleteErrorIndex, 1);
-            saveData();
-            hideDeleteErrorModal();
-            updateStats();
-        }
-        
-        function displayWords() {
-            const wordsList = document.getElementById('words-list');
-            const searchTerm = document.getElementById('search-box').value.toLowerCase();
-            
-            let allWords = [];
-            let totalCount = 0;
-            
-            letters.forEach(letter => {
-                if (words[wordsLevel] && words[wordsLevel][letter]) {
-                    words[wordsLevel][letter].forEach((word, index) => {
-                        allWords.push({ ...word, letter, originalIndex: index });
-                        totalCount++;
-                    });
-                }
-            });
-            
-            if (totalCount === 0) {
-                wordsList.innerHTML = '<p style="text-align: center; color: var(--accent-color); font-size: 1.2em; padding: 30px;">📝 لا توجد كلمات في هذا المستوى</p>';
-                document.getElementById('words-count').textContent = '0 كلمة';
-                return;
-            }
-            
-            let filteredWords = allWords.filter(w => 
-                w.english.toLowerCase().includes(searchTerm) || 
-                w.arabic.includes(searchTerm) ||
-                w.letter.toLowerCase().includes(searchTerm)
-            );
-            
-            document.getElementById('words-count').textContent = filteredWords.length + ' كلمة';
-            
-            if (filteredWords.length === 0) {
-                wordsList.innerHTML = '<p style="text-align: center; color: #f44336; font-size: 1.2em; padding: 30px;">🔍 لا توجد نتائج للبحث</p>';
-                return;
-            }
-            
-            wordsList.innerHTML = filteredWords.map(word => {
-                return `<div class="word-item">
-                    <div class="word-content">
-                        <span style="background: var(--accent-color); color: white; padding: 5px 12px; border-radius: 8px; margin-left: 10px; font-weight: bold;">${word.letter}</span>
-                        <strong>${word.english}</strong>
-                        <span>←→</span>
-                        <strong>${word.arabic}</strong>
-                    </div>
-                    <button class="delete-btn" onclick="showDeleteWordModal('${wordsLevel}', '${word.letter}', ${word.originalIndex})">🗑️ حذف</button>
-                </div>`;
-            }).join('');
-        }
-        
-        function filterWords() {
-            displayWords();
-        }
-        
-        function normalizeText(text) { 
-            return text.trim().toLowerCase().replace(/\s+/g, ' ').replace(/[^\w\s\u0600-\u06FF]/g, ''); 
-        }
-        
-        function startTest(type, letter) {
-            if (type === 'short') {
-                if (!words[testLevel] || !words[testLevel][letter] || words[testLevel][letter].length === 0) { 
-                    alert('⚠️ لا توجد كلمات في اختبار حرف ' + letter + '!'); 
-                    return; 
-                }
-                currentTest = [...words[testLevel][letter]];
-                selectedTestLetter = letter;
-            } else {
-                let allWords = [];
-                letters.forEach(letter => {
-                    if (words[testLevel] && words[testLevel][letter]) {
-                        allWords = allWords.concat(words[testLevel][letter]);
-                    }
-                });
-                if (allWords.length === 0) {
-                    alert('⚠️ لا توجد كلمات في هذا المستوى!');
-                    return;
-                }
-                currentTest = allWords;
-                selectedTestLetter = 'النهائي';
-            }
-            
-            if (selectedDirection === 'random') { 
-                testDirection = Math.random() > 0.5 ? 'ar-en' : 'en-ar'; 
-            } else { 
-                testDirection = selectedDirection; 
-            }
-            
-            currentTest = currentTest.sort(() => Math.random() - 0.5); 
-            currentIndex = 0;
-            document.getElementById('test-card').classList.remove('hidden'); 
-            let directionText = testDirection === 'ar-en' ? '🇸🇦 عربي → إنجليزي 🇬🇧' : '🇬🇧 إنجليزي → عربي 🇸🇦';
-            let testName = type === 'short' ? 'اختبار حرف ' + letter : 'الاختبار النهائي';
-            document.getElementById('test-title').textContent = testName + ' - ' + directionText;
-            showQuestion();
-        }
-        
-        function showQuestion() {
-            if (currentIndex >= currentTest.length) {
-                document.getElementById('question').innerHTML = '<h2 style="color: var(--accent-color);">🎉 انتهى الاختبار!</h2><p style="font-size: 1.3em; margin-top: 20px;">النتيجة النهائية</p>';
-                document.getElementById('answer').classList.add('hidden'); 
-                document.getElementById('check-btn').classList.add('hidden');
-                document.querySelector('#test-card button[onclick="skipQuestion()"]').classList.add('hidden'); 
-                document.getElementById('next-btn').classList.add('hidden'); 
-                return;
-            }
-            const word = currentTest[currentIndex];
-            const q = document.getElementById('question');
-            if (testDirection === 'ar-en') { 
-                q.innerHTML = '<strong>ترجم إلى الإنجليزية:</strong><br><span style="font-size: 1.4em; color: var(--accent-color); font-weight: bold; margin-top: 10px; display: block;">' + word.arabic + '</span>'; 
-            } else { 
-                q.innerHTML = '<strong>ترجم إلى العربية:</strong><br><span style="font-size: 1.4em; color: var(--accent-color); font-weight: bold; margin-top: 10px; display: block;">' + word.english + '</span>'; 
-            }
-            const answerInput = document.getElementById('answer');
-            answerInput.value = ''; 
-            answerInput.classList.remove('hidden'); 
-            answerInput.disabled = false; 
-            answerInput.focus();
-            document.getElementById('result').innerHTML = ''; 
-            document.getElementById('next-btn').classList.add('hidden');
-            const checkBtn = document.getElementById('check-btn');
-            const skipBtn = document.querySelector('#test-card button[onclick="skipQuestion()"]');
-            checkBtn.classList.remove('hidden'); 
-            skipBtn.classList.remove('hidden'); 
-            checkBtn.disabled = false; 
-            updateProgress();
-        }
-        
-        function checkAnswer() {
-            const word = currentTest[currentIndex];
-            const userAnswer = document.getElementById('answer').value;
-            const normalizedUserAnswer = normalizeText(userAnswer);
-            const normalizedCorrect = testDirection === 'ar-en' ? normalizeText(word.english) : normalizeText(word.arabic);
-            const correctAnswer = testDirection === 'ar-en' ? word.english : word.arabic;
-            const result = document.getElementById('result');
-            const isCorrect = normalizedUserAnswer === normalizedCorrect;
-            
-            if (isCorrect) { 
-                result.innerHTML = '<div class="result correct">✅ إجابة صحيحة! ممتاز!</div>'; 
-                stats.correct++; 
-            } else { 
-                result.innerHTML = '<div class="result incorrect">❌ خطأ! الإجابة الصحيحة: <strong>' + correctAnswer + '</strong></div>'; 
-                stats.wrong++; 
-                if (!errors.find(e => e.english === word.english && e.arabic === word.arabic)) {
-                    errors.push(word); 
-                }
-            }
-            saveData(); 
-            updateStats(); 
-            document.getElementById('next-btn').classList.remove('hidden'); 
-            document.getElementById('check-btn').disabled = true;
-        }
-        
-        function skipQuestion() { 
-            nextQuestion(); 
-        }
-        
-        function nextQuestion() { 
-            currentIndex++; 
-            showQuestion(); 
-        }
-        
-        function updateProgress() { 
-            const percent = ((currentIndex + 1) / currentTest.length) * 100; 
-            document.getElementById('progress').style.width = percent + '%'; 
-            document.getElementById('question-counter').textContent = 'السؤال ' + (currentIndex + 1) + ' من ' + currentTest.length; 
-        }
-        
-        function testErrors() {
-            if (errors.length === 0) { 
-                alert('🎉 لا توجد أخطاء! ممتاز!'); 
-                return; 
-            }
-            currentTest = [...errors].sort(() => Math.random() - 0.5); 
-            currentIndex = 0; 
-            if (selectedDirection === 'random') { 
-                testDirection = Math.random() > 0.5 ? 'ar-en' : 'en-ar'; 
-            } else { 
-                testDirection = selectedDirection; 
-            }
-            showPage('test'); 
-            document.getElementById('test-card').classList.remove('hidden'); 
-            let directionText = testDirection === 'ar-en' ? '🇸🇦 عربي → إنجليزي 🇬🇧' : '🇬🇧 إنجليزي → عربي 🇸🇦';
-            document.getElementById('test-title').textContent = 'اختبار الأخطاء - ' + directionText; 
-            showQuestion();
-        }
-        
-        function updateStats() {
-            let total = 0; 
-            for (let level in words) {
-                for (let letter in words[level]) {
-                    total += words[level][letter].length;
-                }
-            }
-            document.getElementById('total-words').textContent = total; 
-            document.getElementById('correct-answers').textContent = stats.correct; 
-            document.getElementById('wrong-answers').textContent = stats.wrong;
-            
-            const errorsList = document.getElementById('errors-list');
-            if (errors.length === 0) {
-                errorsList.innerHTML = '<p style="text-align: center; color: #4CAF50; font-size: 1.3em; padding: 40px;">🎉 لا توجد أخطاء! ممتاز!</p>';
-            } else {
-                errorsList.innerHTML = '<div style="margin-top: 20px;">' + errors.map((e, index) => 
-                    '<div class="word-item"><div class="word-content"><strong>' + e.english + 
-                    '</strong> <span>←→</span> <strong>' + e.arabic + 
-                    '</strong></div><button class="delete-btn" onclick="showDeleteErrorModal(' + index + ')">🗑️ حذف</button></div>'
-                ).join('') + '</div>';
-            }
-            
-            const levelStats = document.getElementById('level-stats'); 
-            let html = '<h3 style="margin-top: 35px; margin-bottom: 25px; color: var(--accent-color);">📊 كلمات كل مستوى:</h3>';
-            const levels = ['A1', 'A2', 'B1', 'B2', 'C1'];
-            const levelColors = { 'A1': '#4CAF50', 'A2': '#2196F3', 'B1': '#FF9800', 'B2': '#9C27B0', 'C1': '#FFD700' };
-            
-            levels.forEach(level => { 
-                let count = 0;
-                if (words[level]) {
-                    for (let letter in words[level]) {
-                        count += words[level][letter].length;
-                    }
-                }
-                html += '<div style="background: var(--input-bg); padding: 18px; margin: 12px 0; border-radius: 12px; border-right: 5px solid ' + levelColors[level] + '; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 3px 10px rgba(0,0,0,0.1); transition: transform 0.3s;" onmouseover="this.style.transform=\'translateX(-5px)\'" onmouseout="this.style.transform=\'translateX(0)\'"><strong style="font-size: 1.3em; color: var(--text-color);">' + level + '</strong><span style="background: linear-gradient(135deg, ' + levelColors[level] + ', ' + levelColors[level] + 'dd); color: white; padding: 8px 20px; border-radius: 25px; font-weight: bold; box-shadow: 0 3px 8px rgba(0,0,0,0.2);">' + count + ' كلمة</span></div>'; 
-            });
-            levelStats.innerHTML = html;
-        }
-        
-        function showResetModal() { 
-            document.getElementById('reset-modal').classList.add('active'); 
-            toggleMenu(); 
-        }
-        
-        function hideResetModal() { 
-            document.getElementById('reset-modal').classList.remove('active'); 
-        }
-        
-        function confirmReset() { 
-            words = {}; 
-            errors = []; 
-            stats = { correct: 0, wrong: 0 }; 
-            localStorage.removeItem('englishApp'); 
-            loadData();
-            updateStats(); 
-            document.getElementById('englishWord').value = ''; 
-            document.getElementById('arabicWord').value = ''; 
-            document.getElementById('test-card').classList.add('hidden'); 
-            hideResetModal(); 
-            showPage('add'); 
-            const msg = document.getElementById('addMessage'); 
-            msg.textContent = '✅ تم إعادة ضبط المصنع بنجاح!'; 
-            msg.style.color = '#4CAF50'; 
-            setTimeout(() => msg.textContent = '', 3000); 
-        }
-        
-        function toggleMenu() { 
-            document.getElementById('sidebar').classList.toggle('active'); 
-            document.getElementById('sidebar-overlay').classList.toggle('active');
-        }
-        
-        function showPage(page) { 
-            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden')); 
-            document.getElementById('page-' + page).classList.remove('hidden'); 
-            toggleMenu(); 
-            updateStats();
-            if (page === 'words') {
-                displayWords();
-            }
-        }
-        
-        document.getElementById('answer').addEventListener('keypress', function(e) { 
-            if (e.key === 'Enter') { 
-                const nextBtn = document.getElementById('next-btn'); 
-                if (!nextBtn.classList.contains('hidden')) {
-                    nextQuestion(); 
-                } else {
-                    checkAnswer(); 
-                }
-            } 
-        });
-        
-        loadData(); 
-        updateStats();
-    </script>
+<div class="sidebar-overlay" id="overlay" onclick="toggleMenu()"></div>
+<div class="top-buttons">
+<button class="dark-mode-btn" onclick="toggleDark()">🌙</button>
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+</div>
+<div class="sidebar" id="sidebar">
+<h3>القائمة</h3>
+<button onclick="showPage('add')">📝 إضافة</button>
+<button onclick="showPage('words')">📖 الكلمات</button>
+<button onclick="showPage('test')">📊 الاختبارات</button>
+<button onclick="showPage('errors')">❌ الأخطاء</button>
+<button onclick="showPage('stats')">📈 الإحصائيات</button>
+<button onclick="showReset()" style="background:#f44336">🔄 إعادة ضبط</button>
+</div>
+<div class="modal" id="modal">
+<div class="modal-content">
+<h2>⚠️ تحذير</h2>
+<p>سيتم حذف كل البيانات المضافة</p>
+<button onclick="hideModal()" style="background:#4CAF50">إلغاء</button>
+<button onclick="confirmReset()" style="background:#f44336">موافق</button>
+</div>
+</div>
+<header>
+<h1>📚 Easy</h1>
+</header>
+<div id="page-add" class="page">
+<div class="card">
+<h2>إضافة كلمة</h2>
+<div class="level-selector">
+<button class="level-btn level-A1 active" onclick="selectLevel('A1')">A1</button>
+<button class="level-btn level-A2" onclick="selectLevel('A2')">A2</button>
+<button class="level-btn level-B1" onclick="selectLevel('B1')">B1</button>
+<button class="level-btn level-B2" onclick="selectLevel('B2')">B2</button>
+<button class="level-btn level-C1" onclick="selectLevel('C1')">C1</button>
+</div>
+<input type="text" id="eng" placeholder="الكلمة بالإنجليزي">
+<input type="text" id="ara" placeholder="المعنى بالعربي">
+<button onclick="addWord()">إضافة</button>
+<p id="msg"></p>
+</div>
+</div>
+<div id="page-words" class="page hidden">
+<div class="card">
+<h2>الكلمات</h2>
+<div class="level-selector">
+<button class="level-btn level-A1 active" onclick="selectWordsLevel('A1')">A1</button>
+<button class="level-btn level-A2" onclick="selectWordsLevel('A2')">A2</button>
+<button class="level-btn level-B1" onclick="selectWordsLevel('B1')">B1</button>
+<button class="level-btn level-B2" onclick="selectWordsLevel('B2')">B2</button>
+<button class="level-btn level-C1" onclick="selectWordsLevel('C1')">C1</button>
+</div>
+<input type="text" class="search-box" id="search" placeholder="🔍 ابحث..." oninput="filterWords()">
+<div id="words-list"></div>
+</div>
+</div>
+<div id="page-test" class="page hidden">
+<div class="card">
+<h2>الاختبارات</h2>
+<div class="level-selector">
+<button class="level-btn level-A1" onclick="selectTestLevel('A1')">A1</button>
+<button class="level-btn level-A2" onclick="selectTestLevel('A2')">A2</button>
+<button class="level-btn level-B1" onclick="selectTestLevel('B1')">B1</button>
+<button class="level-btn level-B2" onclick="selectTestLevel('B2')">B2</button>
+<button class="level-btn level-C1" onclick="selectTestLevel('C1')">C1</button>
+</div>
+<div id="test-opt" class="hidden">
+<button onclick="selectDir('ar-en')" style="background:#4CAF50">🇸🇦 عربي → إنجليزي 🇬🇧</button>
+<button onclick="selectDir('en-ar')" style="background:#2196F3">🇬🇧 إنجليزي → عربي 🇸🇦</button>
+<button onclick="selectDir('random')" style="background:#FF9800">🔀 عشوائي</button>
+<div id="letters" class="hidden">
+<h3>اختر الحرف:</h3>
+<div class="letter-grid" id="grid"></div>
+<button onclick="startTest('final','')" style="width:100%">الاختبار النهائي</button>
+</div>
+</div>
+</div>
+<div class="card hidden" id="test-card">
+<h2 id="test-title"></h2>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<p id="counter"></p>
+<div class="test-question" id="q"></div>
+<input type="text" class="test-input" id="ans" placeholder="الإجابة">
+<button id="check" onclick="checkAns()">تحقق</button>
+<button onclick="skip()">تجاوز</button>
+<button onclick="next()" class="hidden" id="next-btn">التالي</button>
+<div id="result"></div>
+</div>
+</div>
+<div id="page-errors" class="page hidden">
+<div class="card">
+<h2>الأخطاء</h2>
+<button onclick="testErrors()">اختبار الأخطاء</button>
+<div id="errors-list"></div>
+</div>
+</div>
+<div id="page-stats" class="page hidden">
+<div class="card">
+<h2>الإحصائيات</h2>
+<div class="stat-box"><h3 id="total">0</h3><p>الكلمات</p></div>
+<div class="stat-box"><h3 id="correct">0</h3><p>صحيحة</p></div>
+<div class="stat-box"><h3 id="wrong">0</h3><p>خاطئة</p></div>
+<div id="level-stats"></div>
+</div>
+</div>
+<script>
+const D="about,عن|above,فوق|across,عبر|action,حركة|activity,نشاط|actor,ممثل|actress,ممثلة|add,يضيف|address,عنوان|adult,بالغ|advice,نصيحة|afraid,خائف|after,بعد|afternoon,بعد الظهر|again,مرة أخرى|age,عمر|ago,منذ|agree,يوافق|air,هواء|airport,مطار|all,كل|also,أيضاً|always,دائماً|amazing,مذهل|and,و|angry,غاضب|animal,حيوان|another,آخر|answer,إجابة|any,أي|anyone,أي شخص|anything,أي شيء|apartment,شقة|apple,تفاحة|April,أبريل|area,منطقة|arm,ذراع|around,حول|arrive,يصل|art,فن|article,مقال|artist,فنان|as,كـ|ask,يسال|at,في|August,أغسطس|aunt,عمة|autumn,الخريف|away,بعيداً|baby,طفل|back,خلف|bad,سيء|bag,حقيبة|ball,كرة|banana,موزة|band,فرقة|bank,بنك|bath,استحمام|bathroom,حمام|be,يكون|beach,شاطئ|beautiful,جميل|because,لأن|become,يصبح|bed,سرير|bedroom,غرفة نوم|beer,بيرة|before,قبل|begin,يبدأ|beginning,بداية|behind,خلف|believe,يعتقد|below,أسفل|best,الأفضل|better,أفضل|between,بين|bicycle,دراجة|bike,دراجة|big,كبير|bill,فاتورة|bird,طائر|birthday,عيد ميلاد|black,أسود|blog,مدونة|blonde,أشقر|blue,أزرق|boat,قارب|body,جسم|book,كتاب|boot,حذاء|bored,ملان|boring,ممل|born,وُلد|both,كلاهما|bottle,زجاجة|box,صندوق|boy,ولد|boyfriend,صديق|bread,خبز|break,يكسر|breakfast,فطور|bring,يحضر|brother,أخ|brown,بني|build,يبني|building,مبنى|bus,حافلة|business,عمل|busy,مشغول|but,لكن|butter,زبدة|buy,يشتري|by,بواسطة|cafe,مقهى|cake,كعكة|call,يتصل|camera,كاميرا|can,يستطيع|cannot,لا يستطيع|capital,عاصمة|car,سيارة|card,بطاقة|career,مهنة|carrot,جزر|carry,يحمل|cat,قطة|CD,قرص|cent,سنت|centre,مركز|century,قرن|chair,كرسي|change,يغير|chart,مخطط|cheap,رخيص|check,يفحص|cheese,جبن|chicken,دجاج|child,طفل|chocolate,شوكولاتة|choose,يختار|cinema,سينما|city,مدينة|class,فصل|classroom,غرفة الصف|clean,نظيف|climb,يتسلق|clock,ساعة|close,يغلق|clothes,ملابس|club,نادي|coat,معطف|coffee,قهوة|cold,بارد|college,كلية|colour,لون|come,يأتي|common,شائع|company,شركة|compare,يقارن|complete,يكمل|computer,كمبيوتر|concert,حفلة|conversation,محادثة|cook,يطبخ|cooking,طبخ|cool,رائع|correct,صحيح|cost,تكلفة|could,استطاع|country,بلد|course,دورة|cousin,ابن العم|cow,بقرة|cream,كريم|create,يبتكر|culture,ثقافة|cup,كوب|customer,زبون|cut,يقص|dad,أب|dance,يرقص|dancer,راقص|dancing,الرقص|dangerous,خطير|dark,مظلم|date,تاريخ|daughter,ابنة|day,يوم|dear,عزيزي|December,ديسمبر|decide,يقرر|delicious,لذيذ|describe,يصف|description,وصف|design,تصميم|desk,مكتب|detail,تفصيل|dialogue,حوار|dictionary,قاموس|die,يموت|diet,نظام غذائي|difference,اختلاف|different,مختلف|difficult,صعب|dinner,عشاء|dirty,متسخ|discuss,يناقش|dish,طبق|do,يفعل|doctor,طبيب|dog,كلب|dollar,دولار|door,باب|down,لأسفل|downstairs,الطابق السفلي|draw,يرسم|dress,فستان|drink,يشرب|drive,يقود|driver,سائق|during,خلال|DVD,قرص فيديو|each,كل واحد|ear,أذن|early,باكراً|east,شرق|easy,سهل|eat,يأكل|egg,بيضة|eight,ثمانية|eighteen,ثمانية عشر|eighty,ثمانون|elephant,فيل|eleven,أحد عشر|else,آخر|email,بريد|end,نهاية|enjoy,يستمتع|enough,كافٍ|euro,يورو|even,حتى|evening,مساء|event,حدث|ever,أبداً|every,كل|everybody,كل شخص|everyone,كل شخص|everything,كل شيء|exam,امتحان|examination,امتحان|example,مثال|excited,متحمس|exciting,مثير|exercise,تمرين|expensive,غالي|explain,يشرح|extra,إضافي|eye,عين|face,وجه|fact,حقيقة|fall,يسقط|false,خطأ|family,عائلة|famous,مشهور|fantastic,رائع|far,بعيد|farm,مزرعة|farmer,مزارع|fast,سريع|fat,سمين|father,أب|favourite,مفضل|February,فبراير|feel,يشعر|feeling,شعور|festival,مهرجان|few,قليل|fifteen,خمسة عشر|fifth,الخامس|fifty,خمسون|fill,يملأ|film,فيلم|final,نهائي|finally,أخيراً|find,يجد|fine,بخير|finish,ينهي|fire,نار|first,أول|fish,سمك|five,خمسة|flat,شقة|flight,رحلة طيران|floor,أرضية|flower,زهرة|fly,يطير|follow,يتبع|food,طعام|foot,قدم|football,كرة قدم|for,لأجل|forget,ينسى|form,استمارة|four,أربعة|fourteen,أربعة عشر|fourth,الرابع|free,حر|Friday,الجمعة|friend,صديق|friendly,ودود|from,من|front,أمامي|fruit,فاكهة|full,ممتلئ|fun,مرح|funny,مضحك|future,مستقبل|game,لعبة|garden,حديقة|geography,جغرافيا|get,يحصل|girl,بنت|girlfriend,صديقة|give,يعطي|glass,زجاج|go,يذهب|good,جيد|goodbye,وداعاً|grandfather,جد|grandmother,جدة|grandparent,جد|great,عظيم|green,أخضر|grey,رمادي|group,مجموعة|grow,ينمو|guess,يخمن|guitar,قيثارة|gym,صالة رياضية|hair,شعر|half,نصف|hand,يد|happen,يحدث|happy,سعيد|hard,صعب|hat,قبعة|hate,يكره|have,يملك|he,هو|head,رأس|health,صحة|healthy,صحي|hear,يسمع|hello,مرحباً|hi,أهلاً|hey,أهلاً|help,يساعد|her,لها|hers,لها|here,هنا|high,مرتفع|him,هو|his,له|history,تاريخ|hobby,هواية|holiday,عطلة|home,منزل|homework,واجب|hope,يأمل|horse,حصان|hospital,مستشفى|hot,حار|hotel,فندق|hour,ساعة|house,بيت|how,كيف|however,ومع ذلك|hundred,مئة|hungry,جائع|husband,زوج|I,أنا|ice,ثلج|idea,فكرة|if,إذا|imagine,يتخيل|important,مهم|improve,يحسن|in,في|include,يتضمن|information,معلومات|interest,اهتمام|interested,مهتم|interesting,ممتع|internet,إنترنت|interview,مقابلة|into,إلى|introduce,يقدّم|island,جزيرة|it,هو|its,ملكه|jacket,سترة|January,يناير|jeans,جينز|job,وظيفة|join,ينضم|journey,رحلة|juice,عصير|July,يوليو|June,يونيو|just,فقط|keep,يحفظ|key,مفتاح|kilometre,كيلومتر|kind,نوع|kitchen,مطبخ|know,يعرف|land,أرض|language,لغة|large,كبير|last,الأخير|late,متأخر|later,لاحقاً|laugh,يضحك|learn,يتعلم|leave,يغادر|left,يسار|leg,ساق|lesson,درس|let,يدع|letter,رسالة|library,مكتبة|lie,يكذب|life,حياة|light,ضوء|like,يحب|line,خط|lion,أسد|list,قائمة|listen,يستمع|little,صغير|live,يعيش|local,محلي|long,طويل|look,ينظر|lose,يخسر|lot,الكثير|love,يحب|lunch,غداء|machine,آلة|magazine,مجلة|main,رئيسي|make,يصنع|man,رجل|many,كثير|map,خريطة|March,مارس|market,سوق|married,متزوج|match,مباراة|May,مايو|maybe,ربما|me,أنا|meal,وجبة|mean,يعني|meaning,معنى|meat,لحم|meet,يقابل|meeting,اجتماع|member,عضو|menu,قائمة|message,رسالة|metre,متر|midnight,منتصف الليل|mile,ميل|milk,حليب|million,مليون|minute,دقيقة|miss,يفتقد|mistake,خطأ|model,نموذج|modern,حديث|moment,لحظة|Monday,الاثنين|money,مال|month,شهر|more,أكثر|morning,صباح|most,معظم|mother,أم|mountain,جبل|mouse,فأر|mouth,فم|move,يتحرك|movie,فيلم|much,كثير|mum,أمي|museum,متحف|music,موسيقى|must,يجب|my,لي|name,اسم|natural,طبيعي|near,قريب|need,يحتاج|negative,سلبي|neighbour,جار|never,أبداً|new,جديد|news,أخبار|newspaper,صحيفة|next,القادم|nice,لطيف|night,ليلة|nine,تسعة|nineteen,تسعة عشر|ninety,تسعون|no,لا|nobody,لا أحد|north,شمال|nose,أنف|not,ليس|note,ملاحظة|nothing,لا شيء|November,نوفمبر|now,الآن|number,رقم|nurse,ممرضة|object,شيء|October,أكتوبر|of,من|off,مغلق|office,مكتب|often,غالباً|oh,أوه|OK,موافق|old,قديم|on,على|once,مرة|one,واحد|onion,بصل|online,متصل|only,فقط|open,يفتح|opinion,رأي|opposite,مقابل|or,أو|orange,برتقالي|order,يطلب|other,آخر|our,لنا|out,خارج|outside,خارج|over,فوق|own,يملك|page,صفحة|paint,يلون|painting,لوحة|pair,زوج|paper,ورقة|paragraph,فقرة|parent,والد|park,حديقة|part,جزء|partner,شريك|party,حفلة|passport,جواز|past,الماضي|pay,يدفع|pen,قلم|pencil,قلم رصاص|people,ناس|pepper,فلفل|perfect,مثالي|period,فترة|person,شخص|personal,شخصي|phone,هاتف|photo,صورة|photograph,صورة|phrase,عبارة|piano,بيانو|picture,صورة|piece,قطعة|pig,خنزير|pink,وردي|place,مكان|plan,خطة|plane,طائرة|plant,نبات|play,يلعب|player,لاعب|please,من فضلك|point,نقطة|police,شرطة|policeman,شرطي|pool,مسبح|poor,فقير|popular,شعبي|positive,إيجابي|possible,ممكن|post,بريد|potato,بطاطس|pound,جنيه|practice,ممارسة|practise,يمارس|prefer,يفضل|prepare,يجهز|present,حاضر|pretty,جميل|price,سعر|probably,ربما|problem,مشكلة|product,منتج|programme,برنامج|project,مشروع|purple,أرجواني|put,يضع|quarter,ربع|question,سؤال|quick,سريع|quickly,بسرعة|quiet,هادئ|quite,تماماً|radio,راديو|rain,مطر|read,يقرأ|reader,قارئ|reading,القراءة|ready,جاهز|real,حقيقي|really,حقاً|reason,سبب|red,أحمر|relax,يسترخي|remember,يتذكر|repeat,يكرر|report,تقرير|restaurant,مطعم|result,نتيجة|return,يعود|rice,أرز|rich,غني|ride,يركب|right,يمين|river,نهر|road,طريق|room,غرفة|routine,روتين|rule,قاعدة|run,يجري|sad,حزين|salad,سلطة|salt,ملح|same,نفس|sandwich,شطيرة|Saturday,السبت|say,يقول|school,مدرسة|science,علوم|scientist,عالم|sea,بحر|second,ثانٍ|section,قسم|see,يرى|sell,يبيع|send,يرسل|sentence,جملة|September,سبتمبر|seven,سبعة|seventeen,سبعة عشر|seventy,سبعون|share,يشارك|she,هي|sheep,خروف|shirt,قميص|shoe,حذاء|shop,محل|shopping,تسوق|short,قصير|should,يجب|show,يوضح|shower,استحمام|sick,مريض|similar,مشابه|sing,يغني|singer,مغني|song,أغنية|sister,أخت|sit,يجلس|situation,موقف|six,ستة|sixteen,ستة عشر|sixty,ستون|skill,مهارة|skirt,تنورة|sleep,ينام|slow,بطيء|small,صغير|snake,ثعبان|snow,ثلج|so,لذلك|some,بعض|somebody,شخص ما|someone,شخص ما|something,شيء ما|sometimes,أحياناً|son,ابن|soon,قريباً|sorry,آسف|sound,صوت|soup,حساء|south,جنوب|space,مساحة|speak,يتحدث|special,خاص|spell,يتهجى|spelling,التهجئة|spend,يقضي|sport,رياضة|spring,الربيع|stand,يقف|star,نجم|start,يبدأ|statement,بيان|station,محطة|stay,يبقى|still,لا يزال|stop,يتوقف|story,قصة|street,شارع|strong,قوي|student,طالب|study,يدرس|style,أسلوب|subject,موضوع|success,نجاح|sugar,سكر|summer,الصيف|sun,شمس|Sunday,الأحد|supermarket,سوبر ماركت|sure,متأكد|sweater,سترة|swim,يسبح|swimming,السباحة|table,طاولة|take,يأخذ|talk,يتحدث|tall,طويل|taxi,سيارة أجرة|tea,شاي|teach,يدرّس|teacher,معلم|team,فريق|teenager,مراهق|telephone,هاتف|television,تلفاز|TV,تلفاز|tell,يخبر|ten,عشرة|tennis,تنس|terrible,فظيع|test,اختبار|text,نص|than,من|thank,يشكر|thanks,شكراً|that,ذلك|the,الـ|theatre,مسرح|their,لهم|them,هم|they,هم|then,ثم|there,هناك|thing,شيء|think,يفكر|third,الثالث|thirsty,عطشان|thirteen,ثلاثة عشر|thirty,ثلاثون|this,هذا|thousand,ألف|three,ثلاثة|through,من خلال|Thursday,الخميس|ticket,تذكرة|time,وقت|tired,متعب|title,عنوان|to,إلى|today,اليوم|together,معاً|toilet,دورة مياه|tomato,طماطم|tomorrow,غداً|tonight,الليلة|too,أيضاً|tooth,سن|topic,موضوع|tourist,سائح|town,مدينة صغيرة|traffic,حركة المرور|train,قطار|travel,يسافر|tree,شجرة|trip,رحلة|trousers,بنطال|true,صحيح|try,يحاول|T-shirt,قميص صيفي|Tuesday,الثلاثاء|turn,يدور|twelve,اثنا عشر|twenty,عشرون|twice,مرتين|two,اثنان|type,نوع|umbrella,مظلة|uncle,عم|under,تحت|understand,يفهم|university,جامعة|until,حتى|up,للأعلى|upstairs,الطابق العلوي|us,نحن|use,يستخدم|useful,مفيد|usually,عادة|vacation,إجازة|vegetable,خضار|very,جداً|video,فيديو|village,قرية|visit,يزور|visitor,زائر|wait,ينتظر|waiter,نادل|wake,يستيقظ|walk,يمشي|wall,جدار|want,يريد|warm,دافئ|wash,يغسل|watch,يشاهد|water,ماء|way,طريق|we,نحن|wear,يرتدي|weather,طقس|website,موقع|Wednesday,الأربعاء|week,أسبوع|weekend,عطلة|welcome,مرحباً|well,جيداً|west,غرب|what,ماذا|when,متى|where,أين|which,أي|white,أبيض|who,من|why,لماذا|wife,زوجة|will,سوف|win,يفوز|window,نافذة|wine,نبيذ|winter,الشتاء|with,مع|without,بدون|woman,امرأة|wonderful,رائع|word,كلمة|work,يعمل|worker,عامل|world,عالم|would,وددت|write,يكتب|writer,كاتب|writing,كتابة|wrong,خطأ|yeah,نعم|yes,نعم|year,سنة|yellow,أصفر|yesterday,أمس|you,أنت|your,ملكك|yourself,نفسك|young,شاب|zero,صفر|zoo,حديقة حيوان";
+const A1=D.split("|").map(w=>{const[e,a]=w.split(",");return{english:e,arabic:a}});
+let words={},errors=[],stats={correct:0,wrong:0},test=[],idx=0,lvl='A1',testLvl='',dir='ar-en',selDir='random',wLvl='A1';
+function init(){const s=localStorage.getItem('app');if(!s){words.A1=[...A1];save();}else{const d=JSON.parse(s);words=d.w||{};errors=d.e||[];stats=d.s||{correct:0,wrong:0};}const dm=localStorage.getItem('dark');if(dm==='true'){document.body.classList.add('dark-mode');document.querySelector('.dark-mode-btn').textContent='☀️';}}
+function save(){localStorage.setItem('app',JSON.stringify({w:words,e:errors,s:stats}));}
+function toggleDark(){document.body.classList.toggle('dark-mode');const isDark=document.body.classList.contains('dark-mode');document.querySelector('.dark-mode-btn').textContent=isDark?'☀️':'🌙';localStorage.setItem('dark',isDark);}
+function selectLevel(l){lvl=l;document.querySelectorAll('#page-add .level-btn').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');}
+function selectWordsLevel(l){wLvl=l;document.querySelectorAll('#page-words .level-btn').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');displayWords();}
+function selectTestLevel(l){testLvl=l;document.querySelectorAll('#page-test .level-btn').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');document.getElementById('test-opt').classList.remove('hidden');document.getElementById('letters').classList.add('hidden');createLetters();}
+function selectDir(d){selDir=d;document.getElementById('letters').classList.remove('hidden');}
+function createLetters(){const g=document.getElementById('grid');if(!words[testLvl]||words[testLvl].length===0){g.innerHTML='<p style="color:#f44336">لا توجد كلمات</p>';return;}const lets={};words[testLvl].forEach(w=>{const f=w.english[0].toUpperCase();if(!lets[f])lets[f]=0;lets[f]++;});g.innerHTML='';Object.keys(lets).sort().forEach(l=>{const b=document.createElement('button');b.className='letter-btn';b.textContent=l;b.onclick=()=>startTest('letter',l);g.appendChild(b);});}
+function addWord(){const e=document.getElementById('eng').value.trim(),a=document.getElementById('ara').value.trim();const m=document.getElementById('msg');if(!e||!a){m.textContent='⚠️ املأ الحقول';m.style.color='#f44336';return;}if(!words[lvl])words[lvl]=[];words[lvl].push({english:e,arabic:a});save();document.getElementById('eng').value='';document.getElementById('ara').value='';m.textContent='✅ تمت الإضافة';m.style.color='#4CAF50';setTimeout(()=>m.textContent='',3000);updateStats();}
+function displayWords(){const list=document.getElementById('words-list');const s=document.getElementById('search').value.toLowerCase();if(!words[wLvl]||words[wLvl].length===0){list.innerHTML='<p style="text-align:center;color:#667eea">لا توجد كلمات</p>';return;}let filtered=words[wLvl].filter(w=>w.english.toLowerCase().includes(s)||w.arabic.includes(s));if(filtered.length===0){list.innerHTML='<p style="text-align:center;color:#f44336">لا نتائج</p>';return;}list.innerHTML=filtered.map((w,i)=>{const oi=words[wLvl].indexOf(w);return `<div class="word-item"><div><strong>${w.english}</strong> ← <strong>${w.arabic}</strong></div><button style="background:#f44336;padding:8px;border-radius:5px;color:white;border:none;cursor:pointer" onclick="delWord('${wLvl}',${oi})">🗑️</button></div>`;}).join('');}
+function filterWords(){displayWords();}
+function delWord(l,i){if(confirm('حذف الكلمة؟')){words[l].splice(i,1);save();displayWords();updateStats();}}
+function norm(t){return t.trim().toLowerCase().replace(/\s+/g,' ').replace(/[^\w\s\u0600-\u06FF]/g,'');}
+function startTest(type,p){if(!words[testLvl]||words[testLvl].length===0){alert('لا توجد كلمات');return;}if(selDir==='random'){dir=Math.random()>0.5?'ar-en':'en-ar';}else{dir=selDir;}let all=[...words[testLvl]];if(type==='letter'){test=all.filter(w=>w.english[0].toUpperCase()===p);}else{test=all;}test=test.sort(()=>Math.random()-0.5);idx=0;document.getElementById('test-card').classList.remove('hidden');let dt=dir==='ar-en'?'عربي → إنجليزي':'إنجليزي → عربي';document.getElementById('test-title').textContent=(type==='letter'?'حرف '+p:'النهائي')+' - '+dt;showQ();}
+function showQ(){if(idx>=test.length){document.getElementById('q').innerHTML='<h2>🎉 انتهى!</h2>';document.getElementById('ans').classList.add('hidden');document.getElementById('check').classList.add('hidden');document.getElementById('next-btn').classList.add('hidden');return;}const w=test[idx];if(dir==='ar-en'){document.getElementById('q').innerHTML='<strong>ترجم:</strong><br>'+w.arabic;}else{document.getElementById('q').innerHTML='<strong>ترجم:</strong><br>'+w.english;}const a=document.getElementById('ans');a.value='';a.classList.remove('hidden');a.disabled=false;a.focus();document.getElementById('result').innerHTML='';document.getElementById('next-btn').classList.add('hidden');document.getElementById('check').classList.remove('hidden');document.getElementById('check').disabled=false;const p=((idx+1)/test.length)*100;document.getElementById('progress').style.width=p+'%';document.getElementById('counter').textContent='السؤال '+(idx+1)+' من '+test.length;}
+function checkAns(){const w=test[idx],u=document.getElementById('ans').value;const nu=norm(u);const nc=dir==='ar-en'?norm(w.english):norm(w.arabic);const cor=dir==='ar-en'?w.english:w.arabic,r=document.getElementById('result');if(nu===nc){r.innerHTML='<div class="result correct">✅ صحيح</div>';stats.correct++;}else{r.innerHTML='<div class="result incorrect">❌ خطأ! الصحيح: <strong>'+cor+'</strong></div>';stats.wrong++;if(!errors.find(e=>e.english===w.english))errors.push(w);}save();updateStats();document.getElementById('next-btn').classList.remove('hidden');document.getElementById('check').disabled=true;document.getElementById('ans').disabled=true;}
+function skip(){next();}
+function next(){idx++;showQ();}
+function testErrors(){if(errors.length===0){alert('لا أخطاء!');return;}test=[...errors].sort(()=>Math.random()-0.5);idx=0;if(selDir==='random'){dir=Math.random()>0.5?'ar-en':'en-ar';}else{dir=selDir;}showPage('test');document.getElementById('test-card').classList.remove('hidden');let dt=dir==='ar-en'?'عربي → إنجليزي':'إنجليزي → عربي';document.getElementById('test-title').textContent='الأخطاء - '+dt;showQ();}
+function updateStats(){let t=0;for(let l in words)t+=words[l].length;document.getElementById('total').textContent=t;document.getElementById('correct').textContent=stats.correct;document.getElementById('wrong').textContent=stats.wrong;const el=document.getElementById('errors-list');if(errors.length===0){el.innerHTML='<p style="text-align:center;color:#4CAF50">🎉 لا أخطاء</p>';}else{el.innerHTML=errors.map((e,i)=>'<div class="word-item"><div><strong>'+e.english+'</strong> ← <strong>'+e.arabic+'</strong></div><button style="background:#f44336;padding:8px;border-radius:5px;color:white;border:none;cursor:pointer" onclick="delErr('+i+')">🗑️</button></div>').join('');}const ls=document.getElementById('level-stats');let h='<h3 style="margin-top:20px">الكلمات:</h3>';const levs=['A1','A2','B1','B2','C1'],cols={'A1':'#4CAF50','A2':'#2196F3','B1':'#FF9800','B2':'#9C27B0','C1':'#FFD700'};levs.forEach(l=>{const c=words[l]?words[l].length:0;h+='<div style="background:var(--input-bg);padding:15px;margin:10px 0;border-radius:8px;border-right:5px solid '+cols[l]+';display:flex;justify-content:space-between"><strong>'+l+'</strong><span style="background:'+cols[l]+';color:white;padding:5px 15px;border-radius:20px">'+c+'</span></div>';});ls.innerHTML=h;}
+function delErr(i){if(confirm('حذف الخطأ؟')){errors.splice(i,1);save();updateStats();}}
+function showReset(){document.getElementById('modal').classList.add('active');toggleMenu();}
+function hideModal(){document.getElementById('modal').classList.remove('active');}
+function confirmReset(){const uw={};for(let l in words){if(l!=='A1'){uw[l]=words[l];}else{const de=A1.map(w=>w.english);uw.A1=words.A1.filter(w=>!de.includes(w.english));}}words=uw;if(words.A1&&words.A1.length>0){words.A1=[...A1,...words.A1];}else{words.A1=[...A1];}errors=[];stats={correct:0,wrong:0};save();updateStats();document.getElementById('eng').value='';document.getElementById('ara').value='';document.getElementById('test-card').classList.add('hidden');hideModal();showPage('add');const m=document.getElementById('msg');m.textContent='✅ تم إعادة الضبط';m.style.color='#4CAF50';setTimeout(()=>m.textContent='',3000);}
+function toggleMenu(){document.getElementById('sidebar').classList.toggle('active');document.getElementById('overlay').classList.toggle('active');}
+function showPage(p){document.querySelectorAll('.page').forEach(pg=>pg.classList.add('hidden'));document.getElementById('page-'+p).classList.remove('hidden');toggleMenu();updateStats();if(p==='words'){displayWords();}}
+document.getElementById('ans').addEventListener('keypress',function(e){if(e.key==='Enter'){const nb=document.getElementById('next-btn');if(!nb.classList.contains('hidden'))next();else checkAns();}});
+init();updateStats();
+</script>
 </body>
 </html>
