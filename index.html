@@ -3,104 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Easy - Oxford 5000</title>
+    <title>EASY - تعلم كلمات أكسفورد 5000</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         :root {
-            --primary: #6366f1;
-            --secondary: #8b5cf6;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --gold: #fbbf24;
-            --bg-light: #f8fafc;
-            --bg-dark: #0f172a;
-            --text-light: #1e293b;
-            --text-dark: #f1f5f9;
-            --card-light: #ffffff;
-            --card-dark: #1e293b;
-            --sidebar-light: #ffffff;
-            --sidebar-dark: #1e293b;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --accent: #4A90E2;
+            --a1-color: #28a745;
+            --a2-color: #17a2b8;
+            --b1-color: #ffc107;
+            --b2-color: #fd7e14;
+            --c1-color: #FFD700;
+            --error-color: #dc3545;
+            --border-color: #dee2e6;
+            --sidebar-bg: #2c3e50;
+            --sidebar-text: #ecf0f1;
+        }
+
+        body.dark-mode {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --border-color: #404040;
+            --sidebar-bg: #1c1c1c;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             transition: all 0.3s ease;
             overflow-x: hidden;
         }
 
-        body.light-mode {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--text-light);
-        }
-
-        body.dark-mode {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            color: var(--text-dark);
-        }
-
-        .container {
+        .app-container {
             display: flex;
             min-height: 100vh;
-            transition: margin-right 0.3s ease;
-        }
-
-        .container.sidebar-open {
-            margin-right: 280px;
+            transition: all 0.3s ease;
         }
 
         .sidebar {
-            position: fixed;
-            top: 0;
-            right: -280px;
             width: 280px;
-            height: 100vh;
-            padding: 20px;
-            z-index: 1000;
-            transition: right 0.3s ease;
-            overflow-y: auto;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-        }
-
-        body.light-mode .sidebar {
-            background: var(--sidebar-light);
-        }
-
-        body.dark-mode .sidebar {
-            background: var(--sidebar-dark);
-        }
-
-        .sidebar.open {
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            position: fixed;
             right: 0;
+            top: 0;
+            height: 100vh;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
         }
 
         .sidebar-header {
+            padding: 25px 20px;
+            background: rgba(0,0,0,0.2);
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--primary);
+            justify-content: space-between;
         }
 
         .sidebar-header h2 {
             font-size: 24px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFD700;
         }
 
         .close-sidebar {
             background: none;
             border: none;
+            color: var(--sidebar-text);
             font-size: 28px;
             cursor: pointer;
-            color: var(--primary);
             transition: transform 0.2s;
         }
 
@@ -108,1000 +96,1080 @@
             transform: rotate(90deg);
         }
 
+        .sidebar-menu {
+            padding: 10px 0;
+        }
+
         .menu-item {
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 12px;
+            padding: 15px 25px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
+            border-right: 3px solid transparent;
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        body.light-mode .menu-item {
-            background: #f1f5f9;
-        }
-
-        body.dark-mode .menu-item {
-            background: #334155;
+            gap: 12px;
         }
 
         .menu-item:hover {
-            transform: translateX(-5px);
-            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+            background: rgba(255,255,255,0.1);
+            border-right-color: var(--accent);
         }
 
         .menu-item.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
+            background: rgba(255,255,255,0.15);
+            border-right-color: #FFD700;
         }
 
         .main-content {
             flex: 1;
-            padding: 20px;
-            transition: all 0.3s ease;
+            transition: margin 0.3s ease;
+            width: 100%;
         }
 
-        .header {
+        .main-content.sidebar-open {
+            margin-right: 280px;
+        }
+
+        .navbar {
+            background: var(--accent);
+            color: white;
+            padding: 15px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px;
-            border-radius: 20px;
-            margin-bottom: 30px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        body.light-mode .header {
-            background: rgba(255, 255, 255, 0.9);
-        }
-
-        body.dark-mode .header {
-            background: rgba(30, 41, 59, 0.9);
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 26px;
+            font-weight: bold;
         }
 
         .logo {
-            font-size: 36px;
-            font-weight: bold;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: pulse 2s infinite;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .controls {
+        .navbar-controls {
             display: flex;
             gap: 15px;
             align-items: center;
         }
 
         .btn {
-            padding: 12px 24px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 12px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            transition: all 0.3s;
+            font-weight: 600;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        .btn-icon {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+
+        .btn-icon:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
+            background: #FFD700;
+            color: #333;
         }
 
-        .btn-menu {
-            background: var(--primary);
-            color: white;
-            font-size: 24px;
-            padding: 10px 20px;
+        .btn-primary:hover {
+            background: #FFC700;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255,215,0,0.4);
         }
 
-        .theme-toggle {
-            background: var(--warning);
-            color: white;
-            font-size: 24px;
-            padding: 10px 20px;
+        .content-area {
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .levels-grid {
+        .level-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 25px;
+            margin-top: 30px;
         }
 
         .level-card {
+            background: var(--bg-secondary);
+            border-radius: 15px;
             padding: 25px;
-            border-radius: 20px;
+            text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
+            border: 3px solid transparent;
             position: relative;
             overflow: hidden;
         }
 
-        body.light-mode .level-card {
-            background: var(--card-light);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        body.dark-mode .level-card {
-            background: var(--card-dark);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
         .level-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
 
-        .level-card.a1 { border-right: 5px solid #10b981; }
-        .level-card.a2 { border-right: 5px solid #3b82f6; }
-        .level-card.b1 { border-right: 5px solid #8b5cf6; }
-        .level-card.b2 { border-right: 5px solid #ec4899; }
-        .level-card.c1 { border-right: 5px solid var(--gold); }
+        .level-card.a1 { border-color: var(--a1-color); }
+        .level-card.a2 { border-color: var(--a2-color); }
+        .level-card.b1 { border-color: var(--b1-color); }
+        .level-card.b2 { border-color: var(--b2-color); }
+        .level-card.c1 { border-color: var(--c1-color); position: relative; }
 
-        .level-tag {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 14px;
+        .level-card.c1::after {
+            content: "👑";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 30px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .level-title {
+            font-size: 32px;
             font-weight: bold;
             margin-bottom: 10px;
         }
 
-        .level-card.c1 .level-tag {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            color: white;
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-
-        .level-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-
-        .level-progress {
-            width: 100%;
-            height: 8px;
-            background: rgba(99, 102, 241, 0.2);
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 15px 0;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 10px;
-            transition: width 0.5s ease;
+        .level-status {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 10px;
         }
 
         .quiz-container {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 35px;
             max-width: 700px;
-            margin: 0 auto;
-            padding: 30px;
-            border-radius: 20px;
-            animation: fadeIn 0.5s ease;
-        }
-
-        body.light-mode .quiz-container {
-            background: var(--card-light);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        body.dark-mode .quiz-container {
-            background: var(--card-dark);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            margin: 30px auto;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
 
         .quiz-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            text-align: center;
             margin-bottom: 30px;
         }
 
-        .quiz-word {
-            font-size: 48px;
-            font-weight: bold;
-            text-align: center;
-            margin: 40px 0;
-            animation: slideIn 0.5s ease;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
         }
 
-        @keyframes slideIn {
-            from { transform: translateX(100px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #5ba3f5);
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        .question-card {
+            background: var(--bg-primary);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 2px solid var(--border-color);
+        }
+
+        .question-text {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 600;
+            color: var(--accent);
         }
 
         .answer-input {
             width: 100%;
-            padding: 20px;
-            font-size: 20px;
-            border: 3px solid var(--primary);
-            border-radius: 15px;
-            margin: 20px 0;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        body.light-mode .answer-input {
-            background: white;
-            color: var(--text-light);
-        }
-
-        body.dark-mode .answer-input {
-            background: #334155;
-            color: var(--text-dark);
+            padding: 15px;
+            font-size: 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: all 0.3s;
         }
 
         .answer-input:focus {
             outline: none;
-            transform: scale(1.02);
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(74,144,226,0.1);
         }
 
-        .quiz-buttons {
+        .quiz-actions {
             display: flex;
             gap: 15px;
-            margin-top: 30px;
+            margin-top: 25px;
         }
 
-        .quiz-buttons .btn {
+        .quiz-actions .btn {
             flex: 1;
         }
 
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-        }
-
-        .stat-item {
-            text-align: center;
+        .feedback {
+            margin-top: 20px;
             padding: 15px;
-            border-radius: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            animation: slideIn 0.3s ease;
         }
 
-        body.light-mode .stat-item {
-            background: #f1f5f9;
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        body.dark-mode .stat-item {
-            background: #334155;
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+
+        .feedback.wrong {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border-right: 4px solid var(--accent);
         }
 
         .stat-value {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: bold;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--accent);
         }
 
-        .result-message {
-            text-align: center;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            animation: bounceIn 0.5s ease;
+        .stat-label {
+            color: var(--text-secondary);
+            margin-top: 8px;
         }
 
-        @keyframes bounceIn {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        .word-list {
+            margin-top: 20px;
         }
 
-        .result-message.correct {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success);
-            border: 2px solid var(--success);
+        .word-item {
+            background: var(--bg-secondary);
+            padding: 15px 20px;
+            margin: 10px 0;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            border-right: 4px solid transparent;
         }
 
-        .result-message.incorrect {
-            background: rgba(239, 68, 68, 0.2);
-            color: var(--danger);
-            border: 2px solid var(--danger);
+        .word-item:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        .alphabet-tests {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
+        .word-item.a1 { border-right-color: var(--a1-color); }
+        .word-item.a2 { border-right-color: var(--a2-color); }
+        .word-item.b1 { border-right-color: var(--b1-color); }
+        .word-item.b2 { border-right-color: var(--b2-color); }
+        .word-item.c1 { border-right-color: var(--c1-color); }
+
+        .word-content {
+            flex: 1;
         }
 
-        .alphabet-btn {
-            padding: 20px;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            font-size: 24px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            position: relative;
+        .word-english {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
         }
 
-        body.light-mode .alphabet-btn {
-            background: var(--card-light);
-            color: var(--text-light);
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-
-        body.dark-mode .alphabet-btn {
-            background: var(--card-dark);
-            color: var(--text-dark);
-            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-        }
-
-        .alphabet-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
-        }
-
-        .alphabet-btn.completed::after {
-            content: '✓';
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            color: var(--success);
+        .word-arabic {
             font-size: 16px;
+            color: var(--text-secondary);
+            margin-top: 5px;
         }
+
+        .word-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .level-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .level-badge.a1 { background: var(--a1-color); }
+        .level-badge.a2 { background: var(--a2-color); }
+        .level-badge.b1 { background: var(--b1-color); }
+        .level-badge.b2 { background: var(--b2-color); }
+        .level-badge.c1 { background: var(--c1-color); color: #333; }
 
         .add-word-form {
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
-
-        body.light-mode .add-word-form {
-            background: #f1f5f9;
-        }
-
-        body.dark-mode .add-word-form {
-            background: #334155;
+            background: var(--bg-secondary);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 20px;
         }
 
         .form-group {
-            margin: 15px 0;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            font-weight: bold;
+            font-weight: 600;
         }
 
-        .form-group input {
+        .form-group input, .form-group select {
             width: 100%;
-            padding: 15px;
-            border: 2px solid var(--primary);
-            border-radius: 10px;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
             font-size: 16px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
         }
 
-        body.light-mode .form-group input {
-            background: white;
-            color: var(--text-light);
-        }
-
-        body.dark-mode .form-group input {
-            background: #1e293b;
-            color: var(--text-dark);
-        }
-
-        .my-words-list {
-            margin: 20px 0;
-        }
-
-        .word-item {
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 10px;
+        .letter-nav {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
         }
 
-        body.light-mode .word-item {
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        body.dark-mode .word-item {
-            background: #1e293b;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        }
-
-        .word-item:hover {
-            transform: translateX(-5px);
-        }
-
-        .delete-btn {
-            background: var(--danger);
-            color: white;
-            border: none;
-            padding: 8px 16px;
+        .letter-btn {
+            width: 45px;
+            height: 45px;
+            border: 2px solid var(--accent);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            font-weight: bold;
+            transition: all 0.3s;
         }
 
-        .delete-btn:hover {
+        .letter-btn:hover, .letter-btn.active {
+            background: var(--accent);
+            color: white;
             transform: scale(1.1);
         }
 
         .hidden {
-            display: none;
+            display: none !important;
         }
 
-        .errors-container {
-            padding: 20px;
+        .page-title {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--accent);
+            font-weight: bold;
         }
 
-        .error-word {
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 10px;
-            border-right: 4px solid var(--danger);
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
         }
 
-        body.light-mode .error-word {
-            background: rgba(239, 68, 68, 0.1);
-        }
-
-        body.dark-mode .error-word {
-            background: rgba(239, 68, 68, 0.2);
+        .empty-state-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
         }
 
         @media (max-width: 768px) {
-            .container.sidebar-open {
-                margin-right: 0;
-            }
-            
             .sidebar {
                 width: 100%;
-                right: -100%;
             }
             
-            .levels-grid {
+            .main-content.sidebar-open {
+                margin-right: 0;
+            }
+
+            .content-area {
+                padding: 20px;
+            }
+
+            .level-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .alphabet-tests {
-                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-            }
+        }
+
+        .speak-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .speak-btn:hover {
+            background: #3a7bc8;
+            transform: scale(1.1);
+        }
+
+        .quiz-mode-selector {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 12px 24px;
+            border: 2px solid var(--accent);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .mode-btn:hover, .mode-btn.active {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .alphabet-tests {
+            margin-top: 20px;
+        }
+
+        .alphabet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .alphabet-card {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid var(--a1-color);
+        }
+
+        .alphabet-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .alphabet-letter {
+            font-size: 36px;
+            font-weight: bold;
+            color: var(--a1-color);
+        }
+
+        .results-screen {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .results-score {
+            font-size: 72px;
+            font-weight: bold;
+            color: var(--accent);
+            margin: 20px 0;
+        }
+
+        .results-message {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .results-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
         }
     </style>
 </head>
-<body class="light-mode">
-    <div class="container" id="container">
+<body>
+    <div class="app-container">
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <h2>القائمة</h2>
+                <h2>📚 القائمة</h2>
                 <button class="close-sidebar" onclick="toggleSidebar()">×</button>
             </div>
-            <div class="menu-item active" onclick="showHome()">
-                <span>🏠</span>
-                <span>الرئيسية</span>
-            </div>
-            <div class="menu-item" onclick="showErrors()">
-                <span>❌</span>
-                <span>الأخطاء (اختبار الأخطاء)</span>
-            </div>
-            <div class="menu-item" onclick="showMyWords()">
-                <span>📝</span>
-                <span>كلماتي</span>
-            </div>
-            <div class="menu-item" onclick="showSettings()">
-                <span>⚙️</span>
-                <span>الإعدادات</span>
+            <div class="sidebar-menu">
+                <div class="menu-item active" onclick="showPage('levels')">🎯 المستويات</div>
+                <div class="menu-item" onclick="showPage('dictionary')">📖 القاموس</div>
+                <div class="menu-item" onclick="showPage('my-words')">⭐ كلماتي</div>
+                <div class="menu-item" onclick="showPage('errors')">❌ الأخطاء</div>
+                <div class="menu-item" onclick="showPage('add-word')">➕ إضافة كلمة</div>
+                <div class="menu-item" onclick="showPage('settings')">⚙️ الإعدادات</div>
             </div>
         </div>
 
-        <div class="main-content">
-            <div class="header">
-                <div class="logo">Easy 📚</div>
-                <div class="controls">
-                    <button class="btn btn-menu" onclick="toggleSidebar()">☰</button>
-                    <button class="btn theme-toggle" onclick="toggleTheme()">🌙</button>
+        <div class="main-content" id="mainContent">
+            <nav class="navbar">
+                <div class="navbar-brand">
+                    <div class="logo">
+                        <span style="color: #4A90E2; font-weight: bold;">A</span>
+                        <span style="color: #FFD700; font-weight: bold;">E</span>
+                    </div>
+                    <span>EASY</span>
                 </div>
-            </div>
-
-            <div id="home-view">
-                <div class="levels-grid">
-                    <div class="level-card a1" onclick="showLevel('A1')">
-                        <div class="level-tag" style="background: #10b981; color: white;">مبتدئ</div>
-                        <div class="level-title">المستوى A1</div>
-                        <div class="level-progress">
-                            <div class="progress-bar" style="width: 0%" id="progress-a1"></div>
-                        </div>
-                        <p>26 اختبار (A-Z)</p>
-                    </div>
-                    <div class="level-card a2">
-                        <div class="level-tag" style="background: #3b82f6; color: white;">أساسي</div>
-                        <div class="level-title">المستوى A2</div>
-                        <div class="level-progress">
-                            <div class="progress-bar" style="width: 0%"></div>
-                        </div>
-                        <p>لا يوجد اختبارات</p>
-                    </div>
-                    <div class="level-card b1">
-                        <div class="level-tag" style="background: #8b5cf6; color: white;">متوسط</div>
-                        <div class="level-title">المستوى B1</div>
-                        <div class="level-progress">
-                            <div class="progress-bar" style="width: 0%"></div>
-                        </div>
-                        <p>لا يوجد اختبارات</p>
-                    </div>
-                    <div class="level-card b2">
-                        <div class="level-tag" style="background: #ec4899; color: white;">متقدم</div>
-                        <div class="level-title">المستوى B2</div>
-                        <div class="level-progress">
-                            <div class="progress-bar" style="width: 0%"></div>
-                        </div>
-                        <p>لا يوجد اختبارات</p>
-                    </div>
-                    <div class="level-card c1">
-                        <div class="level-tag">🏆 المستوى الذهبي</div>
-                        <div class="level-title">المستوى C1</div>
-                        <div class="level-progress">
-                            <div class="progress-bar" style="width: 0%; background: linear-gradient(90deg, #fbbf24, #f59e0b);"></div>
-                        </div>
-                        <p>لا يوجد اختبارات</p>
-                    </div>
+                <div class="navbar-controls">
+                    <button class="btn-icon" onclick="toggleDarkMode()" title="تبديل الوضع">🌙</button>
+                    <button class="btn-icon" onclick="toggleSidebar()" title="القائمة">☰</button>
                 </div>
-            </div>
+            </nav>
 
-            <div id="level-view" class="hidden">
-                <button class="btn btn-primary" onclick="showHome()" style="margin-bottom: 20px;">⬅️ العودة</button>
-                <h2 id="level-title" style="text-align: center; margin-bottom: 30px; font-size: 32px;"></h2>
-                <div class="alphabet-tests" id="alphabet-tests"></div>
-            </div>
-
-            <div id="quiz-view" class="hidden">
-                <div class="quiz-container">
-                    <div class="quiz-header">
-                        <button class="btn btn-primary" onclick="exitQuiz()">⬅️ الخروج</button>
-                        <div class="stat-item">
-                            <div class="stat-value" id="question-number">1/10</div>
-                            <div>السؤال</div>
+            <div class="content-area">
+                <!-- Levels Page -->
+                <div id="page-levels" class="page">
+                    <h1 class="page-title">اختر مستواك</h1>
+                    <div class="level-grid">
+                        <div class="level-card a1" onclick="showLevelTests('A1')">
+                            <div class="level-title" style="color: var(--a1-color)">A1</div>
+                            <div class="level-status">مستوى مبتدئ - 26 اختبار</div>
                         </div>
-                    </div>
-                    <div class="stats">
-                        <div class="stat-item">
-                            <div class="stat-value" style="color: var(--success);" id="correct-count">0</div>
-                            <div>صحيح</div>
+                        <div class="level-card a2">
+                            <div class="level-title" style="color: var(--a2-color)">A2</div>
+                            <div class="level-status">لا يوجد اختبارات</div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-value" style="color: var(--danger);" id="wrong-count">0</div>
-                            <div>خطأ</div>
+                        <div class="level-card b1">
+                            <div class="level-title" style="color: var(--b1-color)">B1</div>
+                            <div class="level-status">لا يوجد اختبارات</div>
                         </div>
-                    </div>
-                    <div id="quiz-question">
-                        <div class="quiz-word" id="quiz-word"></div>
-                        <input type="text" class="answer-input" id="answer-input" placeholder="اكتب الإجابة هنا..." autocomplete="off">
-                        <div id="result-message" class="hidden"></div>
-                        <div class="quiz-buttons">
-                            <button class="btn btn-primary" onclick="checkAnswer()">✓ تحقق من الإجابة</button>
-                            <button class="btn" style="background: var(--warning); color: white;" onclick="skipQuestion()">⏭ تخطي</button>
+                        <div class="level-card b2">
+                            <div class="level-title" style="color: var(--b2-color)">B2</div>
+                            <div class="level-status">لا يوجد اختبارات</div>
                         </div>
-                    </div>
-                    <div id="quiz-results" class="hidden">
-                        <h2 style="text-align: center; margin-bottom: 20px;">نتيجة الاختبار</h2>
-                        <div class="stat-item" style="margin: 20px 0;">
-                            <div class="stat-value" id="final-score">0%</div>
-                            <div>النتيجة النهائية</div>
-                        </div>
-                        <div class="quiz-buttons">
-                            <button class="btn btn-primary" onclick="restartQuiz()">🔄 إعادة الاختبار</button>
-                            <button class="btn" style="background: var(--secondary); color: white;" onclick="exitQuiz()">⬅️ العودة</button>
+                        <div class="level-card c1">
+                            <div class="level-title" style="color: var(--c1-color)">C1</div>
+                            <div class="level-status">لا يوجد اختبارات</div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div id="errors-view" class="hidden">
-                <button class="btn btn-primary" onclick="showHome()" style="margin-bottom: 20px;">⬅️ العودة</button>
-                <h2 style="text-align: center; margin-bottom: 30px; font-size: 32px;">الكلمات الخاطئة</h2>
-                <div class="errors-container" id="errors-container">
-                    <p style="text-align: center; opacity: 0.6;">لا توجد أخطاء حتى الآن!</p>
-                </div>
-                <button class="btn btn-primary" onclick="testErrors()" style="margin: 20px auto; display: block;">📝 اختبار الأخطاء</button>
-            </div>
-
-            <div id="my-words-view" class="hidden">
-                <button class="btn btn-primary" onclick="showHome()" style="margin-bottom: 20px;">⬅️ العودة</button>
-                <h2 style="text-align: center; margin-bottom: 30px; font-size: 32px;">كلماتي الخاصة</h2>
-                
-                <div class="add-word-form">
-                    <h3 style="margin-bottom: 15px;">➕ إضافة كلمة جديدة</h3>
-                    <div class="form-group">
-                        <label>الكلمة بالإنجليزية:</label>
-                        <input type="text" id="new-word-en" placeholder="مثال: Hello">
-                    </div>
-                    <div class="form-group">
-                        <label>الترجمة بالعربية:</label>
-                        <input type="text" id="new-word-ar" placeholder="مثال: مرحبا">
-                    </div>
-                    <button class="btn btn-primary" onclick="addCustomWord()">✓ إضافة الكلمة</button>
+                <!-- Level Tests Page -->
+                <div id="page-level-tests" class="page hidden">
+                    <button class="btn btn-primary" onclick="showPage('levels')">← رجوع للمستويات</button>
+                    <h1 class="page-title">اختبارات المستوى A1</h1>
+                    <div class="alphabet-grid" id="alphabetGrid"></div>
                 </div>
 
-                <div class="my-words-list" id="my-words-list"></div>
-                
-                <button class="btn btn-primary" onclick="testMyWords()" style="margin: 20px auto; display: block;">📝 اختبار كلماتي</button>
+                <!-- Quiz Page -->
+                <div id="page-quiz" class="page hidden">
+                    <div class="quiz-container">
+                        <div class="quiz-header">
+                            <h2 id="quizTitle">اختبار الحرف A</h2>
+                            <div class="quiz-mode-selector" id="modeSelector">
+                                <button class="mode-btn active" onclick="setQuizMode('en-ar')">إنجليزي → عربي</button>
+                                <button class="mode-btn" onclick="setQuizMode('ar-en')">عربي → إنجليزي</button>
+                                <button class="mode-btn" onclick="setQuizMode('random')">عشوائي</button>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressBar"></div>
+                            </div>
+                            <div id="quizProgress">السؤال 1 من 10</div>
+                        </div>
+
+                        <div id="quizContent">
+                            <div class="question-card">
+                                <div class="question-text" id="questionText"></div>
+                                <input type="text" class="answer-input" id="answerInput" placeholder="اكتب إجابتك هنا">
+                                <div id="feedback" class="feedback hidden"></div>
+                            </div>
+
+                            <div class="quiz-actions">
+                                <button class="btn btn-primary" onclick="checkAnswer()">تحقق</button>
+                                <button class="btn" onclick="skipQuestion()">تخطي</button>
+                                <button class="btn" onclick="endQuiz()">إنهاء</button>
+                            </div>
+                        </div>
+
+                        <div id="resultsContent" class="hidden results-screen">
+                            <h2>🎉 انتهى الاختبار!</h2>
+                            <div class="results-score" id="finalScore">0%</div>
+                            <div class="results-message" id="resultsMessage"></div>
+                            <div class="results-details">
+                                <div class="stat-card">
+                                    <div class="stat-value" id="correctCount">0</div>
+                                    <div class="stat-label">إجابات صحيحة</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value" id="wrongCount">0</div>
+                                    <div class="stat-label">إجابات خاطئة</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value" id="totalQuestions">0</div>
+                                    <div class="stat-label">مجموع الأسئلة</div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" onclick="restartQuiz()">إعادة الاختبار</button>
+                            <button class="btn" onclick="showPage('levels')">العودة للمستويات</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dictionary Page -->
+                <div id="page-dictionary" class="page hidden">
+                    <h1 class="page-title">📖 القاموس</h1>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalWordsCount">0</div>
+                            <div class="stat-label">مجموع الكلمات</div>
+                        </div>
+                    </div>
+                    <div class="letter-nav" id="letterNav"></div>
+                    <div class="word-list" id="dictionaryList"></div>
+                </div>
+
+                <!-- My Words Page -->
+                <div id="page-my-words" class="page hidden">
+                    <h1 class="page-title">⭐ كلماتي</h1>
+                    <button class="btn btn-primary" onclick="startCustomQuiz()">اختبر كلماتي</button>
+                    <div class="word-list" id="myWordsList"></div>
+                </div>
+
+                <!-- Errors Page -->
+                <div id="page-errors" class="page hidden">
+                    <h1 class="page-title">❌ الأخطاء</h1>
+                    <button class="btn btn-primary" onclick="startErrorsQuiz()">اختبر الأخطاء</button>
+                    <div class="word-list" id="errorsList"></div>
+                </div>
+
+                <!-- Add Word Page -->
+                <div id="page-add-word" class="page hidden">
+                    <h1 class="page-title">➕ إضافة كلمة جديدة</h1>
+                    <div class="add-word-form">
+                        <div class="form-group">
+                            <label>الكلمة بالإنجليزية</label>
+                            <input type="text" id="newWordEn" placeholder="مثال: Hello">
+                        </div>
+                        <div class="form-group">
+                            <label>المعنى بالعربية</label>
+                            <input type="text" id="newWordAr" placeholder="مثال: مرحباً">
+                        </div>
+                        <div class="form-group">
+                            <label>المستوى</label>
+                            <select id="newWordLevel">
+                                <option value="A1">A1 - مبتدئ</option>
+                                <option value="A2">A2</option>
+                                <option value="B1">B1</option>
+                                <option value="B2">B2</option>
+                                <option value="C1">C1 - متقدم</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" onclick="addCustomWord()">إضافة الكلمة</button>
+                    </div>
+                </div>
+
+                <!-- Settings Page -->
+                <div id="page-settings" class="page hidden">
+                    <h1 class="page-title">⚙️ الإعدادات</h1>
+                    <div class="add-word-form">
+                        <div class="form-group">
+                            <label>الوضع الليلي</label>
+                            <button class="btn btn-primary" onclick="toggleDarkMode()">تبديل الوضع</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        const wordsA1 = {
+        // A1 Words Database
+        const A1_WORDS = {
             'A': [
-                {en: 'About', ar: 'تقريباً'}, {en: 'Above', ar: 'أعلى'}, {en: 'Across', ar: 'عبر'}, 
-                {en: 'Action', ar: 'عمل'}, {en: 'Activity', ar: 'نشاط'}, {en: 'Actor', ar: 'ممثل'}, 
-                {en: 'Actress', ar: 'ممثلة'}, {en: 'Add', ar: 'يضيف'}, {en: 'Address', ar: 'عنوان'}, 
-                {en: 'Adult', ar: 'بالغ'}, {en: 'Advice', ar: 'نصيحة'}, {en: 'Afraid', ar: 'خائف'}, 
-                {en: 'After', ar: 'بعد'}, {en: 'Afternoon', ar: 'بعد الظهر'}, {en: 'Again', ar: 'مجدداً'}, 
-                {en: 'Age', ar: 'سن'}, {en: 'Ago', ar: 'قبل'}, {en: 'Agree', ar: 'يوافق'}, 
-                {en: 'Air', ar: 'هواء'}, {en: 'Airport', ar: 'مطار'}, {en: 'All', ar: 'كل'}, 
-                {en: 'Also', ar: 'أيضاً'}, {en: 'Always', ar: 'دائماً'}, {en: 'Amazing', ar: 'مدهش'}, 
-                {en: 'And', ar: 'و'}, {en: 'Angry', ar: 'غاضب'}, {en: 'Animal', ar: 'حيوان'}, 
-                {en: 'Another', ar: 'آخِر'}, {en: 'Answer', ar: 'جواب'}, {en: 'Any', ar: 'أي'}, 
-                {en: 'Anyone', ar: 'أي شخص'}, {en: 'Anything', ar: 'أي شيء'}, {en: 'Apartment', ar: 'شقة'}, 
-                {en: 'Apple', ar: 'تفاحة'}, {en: 'April', ar: 'أبريل'}, {en: 'Area', ar: 'منطقة'}, 
-                {en: 'Arm', ar: 'ذراع'}, {en: 'Around', ar: 'تقريباً'}, {en: 'Arrive', ar: 'يَـصِل'}, 
-                {en: 'Art', ar: 'فن'}, {en: 'Article', ar: 'مقالة'}, 
-                {en: 'Artist', ar: 'فنان'}, {en: 'As', ar: 'كـ / مثل'}, {en: 'Ask', ar: 'يسأل'}, 
-                {en: 'At', ar: 'في'}, {en: 'August', ar: 'أغسطس'}, {en: 'Aunt', ar: 'عمة / خالة'}, 
+                {en: 'About', ar: 'تقريباً'}, {en: 'Above', ar: 'أعلى'}, {en: 'Across', ar: 'عبر'},
+                {en: 'Action', ar: 'عمل'}, {en: 'Activity', ar: 'نشاط'}, {en: 'Actor', ar: 'ممثل'},
+                {en: 'Actress', ar: 'ممثلة'}, {en: 'Add', ar: 'يضيف'}, {en: 'Address', ar: 'عنوان'},
+                {en: 'Adult', ar: 'بالغ'}, {en: 'Advice', ar: 'نصيحة'},
+                {en: 'Afraid', ar: 'خائف'}, {en: 'After', ar: 'بعد'}, {en: 'Afternoon', ar: 'بعد الظهر'},
+                {en: 'Again', ar: 'مجدداً'}, {en: 'Age', ar: 'سن'}, {en: 'Ago', ar: 'قبل'},
+                {en: 'Agree', ar: 'يوافق'}, {en: 'Air', ar: 'هواء'}, {en: 'Airport', ar: 'مطار'},
+                {en: 'All', ar: 'كل'}, {en: 'Also', ar: 'أيضاً'}, {en: 'Always', ar: 'دائماً'},
+                {en: 'Amazing', ar: 'مدهش'}, {en: 'And', ar: 'و'}, {en: 'Angry', ar: 'غاضب'},
+                {en: 'Animal', ar: 'حيوان'}, {en: 'Another', ar: 'آخِر'}, {en: 'Answer', ar: 'جواب'},
+                {en: 'Any', ar: 'أي'}, {en: 'Anyone', ar: 'أي شخص'}, {en: 'Anything', ar: 'أي شيء'},
+                {en: 'Apartment', ar: 'شقة'}, {en: 'Apple', ar: 'تفاحة'}, {en: 'April', ar: 'أبريل'},
+                {en: 'Area', ar: 'منطقة'}, {en: 'Arm', ar: 'ذراع'}, {en: 'Around', ar: 'تقريباً'},
+                {en: 'Arrive', ar: 'يَـصِل'}, {en: 'Art', ar: 'فن'}, {en: 'Article', ar: 'مقالة'},
+                {en: 'Artist', ar: 'فنان'}, {en: 'As', ar: 'كـ / مثل'}, {en: 'Ask', ar: 'يسأل'},
+                {en: 'At', ar: 'في'}, {en: 'August', ar: 'أغسطس'}, {en: 'Aunt', ar: 'عمة / خالة'},
                 {en: 'Autumn', ar: 'خريف'}, {en: 'Away', ar: 'بعيداً'}
             ],
             'B': [
-                {en: 'Baby', ar: 'طفل'}, {en: 'Back', ar: 'ظهر'}, {en: 'Bad', ar: 'سيئ'}, 
-                {en: 'Bag', ar: 'حقيبة'}, {en: 'Ball', ar: 'كرة'}, {en: 'Banana', ar: 'موزة'}, 
-                {en: 'Band', ar: 'فرقة موسيقية'}, {en: 'Bank', ar: 'مصرف'}, {en: 'Bath', ar: 'استحمام'}, 
-                {en: 'Bathroom', ar: 'حمام'}, {en: 'Be', ar: 'كُن / يكون'}, {en: 'Beach', ar: 'شاطئ'}, 
-                {en: 'Beautiful', ar: 'جميل'}, {en: 'Because', ar: 'لأن'}, {en: 'Become', ar: 'يصبح'}, 
-                {en: 'Bed', ar: 'سرير'}, {en: 'Bedroom', ar: 'غرفة نوم'}, {en: 'Before', ar: 'قبل'}, 
-                {en: 'Begin', ar: 'يبدأ'}, {en: 'Beginning', ar: 'بداية'}, {en: 'Behind', ar: 'خلف'}, 
-                {en: 'Believe', ar: 'يصدق'}, {en: 'Below', ar: 'تحت'}, {en: 'Best', ar: 'أفضل'}, 
-                {en: 'Better', ar: 'أفضل'}, {en: 'Between', ar: 'بين'}, {en: 'Bicycle', ar: 'دراجة هوائية'}, 
-                {en: 'Big', ar: 'كبير'}, {en: 'Bike', ar: 'دراجة'}, {en: 'Bill', ar: 'فاتورة'}, 
-                {en: 'Bird', ar: 'طائر'}, {en: 'Birthday', ar: 'يوم ميلاد'}, {en: 'Black', ar: 'أسود'}, 
-                {en: 'Blog', ar: 'مدونة'}, {en: 'Blonde', ar: 'أشقر'}, {en: 'Blue', ar: 'أزرق'}, 
-                {en: 'Boat', ar: 'قارب'}, {en: 'Body', ar: 'جسم'}, {en: 'Book', ar: 'كتاب'}, 
-                {en: 'Boot', ar: 'حذاء طويل'}, {en: 'Bored', ar: 'ضجر'}, {en: 'Boring', ar: 'ممل'}, 
-                {en: 'Born', ar: 'وُلد'}, {en: 'Both', ar: 'كلا'}, {en: 'Bottle', ar: 'زجاجة'}, 
-                {en: 'Box', ar: 'صندوق'}, {en: 'Boy', ar: 'ولد'}, {en: 'Bread', ar: 'خبز'}, 
-                {en: 'Break', ar: 'استراحة'}, {en: 'Breakfast', ar: 'وجبة إفطار'}, {en: 'Bring', ar: 'إجلب'}, 
-                {en: 'Brother', ar: 'أخ'}, {en: 'Brown', ar: 'بني'}, {en: 'Build', ar: 'يبني'}, 
-                {en: 'Building', ar: 'مبنى'}, {en: 'Bus', ar: 'حافلة'}, {en: 'Business', ar: 'عمل'}, 
-                {en: 'Busy', ar: 'مشغول'}, {en: 'But', ar: 'لكن'}, {en: 'Butter', ar: 'زبدة'}, 
+                {en: 'Baby', ar: 'طفل'}, {en: 'Back', ar: 'ظهر'}, {en: 'Bad', ar: 'سيئ'},
+                {en: 'Bag', ar: 'حقيبة'}, {en: 'Ball', ar: 'كرة'}, {en: 'Banana', ar: 'موزة'},
+                {en: 'Band', ar: 'فرقة موسيقية'}, {en: 'Bank', ar: 'مصرف'}, {en: 'Bath', ar: 'استحمام'},
+                {en: 'Bathroom', ar: 'حمام'}, {en: 'Be', ar: 'كُن / يكون'}, {en: 'Beach', ar: 'شاطئ'},
+                {en: 'Beautiful', ar: 'جميل'}, {en: 'Because', ar: 'لأن'}, {en: 'Become', ar: 'يصبح'},
+                {en: 'Bed', ar: 'سرير'}, {en: 'Bedroom', ar: 'غرفة نوم'}, {en: 'Before', ar: 'قبل'},
+                {en: 'Begin', ar: 'يبدأ'}, {en: 'Beginning', ar: 'بداية'}, {en: 'Behind', ar: 'خلف'},
+                {en: 'Believe', ar: 'يصدق'}, {en: 'Below', ar: 'تحت'}, {en: 'Best', ar: 'أفضل'},
+                {en: 'Better', ar: 'أفضل'}, {en: 'Between', ar: 'بين'}, {en: 'Bicycle', ar: 'دراجة هوائية'},
+                {en: 'Big', ar: 'كبير'}, {en: 'Bike', ar: 'دراجة'}, {en: 'Bill', ar: 'فاتورة'},
+                {en: 'Bird', ar: 'طائر'}, {en: 'Birthday', ar: 'يوم ميلاد'}, {en: 'Black', ar: 'أسود'},
+                {en: 'Blog', ar: 'مدونة'}, {en: 'Blonde', ar: 'أشقر'}, {en: 'Blue', ar: 'أزرق'},
+                {en: 'Boat', ar: 'قارب'}, {en: 'Body', ar: 'جسم'}, {en: 'Book', ar: 'كتاب'},
+                {en: 'Boot', ar: 'حذاء طويل'}, {en: 'Bored', ar: 'ضجر'}, {en: 'Boring', ar: 'ممل'},
+                {en: 'Born', ar: 'وُلد'}, {en: 'Both', ar: 'كلا'}, {en: 'Bottle', ar: 'زجاجة'},
+                {en: 'Box', ar: 'صندوق'}, {en: 'Boy', ar: 'ولد'}, {en: 'Bread', ar: 'خبز'},
+                {en: 'Break', ar: 'استراحة'}, {en: 'Breakfast', ar: 'وجبة إفطار'}, {en: 'Bring', ar: 'إجلب'},
+                {en: 'Brother', ar: 'أخ'}, {en: 'Brown', ar: 'بني'}, {en: 'Build', ar: 'يبني'},
+                {en: 'Building', ar: 'مبنى'}, {en: 'Bus', ar: 'حافلة'}, {en: 'Business', ar: 'عمل'},
+                {en: 'Busy', ar: 'مشغول'}, {en: 'But', ar: 'لكن'}, {en: 'Butter', ar: 'زبدة'},
                 {en: 'Buy', ar: 'يشتري'}, {en: 'By', ar: 'بـ / بواسطة'}, {en: 'Bye', ar: 'وداعاً'}
             ],
             'C': [
-                {en: 'Cafe', ar: 'مقهى'}, {en: 'Cake', ar: 'كعكة'}, {en: 'Call', ar: 'مكالمة'}, 
-                {en: 'Camera', ar: 'كاميرا'}, {en: 'Can', ar: 'يستطيع'}, {en: 'Capital', ar: 'عاصمة'}, 
-                {en: 'Car', ar: 'سيارة'}, {en: 'Card', ar: 'بطاقة'}, {en: 'Career', ar: 'مهنة'}, 
-                {en: 'Carrot', ar: 'جزرة'}, {en: 'Carry', ar: 'يحمل'}, {en: 'CD', ar: 'قرص مضغوط'}, 
-                {en: 'Cent', ar: 'سنت'}, {en: 'Center', ar: 'وسط'}, {en: 'Century', ar: 'قرن'}, 
-                {en: 'Chair', ar: 'كرسي'}, {en: 'Change', ar: 'تغيير'}, {en: 'Chart', ar: 'رسم بياني'}, 
-                {en: 'Cheap', ar: 'رخيص'}, {en: 'Check', ar: 'يفحص'}, {en: 'Cheese', ar: 'جبنة'}, 
-                {en: 'Chicken', ar: 'دجاجة'}, {en: 'Child', ar: 'طفل'}, {en: 'Chocolate', ar: 'شوكولاتة'}, 
-                {en: 'Choose', ar: 'يختار'}, {en: 'Cinema', ar: 'سينما'}, {en: 'City', ar: 'مدينة'}, 
-                {en: 'Class', ar: 'فصل'}, {en: 'Classroom', ar: 'غرفة الفصل'}, {en: 'Clean', ar: 'نظيف'}, 
-                {en: 'Climb', ar: 'يتسلق'}, {en: 'Clock', ar: 'ساعة'}, {en: 'Close', ar: 'يغلق'}, 
-                {en: 'Clothes', ar: 'ملابس'}, {en: 'Club', ar: 'نادٍ'}, {en: 'Coat', ar: 'معطف'}, 
-                {en: 'Coffee', ar: 'قهوة'}, {en: 'Cold', ar: 'بارد'}, {en: 'College', ar: 'كلية'}, 
-                {en: 'Color', ar: 'لون'}, {en: 'Come', ar: 'يأتي'}, {en: 'Common', ar: 'شائع'}, 
-                {en: 'Company', ar: 'شركة'}, {en: 'Compare', ar: 'يقارن'}, {en: 'Computer', ar: 'حاسوب'}, 
-                {en: 'Cook', ar: 'يطبخ'}, {en: 'Cookie', ar: 'بسكويت'}, {en: 'Cool', ar: 'رائع'}, 
-                {en: 'Corner', ar: 'زاوية'}, {en: 'Correct', ar: 'صحيح'}, {en: 'Cost', ar: 'تكلفة'}, 
-                {en: 'Could', ar: 'استطاع'}, {en: 'Country', ar: 'بلد'}, {en: 'Course', ar: 'دورة'}, 
-                {en: 'Cousin', ar: 'ابن عم'}, {en: 'Cow', ar: 'بقرة'}, {en: 'Create', ar: 'يخلق'}, 
-                {en: 'Cross', ar: 'يعبر'}, {en: 'Cry', ar: 'يبكي'}, {en: 'Cup', ar: 'كوب'}, 
+                {en: 'Cafe', ar: 'مقهى'}, {en: 'Cake', ar: 'كعكة'}, {en: 'Call', ar: 'مكالمة'},
+                {en: 'Camera', ar: 'كاميرا'}, {en: 'Can', ar: 'يستطيع'}, {en: 'Capital', ar: 'عاصمة'},
+                {en: 'Car', ar: 'سيارة'}, {en: 'Card', ar: 'بطاقة'}, {en: 'Career', ar: 'مهنة'},
+                {en: 'Carrot', ar: 'جزرة'}, {en: 'Carry', ar: 'يحمل'}, {en: 'CD', ar: 'قرص مضغوط'},
+                {en: 'Cent', ar: 'سنت'}, {en: 'Center', ar: 'وسط'}, {en: 'Century', ar: 'قرن'},
+                {en: 'Chair', ar: 'كرسي'}, {en: 'Change', ar: 'تغيير'}, {en: 'Chart', ar: 'رسم بياني'},
+                {en: 'Cheap', ar: 'رخيص'}, {en: 'Check', ar: 'يفحص'}, {en: 'Cheese', ar: 'جبنة'},
+                {en: 'Chicken', ar: 'دجاجة'}, {en: 'Child', ar: 'طفل'}, {en: 'Chocolate', ar: 'شوكولاتة'},
+                {en: 'Choose', ar: 'يختار'}, {en: 'Cinema', ar: 'سينما'}, {en: 'City', ar: 'مدينة'},
+                {en: 'Class', ar: 'فصل'}, {en: 'Classroom', ar: 'غرفة الفصل'}, {en: 'Clean', ar: 'نظيف'},
+                {en: 'Climb', ar: 'يتسلق'}, {en: 'Clock', ar: 'ساعة'}, {en: 'Close', ar: 'يغلق'},
+                {en: 'Clothes', ar: 'ملابس'}, {en: 'Club', ar: 'نادٍ'}, {en: 'Coat', ar: 'معطف'},
+                {en: 'Coffee', ar: 'قهوة'}, {en: 'Cold', ar: 'بارد'}, {en: 'College', ar: 'كلية'},
+                {en: 'Color', ar: 'لون'}, {en: 'Come', ar: 'يأتي'}, {en: 'Common', ar: 'شائع'},
+                {en: 'Company', ar: 'شركة'}, {en: 'Compare', ar: 'يقارن'}, {en: 'Computer', ar: 'حاسوب'},
+                {en: 'Cook', ar: 'يطبخ'}, {en: 'Cookie', ar: 'بسكويت'}, {en: 'Cool', ar: 'رائع'},
+                {en: 'Corner', ar: 'زاوية'}, {en: 'Correct', ar: 'صحيح'}, {en: 'Cost', ar: 'تكلفة'},
+                {en: 'Could', ar: 'استطاع'}, {en: 'Country', ar: 'بلد'}, {en: 'Course', ar: 'دورة'},
+                {en: 'Cousin', ar: 'ابن عم'}, {en: 'Cow', ar: 'بقرة'}, {en: 'Create', ar: 'يخلق'},
+                {en: 'Cross', ar: 'يعبر'}, {en: 'Cry', ar: 'يبكي'}, {en: 'Cup', ar: 'كوب'},
                 {en: 'Customer', ar: 'زبون'}, {en: 'Cut', ar: 'يقطع'}
             ],
             'D': [
-                {en: 'Dad', ar: 'بابا'}, {en: 'Dance', ar: 'رقص'}, {en: 'Dangerous', ar: 'خطير'}, 
-                {en: 'Dark', ar: 'مظلم'}, {en: 'Date', ar: 'تاريخ'}, {en: 'Daughter', ar: 'ابنة'}, 
-                {en: 'Day', ar: 'يوم'}, {en: 'Dear', ar: 'عزيزي'}, {en: 'December', ar: 'ديسمبر'}, 
-                {en: 'Decide', ar: 'يقرر'}, {en: 'Delicious', ar: 'لذيذ'}, {en: 'Describe', ar: 'يصف'}, 
-                {en: 'Description', ar: 'وصف'}, {en: 'Desk', ar: 'مكتب'}, {en: 'Dictionary', ar: 'قاموس'}, 
-                {en: 'Die', ar: 'يموت'}, {en: 'Difference', ar: 'اختلاف'}, {en: 'Different', ar: 'مختلف'}, 
-                {en: 'Difficult', ar: 'صعب'}, {en: 'Dinner', ar: 'عشاء'}, {en: 'Dirty', ar: 'متسخ'}, 
-                {en: 'Discuss', ar: 'يناقش'}, {en: 'Dish', ar: 'طبق'}, {en: 'Do', ar: 'يفعل'}, 
-                {en: 'Doctor', ar: 'طبيب'}, {en: 'Dog', ar: 'كلب'}, {en: 'Dollar', ar: 'دولار'}, 
-                {en: 'Door', ar: 'باب'}, {en: 'Down', ar: 'أسفل'}, {en: 'Draw', ar: 'يرسم'}, 
-                {en: 'Drawing', ar: 'رسم'}, {en: 'Dress', ar: 'فستان'}, {en: 'Drink', ar: 'يشرب'}, 
+                {en: 'Dad', ar: 'بابا'}, {en: 'Dance', ar: 'رقص'}, {en: 'Dangerous', ar: 'خطير'},
+                {en: 'Dark', ar: 'مظلم'}, {en: 'Date', ar: 'تاريخ'}, {en: 'Daughter', ar: 'ابنة'},
+                {en: 'Day', ar: 'يوم'}, {en: 'Dear', ar: 'عزيزي'}, {en: 'December', ar: 'ديسمبر'},
+                {en: 'Decide', ar: 'يقرر'}, {en: 'Delicious', ar: 'لذيذ'}, {en: 'Describe', ar: 'يصف'},
+                {en: 'Description', ar: 'وصف'}, {en: 'Desk', ar: 'مكتب'}, {en: 'Dictionary', ar: 'قاموس'},
+                {en: 'Die', ar: 'يموت'}, {en: 'Difference', ar: 'اختلاف'}, {en: 'Different', ar: 'مختلف'},
+                {en: 'Difficult', ar: 'صعب'}, {en: 'Dinner', ar: 'عشاء'}, {en: 'Dirty', ar: 'متسخ'},
+                {en: 'Discuss', ar: 'يناقش'}, {en: 'Dish', ar: 'طبق'}, {en: 'Do', ar: 'يفعل'},
+                {en: 'Doctor', ar: 'طبيب'}, {en: 'Dog', ar: 'كلب'}, {en: 'Dollar', ar: 'دولار'},
+                {en: 'Door', ar: 'باب'}, {en: 'Down', ar: 'أسفل'}, {en: 'Draw', ar: 'يرسم'},
+                {en: 'Drawing', ar: 'رسم'}, {en: 'Dress', ar: 'فستان'}, {en: 'Drink', ar: 'يشرب'},
                 {en: 'Drive', ar: 'يقود'}, {en: 'Driver', ar: 'سائق'}, {en: 'During', ar: 'خلال'}
             ],
             'E': [
-                {en: 'Each', ar: 'كل'}, {en: 'Ear', ar: 'أذن'}, {en: 'Early', ar: 'مبكراً'}, 
-                {en: 'East', ar: 'شرق'}, {en: 'Easy', ar: 'سهل'}, {en: 'Eat', ar: 'يأكل'}, 
-                {en: 'Egg', ar: 'بيضة'}, {en: 'Eight', ar: 'ثمانية'}, {en: 'Eighteen', ar: 'ثمانية عشر'}, 
-                {en: 'Eighty', ar: 'ثمانون'}, {en: 'Elephant', ar: 'فيل'}, {en: 'Eleven', ar: 'أحد عشر'}, 
-                {en: 'Else', ar: 'آخر'}, {en: 'Email', ar: 'بريد إلكتروني'}, {en: 'End', ar: 'نهاية'}, 
-                {en: 'Enjoy', ar: 'يستمتع'}, {en: 'Enough', ar: 'كافٍ'}, {en: 'Eraser', ar: 'ممحاة'}, 
-                {en: 'Evening', ar: 'مساء'}, {en: 'Every', ar: 'كل'}, {en: 'Exercise', ar: 'تمرين'}, 
-                {en: 'Expensive', ar: 'غالي'}, {en: 'Explain', ar: 'يشرح'}, {en: 'Extra', ar: 'إضافي'}, 
+                {en: 'Each', ar: 'كل'}, {en: 'Ear', ar: 'أذن'}, {en: 'Early', ar: 'مبكراً'},
+                {en: 'East', ar: 'شرق'}, {en: 'Easy', ar: 'سهل'}, {en: 'Eat', ar: 'يأكل'},
+                {en: 'Egg', ar: 'بيضة'}, {en: 'Eight', ar: 'ثمانية'}, {en: 'Eighteen', ar: 'ثمانية عشر'},
+                {en: 'Eighty', ar: 'ثمانون'}, {en: 'Elephant', ar: 'فيل'}, {en: 'Eleven', ar: 'أحد عشر'},
+                {en: 'Else', ar: 'آخر'}, {en: 'Email', ar: 'بريد إلكتروني'}, {en: 'End', ar: 'نهاية'},
+                {en: 'Enjoy', ar: 'يستمتع'}, {en: 'Enough', ar: 'كافٍ'}, {en: 'Eraser', ar: 'ممحاة'},
+                {en: 'Evening', ar: 'مساء'}, {en: 'Every', ar: 'كل'}, {en: 'Exercise', ar: 'تمرين'},
+                {en: 'Expensive', ar: 'غالي'}, {en: 'Explain', ar: 'يشرح'}, {en: 'Extra', ar: 'إضافي'},
                 {en: 'Eye', ar: 'عين'}
             ],
             'F': [
-                {en: 'Face', ar: 'وجه'}, {en: 'Fact', ar: 'حقيقة'}, {en: 'Fall', ar: 'يسقط'}, 
-                {en: 'False', ar: 'خاطئ'}, {en: 'Family', ar: 'عائلة'}, {en: 'Famous', ar: 'مشهور'}, 
-                {en: 'Fantastic', ar: 'رائع'}, {en: 'Far', ar: 'بعيداً'}, {en: 'Farm', ar: 'مزرعة'}, 
-                {en: 'Fast', ar: 'سريع'}, {en: 'Fat', ar: 'سمين'}, {en: 'Father', ar: 'أب'}, 
-                {en: 'Favorite', ar: 'مفضل'}, {en: 'February', ar: 'فبراير'}, {en: 'Feel', ar: 'يشعر'}, 
-                {en: 'Feeling', ar: 'شعور'}, {en: 'Festival', ar: 'مهرجان'}, {en: 'Few', ar: 'قليل'}, 
-                {en: 'Fifteen', ar: 'خمسة عشر'}, {en: 'Fifth', ar: 'الخامس'}, {en: 'Fifty', ar: 'خمسون'}, 
-                {en: 'Fill', ar: 'يملأ'}, {en: 'Film', ar: 'فيلم'}, {en: 'Final', ar: 'نهائي'}, 
-                {en: 'Find', ar: 'يجد'}, {en: 'Fine', ar: 'بخير'}, {en: 'Finish', ar: 'ينهي'}, 
-                {en: 'Fire', ar: 'نار'}, {en: 'First', ar: 'أولاً'}, {en: 'Fish', ar: 'سمك'}, 
-                {en: 'Five', ar: 'خمسة'}, {en: 'Flat', ar: 'شقة'}, {en: 'Flight', ar: 'رحلة جوية'}, 
-                {en: 'Floor', ar: 'أرضية'}, {en: 'Flower', ar: 'زهرة'}, {en: 'Fly', ar: 'يطير'}, 
-                {en: 'Follow', ar: 'يتبع'}, {en: 'Food', ar: 'طعام'}, {en: 'Foot', ar: 'قدم'}, 
-                {en: 'Football', ar: 'كرة قدم'}, {en: 'For', ar: 'لأجل'}, {en: 'Forget', ar: 'ينسى'}, 
-                {en: 'Form', ar: 'شكل'}, {en: 'Forty', ar: 'أربعون'}, {en: 'Four', ar: 'أربعة'}, 
-                {en: 'Fourteen', ar: 'أربعة عشر'}, {en: 'Fourth', ar: 'الرابع'}, {en: 'Free', ar: 'متفرغ'}, 
-                {en: 'Friday', ar: 'الجمعة'}, {en: 'Friend', ar: 'صديق'}, {en: 'Friendly', ar: 'ودود'}, 
-                {en: 'From', ar: 'من'}, {en: 'Front', ar: 'أمامي'}, {en: 'Fruit', ar: 'فاكهة'}, 
-                {en: 'Full', ar: 'ممتلئ'}, {en: 'Fun', ar: 'متعة'}, {en: 'Funny', ar: 'مضحك'}, 
+                {en: 'Face', ar: 'وجه'}, {en: 'Fact', ar: 'حقيقة'}, {en: 'Fall', ar: 'يسقط'},
+                {en: 'False', ar: 'خاطئ'}, {en: 'Family', ar: 'عائلة'}, {en: 'Famous', ar: 'مشهور'},
+                {en: 'Fantastic', ar: 'رائع'}, {en: 'Far', ar: 'بعيداً'}, {en: 'Farm', ar: 'مزرعة'},
+                {en: 'Fast', ar: 'سريع'}, {en: 'Fat', ar: 'سمين'}, {en: 'Father', ar: 'أب'},
+                {en: 'Favorite', ar: 'مفضل'}, {en: 'February', ar: 'فبراير'}, {en: 'Feel', ar: 'يشعر'},
+                {en: 'Feeling', ar: 'شعور'}, {en: 'Festival', ar: 'مهرجان'}, {en: 'Few', ar: 'قليل'},
+                {en: 'Fifteen', ar: 'خمسة عشر'}, {en: 'Fifth', ar: 'الخامس'}, {en: 'Fifty', ar: 'خمسون'},
+                {en: 'Fill', ar: 'يملأ'}, {en: 'Film', ar: 'فيلم'}, {en: 'Final', ar: 'نهائي'},
+                {en: 'Find', ar: 'يجد'}, {en: 'Fine', ar: 'بخير'}, {en: 'Finish', ar: 'ينهي'},
+                {en: 'Fire', ar: 'نار'}, {en: 'First', ar: 'أولاً'}, {en: 'Fish', ar: 'سمك'},
+                {en: 'Five', ar: 'خمسة'}, {en: 'Flat', ar: 'شقة'}, {en: 'Flight', ar: 'رحلة جوية'},
+                {en: 'Floor', ar: 'أرضية'}, {en: 'Flower', ar: 'زهرة'}, {en: 'Fly', ar: 'يطير'},
+                {en: 'Follow', ar: 'يتبع'}, {en: 'Food', ar: 'طعام'}, {en: 'Foot', ar: 'قدم'},
+                {en: 'Football', ar: 'كرة قدم'}, {en: 'For', ar: 'لأجل'}, {en: 'Forget', ar: 'ينسى'},
+                {en: 'Form', ar: 'شكل'}, {en: 'Forty', ar: 'أربعون'}, {en: 'Four', ar: 'أربعة'},
+                {en: 'Fourteen', ar: 'أربعة عشر'}, {en: 'Fourth', ar: 'الرابع'}, {en: 'Free', ar: 'متفرغ'},
+                {en: 'Friday', ar: 'الجمعة'}, {en: 'Friend', ar: 'صديق'}, {en: 'Friendly', ar: 'ودود'},
+                {en: 'From', ar: 'من'}, {en: 'Front', ar: 'أمامي'}, {en: 'Fruit', ar: 'فاكهة'},
+                {en: 'Full', ar: 'ممتلئ'}, {en: 'Fun', ar: 'متعة'}, {en: 'Funny', ar: 'مضحك'},
                 {en: 'Future', ar: 'مستقبل'}
             ],
             'G': [
-                {en: 'Game', ar: 'لعبة'}, {en: 'Garden', ar: 'حديقة'}, {en: 'Geography', ar: 'جغرافيا'}, 
-                {en: 'Get', ar: 'يحصل'}, {en: 'Girl', ar: 'بنت'}, {en: 'Give', ar: 'يعطي'}, 
-                {en: 'Glass', ar: 'زجاج'}, {en: 'Go', ar: 'يذهب'}, {en: 'Good', ar: 'جيد'}, 
-                {en: 'Goodbye', ar: 'وداعاً'}, {en: 'Grandfather', ar: 'جد'}, {en: 'Grandmother', ar: 'جدة'}, 
-                {en: 'Grandparent', ar: 'أحد الجدين'}, {en: 'Great', ar: 'رائع'}, {en: 'Green', ar: 'أخضر'}, 
-                {en: 'Grey', ar: 'رمادي'}, {en: 'Group', ar: 'مجموعة'}, {en: 'Grow', ar: 'ينمو'}, 
+                {en: 'Game', ar: 'لعبة'}, {en: 'Garden', ar: 'حديقة'}, {en: 'Geography', ar: 'جغرافيا'},
+                {en: 'Get', ar: 'يحصل'}, {en: 'Girl', ar: 'بنت'}, {en: 'Give', ar: 'يعطي'},
+                {en: 'Glass', ar: 'زجاج'}, {en: 'Go', ar: 'يذهب'}, {en: 'Good', ar: 'جيد'},
+                {en: 'Goodbye', ar: 'وداعاً'}, {en: 'Grandfather', ar: 'جد'}, {en: 'Grandmother', ar: 'جدة'},
+                {en: 'Grandparent', ar: 'أحد الجدين'}, {en: 'Great', ar: 'رائع'}, {en: 'Green', ar: 'أخضر'},
+                {en: 'Grey', ar: 'رمادي'}, {en: 'Group', ar: 'مجموعة'}, {en: 'Grow', ar: 'ينمو'},
                 {en: 'Guess', ar: 'تخمين'}, {en: 'Guitar', ar: 'جيتار'}, {en: 'Gym', ar: 'صالة رياضية'}
             ],
             'H': [
-                {en: 'Hair', ar: 'شعر'}, {en: 'Half', ar: 'نصف'}, {en: 'Hand', ar: 'يد'}, 
-                {en: 'Happen', ar: 'يحدث'}, {en: 'Happy', ar: 'سعيد'}, {en: 'Hard', ar: 'صعب'}, 
-                {en: 'Hat', ar: 'قبعة'}, {en: 'Hate', ar: 'يكره'}, {en: 'Have', ar: 'يملك'}, 
-                {en: 'He', ar: 'هو'}, {en: 'Head', ar: 'رأس'}, {en: 'Health', ar: 'صحة'}, 
-                {en: 'Healthy', ar: 'صحي'}, {en: 'Hear', ar: 'يسمع'}, {en: 'Hello', ar: 'مرحباً'}, 
-                {en: 'Help', ar: 'مساعدة'}, {en: 'Her', ar: 'لها'}, {en: 'Here', ar: 'هنا'}, 
-                {en: 'Hey', ar: 'مهلاً'}, {en: 'Hi', ar: 'مرحباً'}, {en: 'High', ar: 'مرتفع'}, 
-                {en: 'Him', ar: 'له'}, {en: 'His', ar: 'له'}, {en: 'History', ar: 'تاريخ'}, 
-                {en: 'Hobby', ar: 'هواية'}, {en: 'Holiday', ar: 'عطلة'}, {en: 'Home', ar: 'منزل'}, 
-                {en: 'Homework', ar: 'واجب منزلي'}, {en: 'Hope', ar: 'يأمل'}, {en: 'Horse', ar: 'حصان'}, 
-                {en: 'Hospital', ar: 'مستشفى'}, {en: 'Hot', ar: 'ساخن'}, {en: 'Hotel', ar: 'فندق'}, 
-                {en: 'Hour', ar: 'ساعة'}, {en: 'House', ar: 'بيت'}, {en: 'How', ar: 'كيف'}, 
+                {en: 'Hair', ar: 'شعر'}, {en: 'Half', ar: 'نصف'}, {en: 'Hand', ar: 'يد'},
+                {en: 'Happen', ar: 'يحدث'}, {en: 'Happy', ar: 'سعيد'}, {en: 'Hard', ar: 'صعب'},
+                {en: 'Hat', ar: 'قبعة'}, {en: 'Hate', ar: 'يكره'}, {en: 'Have', ar: 'يملك'},
+                {en: 'He', ar: 'هو'}, {en: 'Head', ar: 'رأس'}, {en: 'Health', ar: 'صحة'},
+                {en: 'Healthy', ar: 'صحي'}, {en: 'Hear', ar: 'يسمع'}, {en: 'Hello', ar: 'مرحباً'},
+                {en: 'Help', ar: 'مساعدة'}, {en: 'Her', ar: 'لها'}, {en: 'Here', ar: 'هنا'},
+                {en: 'Hey', ar: 'مهلاً'}, {en: 'Hi', ar: 'مرحباً'}, {en: 'High', ar: 'مرتفع'},
+                {en: 'Him', ar: 'له'}, {en: 'His', ar: 'له'}, {en: 'History', ar: 'تاريخ'},
+                {en: 'Hobby', ar: 'هواية'}, {en: 'Holiday', ar: 'عطلة'}, {en: 'Home', ar: 'منزل'},
+                {en: 'Homework', ar: 'واجب منزلي'}, {en: 'Hope', ar: 'يأمل'}, {en: 'Horse', ar: 'حصان'},
+                {en: 'Hospital', ar: 'مستشفى'}, {en: 'Hot', ar: 'ساخن'}, {en: 'Hotel', ar: 'فندق'},
+                {en: 'Hour', ar: 'ساعة'}, {en: 'House', ar: 'بيت'}, {en: 'How', ar: 'كيف'},
                 {en: 'Hundred', ar: 'مئة'}, {en: 'Hungry', ar: 'جائع'}, {en: 'Husband', ar: 'زوج'}
             ],
             'I': [
-                {en: 'I', ar: 'أنا'}, {en: 'Ice', ar: 'ثلج'}, {en: 'Ice cream', ar: 'مثلجات'}, 
-                {en: 'Idea', ar: 'فكرة'}, {en: 'If', ar: 'إذا'}, {en: 'Imagine', ar: 'يتخيل'}, 
-                {en: 'Important', ar: 'مهم'}, {en: 'Improve', ar: 'يحسن'}, {en: 'In', ar: 'في'}, 
-                {en: 'Include', ar: 'يتضمن'}, {en: 'Information', ar: 'معلومات'}, {en: 'Interest', ar: 'اهتمام'}, 
-                {en: 'Interesting', ar: 'ممتع'}, {en: 'Internet', ar: 'الإنترنت'}, {en: 'Interview', ar: 'مقابلة'}, 
-                {en: 'Into', ar: 'إلى داخل'}, {en: 'Invite', ar: 'يدعو'}, {en: 'Island', ar: 'جزيرة'}, 
+                {en: 'I', ar: 'أنا'}, {en: 'Ice', ar: 'ثلج'}, {en: 'Ice cream', ar: 'مثلجات'},
+                {en: 'Idea', ar: 'فكرة'}, {en: 'If', ar: 'إذا'}, {en: 'Imagine', ar: 'يتخيل'},
+                {en: 'Important', ar: 'مهم'}, {en: 'Improve', ar: 'يحسن'}, {en: 'In', ar: 'في'},
+                {en: 'Include', ar: 'يتضمن'}, {en: 'Information', ar: 'معلومات'}, {en: 'Interest', ar: 'اهتمام'},
+                {en: 'Interesting', ar: 'ممتع'}, {en: 'Internet', ar: 'الإنترنت'}, {en: 'Interview', ar: 'مقابلة'},
+                {en: 'Into', ar: 'إلى داخل'}, {en: 'Invite', ar: 'يدعو'}, {en: 'Island', ar: 'جزيرة'},
                 {en: 'It', ar: 'هو/هي (لغير العاقل)'}, {en: 'Its', ar: 'له/لها (لغير العاقل)'}
             ],
             'J': [
-                {en: 'January', ar: 'يناير'}, {en: 'Jacket', ar: 'سترة'}, {en: 'Jeans', ar: 'بنطال جينز'}, 
-                {en: 'Job', ar: 'وظيفة'}, {en: 'Join', ar: 'ينضم'}, {en: 'Journey', ar: 'رحلة'}, 
-                {en: 'Juice', ar: 'عصير'}, {en: 'July', ar: 'يوليو'}, {en: 'June', ar: 'يونيو'}, 
+                {en: 'January', ar: 'يناير'}, {en: 'Jacket', ar: 'سترة'}, {en: 'Jeans', ar: 'بنطال جينز'},
+                {en: 'Job', ar: 'وظيفة'}, {en: 'Join', ar: 'ينضم'}, {en: 'Journey', ar: 'رحلة'},
+                {en: 'Juice', ar: 'عصير'}, {en: 'July', ar: 'يوليو'}, {en: 'June', ar: 'يونيو'},
                 {en: 'Just', ar: 'فقط'}
             ],
             'K': [
-                {en: 'Keep', ar: 'يحتفظ'}, {en: 'Key', ar: 'مفتاح'}, {en: 'Kid', ar: 'طفل'}, 
-                {en: 'Kind', ar: 'نوع'}, {en: 'Kitchen', ar: 'مطبخ'}, {en: 'Know', ar: 'يعرف'}, 
+                {en: 'Keep', ar: 'يحتفظ'}, {en: 'Key', ar: 'مفتاح'}, {en: 'Kid', ar: 'طفل'},
+                {en: 'Kind', ar: 'نوع'}, {en: 'Kitchen', ar: 'مطبخ'}, {en: 'Know', ar: 'يعرف'},
                 {en: 'Knowledge', ar: 'معرفة'}
             ],
             'L': [
-                {en: 'Land', ar: 'أرض'}, {en: 'Language', ar: 'لغة'}, {en: 'Large', ar: 'كبير'}, 
-                {en: 'Last', ar: 'آخِر'}, {en: 'Late', ar: 'متأخر'}, {en: 'Later', ar: 'لاحقاً'}, 
-                {en: 'Laugh', ar: 'يضحك'}, {en: 'Learn', ar: 'يتعلم'}, {en: 'Leave', ar: 'يغادر'}, 
-                {en: 'Left', ar: 'يسار'}, {en: 'Leg', ar: 'ساق'}, {en: 'Lesson', ar: 'درس'}, 
-                {en: 'Let', ar: 'يدع'}, {en: 'Letter', ar: 'رسالة'}, {en: 'Library', ar: 'مكتبة'}, 
-                {en: 'Life', ar: 'حياة'}, {en: 'Light', ar: 'ضوء'}, {en: 'Like', ar: 'يحب'}, 
-                {en: 'Line', ar: 'خط'}, {en: 'Lion', ar: 'أسد'}, {en: 'List', ar: 'قائمة'}, 
-                {en: 'Listen', ar: 'يستمع'}, {en: 'Little', ar: 'قليل'}, {en: 'Live', ar: 'يعيش'}, 
-                {en: 'Local', ar: 'محلي'}, {en: 'Long', ar: 'طويل'}, {en: 'Look', ar: 'ينظر'}, 
-                {en: 'Lose', ar: 'يخسر'}, {en: 'Lot', ar: 'كثير'}, {en: 'Love', ar: 'يحب'}, 
+                {en: 'Land', ar: 'أرض'}, {en: 'Language', ar: 'لغة'}, {en: 'Large', ar: 'كبير'},
+                {en: 'Last', ar: 'آخِر'}, {en: 'Late', ar: 'متأخر'}, {en: 'Later', ar: 'لاحقاً'},
+                {en: 'Laugh', ar: 'يضحك'}, {en: 'Learn', ar: 'يتعلم'}, {en: 'Leave', ar: 'يغادر'},
+                {en: 'Left', ar: 'يسار'}, {en: 'Leg', ar: 'ساق'}, {en: 'Lesson', ar: 'درس'},
+                {en: 'Let', ar: 'يدع'}, {en: 'Letter', ar: 'رسالة'}, {en: 'Library', ar: 'مكتبة'},
+                {en: 'Life', ar: 'حياة'}, {en: 'Light', ar: 'ضوء'}, {en: 'Like', ar: 'يحب'},
+                {en: 'Line', ar: 'خط'}, {en: 'Lion', ar: 'أسد'}, {en: 'List', ar: 'قائمة'},
+                {en: 'Listen', ar: 'يستمع'}, {en: 'Little', ar: 'قليل'}, {en: 'Live', ar: 'يعيش'},
+                {en: 'Local', ar: 'محلي'}, {en: 'Long', ar: 'طويل'}, {en: 'Look', ar: 'ينظر'},
+                {en: 'Lose', ar: 'يخسر'}, {en: 'Lot', ar: 'كثير'}, {en: 'Love', ar: 'يحب'},
                 {en: 'Lunch', ar: 'غداء'}
             ],
             'M': [
-                {en: 'Make', ar: 'يصنع'}, {en: 'Man', ar: 'رجل'}, {en: 'Many', ar: 'كثير'}, 
-                {en: 'Map', ar: 'خريطة'}, {en: 'March', ar: 'مارس'}, {en: 'Market', ar: 'سوق'}, 
-                {en: 'Married', ar: 'متزوج'}, {en: 'May', ar: 'مايو'}, {en: 'Maybe', ar: 'ربما'}, 
-                {en: 'Me', ar: 'أنا'}, {en: 'Meal', ar: 'وجبة'}, {en: 'Mean', ar: 'يعني'}, 
-                {en: 'Meaning', ar: 'معنى'}, {en: 'Meat', ar: 'لحم'}, {en: 'Meeting', ar: 'اجتماع'}, 
-                {en: 'Member', ar: 'عضو'}, {en: 'Message', ar: 'رسالة'}, {en: 'Middle', ar: 'وسط'}, 
-                {en: 'Milk', ar: 'حليب'}, {en: 'Minute', ar: 'دقيقة'}, {en: 'Miss', ar: 'يفتقد'}, 
-                {en: 'Mistake', ar: 'خطأ'}, {en: 'Model', ar: 'نموذج'}, {en: 'Modern', ar: 'حديث'}, 
-                {en: 'Moment', ar: 'لحظة'}, {en: 'Monday', ar: 'الاثنين'}, {en: 'Money', ar: 'مال'}, 
-                {en: 'Month', ar: 'شهر'}, {en: 'More', ar: 'أكثر'}, {en: 'Morning', ar: 'صباح'}, 
-                {en: 'Most', ar: 'معظم'}, {en: 'Mother', ar: 'أم'}, {en: 'Mountain', ar: 'جبل'}, 
-                {en: 'Mouse', ar: 'فأر'}, {en: 'Mouth', ar: 'فم'}, {en: 'Move', ar: 'يتحرك'}, 
-                {en: 'Movie', ar: 'فيلم'}, {en: 'Much', ar: 'كثير'}, {en: 'Museum', ar: 'متحف'}, 
+                {en: 'Make', ar: 'يصنع'}, {en: 'Man', ar: 'رجل'}, {en: 'Many', ar: 'كثير'},
+                {en: 'Map', ar: 'خريطة'}, {en: 'March', ar: 'مارس'}, {en: 'Market', ar: 'سوق'},
+                {en: 'Married', ar: 'متزوج'}, {en: 'May', ar: 'مايو'}, {en: 'Maybe', ar: 'ربما'},
+                {en: 'Me', ar: 'أنا'}, {en: 'Meal', ar: 'وجبة'}, {en: 'Mean', ar: 'يعني'},
+                {en: 'Meaning', ar: 'معنى'}, {en: 'Meat', ar: 'لحم'}, {en: 'Meeting', ar: 'اجتماع'},
+                {en: 'Member', ar: 'عضو'}, {en: 'Message', ar: 'رسالة'}, {en: 'Middle', ar: 'وسط'},
+                {en: 'Milk', ar: 'حليب'}, {en: 'Minute', ar: 'دقيقة'}, {en: 'Miss', ar: 'يفتقد'},
+                {en: 'Mistake', ar: 'خطأ'}, {en: 'Model', ar: 'نموذج'}, {en: 'Modern', ar: 'حديث'},
+                {en: 'Moment', ar: 'لحظة'}, {en: 'Monday', ar: 'الاثنين'}, {en: 'Money', ar: 'مال'},
+                {en: 'Month', ar: 'شهر'}, {en: 'More', ar: 'أكثر'}, {en: 'Morning', ar: 'صباح'},
+                {en: 'Most', ar: 'معظم'}, {en: 'Mother', ar: 'أم'}, {en: 'Mountain', ar: 'جبل'},
+                {en: 'Mouse', ar: 'فأر'}, {en: 'Mouth', ar: 'فم'}, {en: 'Move', ar: 'يتحرك'},
+                {en: 'Movie', ar: 'فيلم'}, {en: 'Much', ar: 'كثير'}, {en: 'Museum', ar: 'متحف'},
                 {en: 'Music', ar: 'موسيقى'}, {en: 'Must', ar: 'يجب'}, {en: 'My', ar: 'لي'}
             ],
             'N': [
-                {en: 'Name', ar: 'اسم'}, {en: 'Natural', ar: 'طبيعي'}, {en: 'Near', ar: 'قريب'}, 
-                {en: 'Necessary', ar: 'ضروري'}, {en: 'Need', ar: 'يحتاج'}, {en: 'Neighbor', ar: 'جار'}, 
-                {en: 'Never', ar: 'أبداً'}, {en: 'New', ar: 'جديد'}, {en: 'News', ar: 'أخبار'}, 
-                {en: 'Next', ar: 'التالي'}, {en: 'Nice', ar: 'لطيف'}, {en: 'Night', ar: 'ليل'}, 
-                {en: 'Nine', ar: 'تسعة'}, {en: 'Nineteen', ar: 'تسعة عشر'}, 
-                {en: 'Ninety', ar: 'تسعون'}, {en: 'No', ar: 'لا'}, {en: 'Nobody', ar: 'لا أحد'}, 
-                {en: 'North', ar: 'شمال'}, {en: 'Nose', ar: 'أنف'}, {en: 'Not', ar: 'ليس'}, 
-                {en: 'Note', ar: 'ملاحظة'}, {en: 'Nothing', ar: 'لا شيء'}, {en: 'November', ar: 'نوفمبر'}, 
-                {en: 'Now', ar: 'الآن'}, {en: 'Number', ar: 'رقم'}, {en: 'Nurse', ar: 'ممرضة'}
+                {en: 'Name', ar: 'اسم'}, {en: 'Natural', ar: 'طبيعي'}, {en: 'Near', ar: 'قريب'},
+                {en: 'Necessary', ar: 'ضروري'}, {en: 'Need', ar: 'يحتاج'}, {en: 'Neighbor', ar: 'جار'},
+                {en: 'Never', ar: 'أبداً'}, {en: 'New', ar: 'جديد'}, {en: 'News', ar: 'أخبار'},
+                {en: 'Next', ar: 'التالي'}, {en: 'Nice', ar: 'لطيف'}, {en: 'Night', ar: 'ليل'},
+                {en: 'Nine', ar: 'تسعة'}, {en: 'Nineteen', ar: 'تسعة عشر'}, {en: 'Ninety', ar: 'تسعون'},
+                {en: 'No', ar: 'لا'}, {en: 'Nobody', ar: 'لا أحد'}, {en: 'North', ar: 'شمال'},
+                {en: 'Nose', ar: 'أنف'}, {en: 'Not', ar: 'ليس'}, {en: 'Note', ar: 'ملاحظة'},
+                {en: 'Nothing', ar: 'لا شيء'}, {en: 'November', ar: 'نوفمبر'}, {en: 'Now', ar: 'الآن'},
+                {en: 'Number', ar: 'رقم'}, {en: 'Nurse', ar: 'ممرضة'}
             ],
             'O': [
-                {en: 'Object', ar: 'شيء'}, {en: 'October', ar: 'أكتوبر'}, {en: 'Office', ar: 'مكتب'}, 
-                {en: 'Often', ar: 'غالباً'}, {en: 'OK', ar: 'حسناً'}, {en: 'Old', ar: 'قديم'}, 
-                {en: 'On', ar: 'على'}, {en: 'Once', ar: 'مرة واحدة'}, {en: 'One', ar: 'واحد'}, 
-                {en: 'Only', ar: 'فقط'}, {en: 'Open', ar: 'يفتح'}, {en: 'Opinion', ar: 'رأي'}, 
-                {en: 'Opposite', ar: 'مقابل'}, {en: 'Or', ar: 'أو'}, {en: 'Orange', ar: 'برتقال'}, 
-                {en: 'Order', ar: 'ترتيب'}, {en: 'Other', ar: 'آخَر'}, {en: 'Our', ar: 'لنا'}, 
-                {en: 'Out', ar: 'للخارج'}, {en: 'Outside', ar: 'في الخارج'}, {en: 'Over', ar: 'فوق'}, 
+                {en: 'Object', ar: 'شيء'}, {en: 'October', ar: 'أكتوبر'}, {en: 'Office', ar: 'مكتب'},
+                {en: 'Often', ar: 'غالباً'}, {en: 'OK', ar: 'حسناً'}, {en: 'Old', ar: 'قديم'},
+                {en: 'On', ar: 'على'}, {en: 'Once', ar: 'مرة واحدة'}, {en: 'One', ar: 'واحد'},
+                {en: 'Only', ar: 'فقط'}, {en: 'Open', ar: 'يفتح'}, {en: 'Opinion', ar: 'رأي'},
+                {en: 'Opposite', ar: 'مقابل'}, {en: 'Or', ar: 'أو'}, {en: 'Orange', ar: 'برتقال'},
+                {en: 'Order', ar: 'ترتيب'}, {en: 'Other', ar: 'آخَر'}, {en: 'Our', ar: 'لنا'},
+                {en: 'Out', ar: 'للخارج'}, {en: 'Outside', ar: 'في الخارج'}, {en: 'Over', ar: 'فوق'},
                 {en: 'Own', ar: 'يملك'}
             ],
             'P': [
-                {en: 'Page', ar: 'صفحة'}, {en: 'Paint', ar: 'يطلي'}, {en: 'Painting', ar: 'لوحة'}, 
-                {en: 'Pair', ar: 'زوج'}, {en: 'Paper', ar: 'ورق'}, {en: 'Paragraph', ar: 'فقرة'}, 
-                {en: 'Parent', ar: 'أحد الوالدين'}, {en: 'Park', ar: 'حديقة'}, {en: 'Part', ar: 'جزء'}, 
-                {en: 'Partner', ar: 'شريك'}, {en: 'Party', ar: 'حفلة'}, {en: 'Passport', ar: 'جواز سفر'}, 
-                {en: 'Past', ar: 'الماضي'}, {en: 'Pay', ar: 'يدفع'}, {en: 'Pen', ar: 'قلم'}, 
-                {en: 'Pencil', ar: 'قلم رصاص'}, {en: 'People', ar: 'ناس'}, {en: 'Pepper', ar: 'فلفل'}, 
-                {en: 'Perfect', ar: 'مثالي'}, {en: 'Period', ar: 'فترة'}, {en: 'Person', ar: 'شخص'}, 
-                {en: 'Personal', ar: 'شخصي'}, {en: 'Phone', ar: 'هاتف'}, {en: 'Photo', ar: 'صورة'}, 
-                {en: 'Photograph', ar: 'صورة فوتوغرافية'}, {en: 'Photographer', ar: 'مصور'}, {en: 'Phrase', ar: 'عبارة'}, 
-                {en: 'Piano', ar: 'بيانو'}, {en: 'Pick', ar: 'يختار'}, {en: 'Picture', ar: 'صورة'}, 
-                {en: 'Piece', ar: 'قطعة'}, {en: 'Pig', ar: 'خنزير'}, {en: 'Pink', ar: 'وردي'}, 
-                {en: 'Place', ar: 'مكان'}, {en: 'Plan', ar: 'خطة'}, {en: 'Plane', ar: 'طائرة'}, 
-                {en: 'Plant', ar: 'نبات'}, {en: 'Play', ar: 'يلعب'}, {en: 'Player', ar: 'لاعب'}, 
-                {en: 'Please', ar: 'من فضلك'}, {en: 'Point', ar: 'نقطة'}, {en: 'Police', ar: 'شرطة'}, 
-                {en: 'Policeman', ar: 'شرطي'}, {en: 'Pool', ar: 'مسبح'}, {en: 'Poor', ar: 'فقير'}, 
-                {en: 'Popular', ar: 'محبوب'}, {en: 'Positive', ar: 'إيجابي'}, {en: 'Possible', ar: 'ممكن'}, 
-                {en: 'Post', ar: 'بريد'}, {en: 'Poster', ar: 'ملصق'}, {en: 'Potato', ar: 'بطاطس'}, 
-                {en: 'Pound', ar: 'جنيه'}, {en: 'Practice', ar: 'ممارسة'}, {en: 'Prepare', ar: 'يجهز'}, 
-                {en: 'Present', ar: 'هدية'}, {en: 'Pretty', ar: 'جميل'}, {en: 'Price', ar: 'سعر'}, 
-                {en: 'Print', ar: 'يطبع'}, {en: 'Problem', ar: 'مشكلة'}, {en: 'Product', ar: 'منتج'}, 
-                {en: 'Programme', ar: 'برنامج'}, {en: 'Project', ar: 'مشروع'}, {en: 'Public', ar: 'عام'}, 
+                {en: 'Page', ar: 'صفحة'}, {en: 'Paint', ar: 'يطلي'}, {en: 'Painting', ar: 'لوحة'},
+                {en: 'Pair', ar: 'زوج'}, {en: 'Paper', ar: 'ورق'}, {en: 'Paragraph', ar: 'فقرة'},
+                {en: 'Parent', ar: 'أحد الوالدين'}, {en: 'Park', ar: 'حديقة'}, {en: 'Part', ar: 'جزء'},
+                {en: 'Partner', ar: 'شريك'}, {en: 'Party', ar: 'حفلة'}, {en: 'Passport', ar: 'جواز سفر'},
+                {en: 'Past', ar: 'الماضي'}, {en: 'Pay', ar: 'يدفع'}, {en: 'Pen', ar: 'قلم'},
+                {en: 'Pencil', ar: 'قلم رصاص'}, {en: 'People', ar: 'ناس'}, {en: 'Pepper', ar: 'فلفل'},
+                {en: 'Perfect', ar: 'مثالي'}, {en: 'Period', ar: 'فترة'}, {en: 'Person', ar: 'شخص'},
+                {en: 'Personal', ar: 'شخصي'}, {en: 'Phone', ar: 'هاتف'}, {en: 'Photo', ar: 'صورة'},
+                {en: 'Photograph', ar: 'صورة فوتوغرافية'}, {en: 'Photographer', ar: 'مصور'}, {en: 'Phrase', ar: 'عبارة'},
+                {en: 'Piano', ar: 'بيانو'}, {en: 'Pick', ar: 'يختار'}, {en: 'Picture', ar: 'صورة'},
+                {en: 'Piece', ar: 'قطعة'}, {en: 'Pig', ar: 'خنزير'}, {en: 'Pink', ar: 'وردي'},
+                {en: 'Place', ar: 'مكان'}, {en: 'Plan', ar: 'خطة'}, {en: 'Plane', ar: 'طائرة'},
+                {en: 'Plant', ar: 'نبات'}, {en: 'Play', ar: 'يلعب'}, {en: 'Player', ar: 'لاعب'},
+                {en: 'Please', ar: 'من فضلك'}, {en: 'Point', ar: 'نقطة'}, {en: 'Police', ar: 'شرطة'},
+                {en: 'Policeman', ar: 'شرطي'}, {en: 'Pool', ar: 'مسبح'}, {en: 'Poor', ar: 'فقير'},
+                {en: 'Popular', ar: 'محبوب'}, {en: 'Positive', ar: 'إيجابي'}, {en: 'Possible', ar: 'ممكن'},
+                {en: 'Post', ar: 'بريد'}, {en: 'Poster', ar: 'ملصق'}, {en: 'Potato', ar: 'بطاطس'},
+                {en: 'Pound', ar: 'جنيه'}, {en: 'Practice', ar: 'ممارسة'}, {en: 'Prepare', ar: 'يجهز'},
+                {en: 'Present', ar: 'هدية'}, {en: 'Pretty', ar: 'جميل'}, {en: 'Price', ar: 'سعر'},
+                {en: 'Print', ar: 'يطبع'}, {en: 'Problem', ar: 'مشكلة'}, {en: 'Product', ar: 'منتج'},
+                {en: 'Programme', ar: 'برنامج'}, {en: 'Project', ar: 'مشروع'}, {en: 'Public', ar: 'عام'},
                 {en: 'Pupil', ar: 'تلميذ'}, {en: 'Purple', ar: 'أرجواني'}, {en: 'Put', ar: 'يضع'}
             ],
             'Q': [
-                {en: 'Quarter', ar: 'ربع'}, {en: 'Question', ar: 'سؤال'}, {en: 'Quick', ar: 'سريع'}, 
+                {en: 'Quarter', ar: 'ربع'}, {en: 'Question', ar: 'سؤال'}, {en: 'Quick', ar: 'سريع'},
                 {en: 'Quiet', ar: 'هادئ'}, {en: 'Quite', ar: 'تماماً'}
             ],
             'R': [
-                {en: 'Radio', ar: 'راديو'}, {en: 'Rain', ar: 'مطر'}, {en: 'Read', ar: 'يقرأ'}, 
-                {en: 'Reader', ar: 'قارئ'}, {en: 'Reading', ar: 'قراءة'}, {en: 'Ready', ar: 'جاهز'}, 
-                {en: 'Real', ar: 'حقيقي'}, {en: 'Really', ar: 'حقاً'}, {en: 'Reason', ar: 'سبب'}, 
-                {en: 'Red', ar: 'أحمر'}, {en: 'Relax', ar: 'يسترخي'}, {en: 'Remember', ar: 'يتذكر'}, 
-                {en: 'Repeat', ar: 'يكرر'}, {en: 'Report', ar: 'تقرير'}, {en: 'Restaurant', ar: 'مطعم'}, 
-                {en: 'Result', ar: 'نتيجة'}, {en: 'Return', ar: 'يعود'}, {en: 'Rice', ar: 'أرز'}, 
-                {en: 'Rich', ar: 'غني'}, {en: 'Ride', ar: 'يركب'}, {en: 'Right', ar: 'يمين'}, 
-                {en: 'River', ar: 'نهر'}, {en: 'Road', ar: 'طريق'}, {en: 'Room', ar: 'غرفة'}, 
+                {en: 'Radio', ar: 'راديو'}, {en: 'Rain', ar: 'مطر'}, {en: 'Read', ar: 'يقرأ'},
+                {en: 'Reader', ar: 'قارئ'}, {en: 'Reading', ar: 'قراءة'}, {en: 'Ready', ar: 'جاهز'},
+                {en: 'Real', ar: 'حقيقي'}, {en: 'Really', ar: 'حقاً'}, {en: 'Reason', ar: 'سبب'},
+                {en: 'Red', ar: 'أحمر'}, {en: 'Relax', ar: 'يسترخي'}, {en: 'Remember', ar: 'يتذكر'},
+                {en: 'Repeat', ar: 'يكرر'}, {en: 'Report', ar: 'تقرير'}, {en: 'Restaurant', ar: 'مطعم'},
+                {en: 'Result', ar: 'نتيجة'}, {en: 'Return', ar: 'يعود'}, {en: 'Rice', ar: 'أرز'},
+                {en: 'Rich', ar: 'غني'}, {en: 'Ride', ar: 'يركب'}, {en: 'Right', ar: 'يمين'},
+                {en: 'River', ar: 'نهر'}, {en: 'Road', ar: 'طريق'}, {en: 'Room', ar: 'غرفة'},
                 {en: 'Routine', ar: 'روتين'}, {en: 'Rule', ar: 'قاعدة'}, {en: 'Run', ar: 'يركض'}
             ],
             'S': [
-                {en: 'Sad', ar: 'حزين'}, {en: 'Salad', ar: 'سلطة'}, {en: 'Salt', ar: 'ملح'}, 
-                {en: 'Same', ar: 'نفس'}, {en: 'Sandwich', ar: 'شطيرة'}, {en: 'Saturday', ar: 'السبت'}, 
-                {en: 'Say', ar: 'يقول'}, {en: 'School', ar: 'مدرسة'}, {en: 'Science', ar: 'علوم'}, 
-                {en: 'Scientist', ar: 'عالِم'}, {en: 'Sea', ar: 'بحر'}, {en: 'Second', ar: 'ثانية'}, 
-                {en: 'Section', ar: 'قسم'}, {en: 'See', ar: 'يرى'}, {en: 'Sell', ar: 'يبيع'}, 
-                {en: 'Send', ar: 'يرسل'}, {en: 'Sentence', ar: 'جملة'}, {en: 'September', ar: 'سبتمبر'}, 
-                {en: 'Seven', ar: 'سبعة'}, {en: 'Seventeen', ar: 'سبعة عشر'}, {en: 'Seventy', ar: 'سبعون'}, 
-                {en: 'Share', ar: 'يشارك'}, {en: 'She', ar: 'هي'}, {en: 'Sheep', ar: 'خروف'}, 
-                {en: 'Shirt', ar: 'قميص'}, {en: 'Shoe', ar: 'حذاء'}, {en: 'Shop', ar: 'متجر'}, 
-                {en: 'Shopping', ar: 'تسوق'}, {en: 'Short', ar: 'قصير'}, {en: 'Should', ar: 'يجب'}, 
-                {en: 'Show', ar: 'عرض'}, {en: 'Shower', ar: 'دُش'}, {en: 'Sick', ar: 'مريض'}, 
-                {en: 'Similar', ar: 'مشابه'}, {en: 'Sing', ar: 'يغني'}, {en: 'Singer', ar: 'مغنٍّ'}, 
-                {en: 'Sister', ar: 'أخت'}, {en: 'Sit', ar: 'يجلس'}, {en: 'Situation', ar: 'موقف'}, 
-                {en: 'Six', ar: 'ستة'}, {en: 'Sixteen', ar: 'ستة عشر'}, {en: 'Sixty', ar: 'ستون'}, 
-                {en: 'Skill', ar: 'مهارة'}, {en: 'Skirt', ar: 'تنورة'}, {en: 'Sleep', ar: 'ينام'}, 
-                {en: 'Slow', ar: 'بطيء'}, {en: 'Small', ar: 'صغير'}, {en: 'Smile', ar: 'يبتسم'}, 
-                {en: 'Smoke', ar: 'يدخن'}, {en: 'Snow', ar: 'ثلج'}, {en: 'So', ar: 'لذلك'}, 
-                {en: 'Soap', ar: 'صابون'}, {en: 'Soccer', ar: 'كرة قدم'}, {en: 'Soft', ar: 'ناعم'}, 
-                {en: 'Some', ar: 'بعض'}, {en: 'Somebody', ar: 'شخص ما'}, {en: 'Something', ar: 'شيء ما'}, 
-                {en: 'Sometimes', ar: 'أحياناً'}, {en: 'Son', ar: 'ابن'}, {en: 'Song', ar: 'أغنية'}, 
-                {en: 'Soon', ar: 'قريباً'}, {en: 'Sorry', ar: 'آسف'}, {en: 'Sound', ar: 'صوت'}, 
-                {en: 'Soup', ar: 'حساء'}, {en: 'South', ar: 'جنوب'}, {en: 'Space', ar: 'فضاء'}, 
-                {en: 'Speak', ar: 'يتحدث'}, {en: 'Speaker', ar: 'متحدث'}, {en: 'Special', ar: 'خاص'}, 
-                {en: 'Spell', ar: 'يتهجى'}, {en: 'Spend', ar: 'يقضي'}, {en: 'Sport', ar: 'رياضة'}, 
-                {en: 'Spring', ar: 'ربيع'}, {en: 'Stand', ar: 'يقف'}, {en: 'Star', ar: 'نجمة'}, 
-                {en: 'Start', ar: 'يبدأ'}, {en: 'Statement', ar: 'بيان'}, {en: 'Station', ar: 'محطة'}, 
-                {en: 'Stay', ar: 'يبقى'}, {en: 'Still', ar: 'لا يزال'}, {en: 'Stop', ar: 'يتوقف'}, 
-                {en: 'Story', ar: 'قصة'}, {en: 'Street', ar: 'شارع'}, {en: 'Strong', ar: 'قوي'}, 
-                {en: 'Student', ar: 'طالب'}, {en: 'Study', ar: 'يدرس'}, {en: 'Subject', ar: 'موضوع'}, 
-                {en: 'Success', ar: 'نجاح'}, {en: 'Sugar', ar: 'سكر'}, {en: 'Summer', ar: 'صيف'}, 
-                {en: 'Sun', ar: 'شمس'}, {en: 'Sunday', ar: 'الأحد'}, {en: 'Supermarket', ar: 'سوبر ماركت'}, 
+                {en: 'Sad', ar: 'حزين'}, {en: 'Salad', ar: 'سلطة'}, {en: 'Salt', ar: 'ملح'},
+                {en: 'Same', ar: 'نفس'}, {en: 'Sandwich', ar: 'شطيرة'}, {en: 'Saturday', ar: 'السبت'},
+                {en: 'Say', ar: 'يقول'}, {en: 'School', ar: 'مدرسة'}, {en: 'Science', ar: 'علوم'},
+                {en: 'Scientist', ar: 'عالِم'}, {en: 'Sea', ar: 'بحر'}, {en: 'Second', ar: 'ثانية'},
+                {en: 'Section', ar: 'قسم'}, {en: 'See', ar: 'يرى'}, {en: 'Sell', ar: 'يبيع'},
+                {en: 'Send', ar: 'يرسل'}, {en: 'Sentence', ar: 'جملة'}, {en: 'September', ar: 'سبتمبر'},
+                {en: 'Seven', ar: 'سبعة'}, {en: 'Seventeen', ar: 'سبعة عشر'}, {en: 'Seventy', ar: 'سبعون'},
+                {en: 'Share', ar: 'يشارك'}, {en: 'She', ar: 'هي'}, {en: 'Sheep', ar: 'خروف'},
+                {en: 'Shirt', ar: 'قميص'}, {en: 'Shoe', ar: 'حذاء'}, {en: 'Shop', ar: 'متجر'},
+                {en: 'Shopping', ar: 'تسوق'}, {en: 'Short', ar: 'قصير'}, {en: 'Should', ar: 'يجب'},
+                {en: 'Show', ar: 'عرض'}, {en: 'Shower', ar: 'دُش'}, {en: 'Sick', ar: 'مريض'},
+                {en: 'Similar', ar: 'مشابه'}, {en: 'Sing', ar: 'يغني'}, {en: 'Singer', ar: 'مغنٍّ'},
+                {en: 'Sister', ar: 'أخت'}, {en: 'Sit', ar: 'يجلس'}, {en: 'Situation', ar: 'موقف'},
+                {en: 'Six', ar: 'ستة'}, {en: 'Sixteen', ar: 'ستة عشر'}, {en: 'Sixty', ar: 'ستون'},
+                {en: 'Skill', ar: 'مهارة'}, {en: 'Skirt', ar: 'تنورة'}, {en: 'Sleep', ar: 'ينام'},
+                {en: 'Slow', ar: 'بطيء'}, {en: 'Small', ar: 'صغير'}, {en: 'Smile', ar: 'يبتسم'},
+                {en: 'Smoke', ar: 'يدخن'}, {en: 'Snow', ar: 'ثلج'}, {en: 'So', ar: 'لذلك'},
+                {en: 'Soap', ar: 'صابون'}, {en: 'Soccer', ar: 'كرة قدم'}, {en: 'Soft', ar: 'ناعم'},
+                {en: 'Some', ar: 'بعض'}, {en: 'Somebody', ar: 'شخص ما'}, {en: 'Something', ar: 'شيء ما'},
+                {en: 'Sometimes', ar: 'أحياناً'}, {en: 'Son', ar: 'ابن'}, {en: 'Song', ar: 'أغنية'},
+                {en: 'Soon', ar: 'قريباً'}, {en: 'Sorry', ar: 'آسف'}, {en: 'Sound', ar: 'صوت'},
+                {en: 'Soup', ar: 'حساء'}, {en: 'South', ar: 'جنوب'}, {en: 'Space', ar: 'فضاء'},
+                {en: 'Speak', ar: 'يتحدث'}, {en: 'Speaker', ar: 'متحدث'}, {en: 'Special', ar: 'خاص'},
+                {en: 'Spell', ar: 'يتهجى'}, {en: 'Spend', ar: 'يقضي'}, {en: 'Sport', ar: 'رياضة'},
+                {en: 'Spring', ar: 'ربيع'}, {en: 'Stand', ar: 'يقف'}, {en: 'Star', ar: 'نجمة'},
+                {en: 'Start', ar: 'يبدأ'}, {en: 'Statement', ar: 'بيان'}, {en: 'Station', ar: 'محطة'},
+                {en: 'Stay', ar: 'يبقى'}, {en: 'Still', ar: 'لا يزال'}, {en: 'Stop', ar: 'يتوقف'},
+                {en: 'Story', ar: 'قصة'}, {en: 'Street', ar: 'شارع'}, {en: 'Strong', ar: 'قوي'},
+                {en: 'Student', ar: 'طالب'}, {en: 'Study', ar: 'يدرس'}, {en: 'Subject', ar: 'موضوع'},
+                {en: 'Success', ar: 'نجاح'}, {en: 'Sugar', ar: 'سكر'}, {en: 'Summer', ar: 'صيف'},
+                {en: 'Sun', ar: 'شمس'}, {en: 'Sunday', ar: 'الأحد'}, {en: 'Supermarket', ar: 'سوبر ماركت'},
                 {en: 'Sure', ar: 'متأكد'}, {en: 'Swim', ar: 'يسبح'}, {en: 'Swimming', ar: 'سباحة'}
             ],
             'T': [
-                {en: 'Table', ar: 'طاولة'}, {en: 'Take', ar: 'يأخذ'}, {en: 'Talk', ar: 'يتحدث'}, 
-                {en: 'Tall', ar: 'طويل'}, {en: 'Tea', ar: 'شاي'}, {en: 'Teach', ar: 'يدرس'}, 
-                {en: 'Teacher', ar: 'معلم'}, {en: 'Team', ar: 'فريق'}, {en: 'Telephone', ar: 'هاتف'}, 
-                {en: 'Television', ar: 'تلفاز'}, {en: 'Tell', ar: 'يخبر'}, {en: 'Ten', ar: 'عشرة'}, 
-                {en: 'Tennis', ar: 'تنس'}, {en: 'Terrible', ar: 'فظيع'}, {en: 'Test', ar: 'اختبار'}, 
-                {en: 'Than', ar: 'من (للمقارنة)'}, {en: 'Thank', ar: 'يشكر'}, {en: 'Thanks', ar: 'شكراً'}, 
-                {en: 'That', ar: 'ذلك'}, {en: 'The', ar: 'الـ'}, {en: 'Theatre', ar: 'مسرح'}, 
-                {en: 'Their', ar: 'لهم'}, {en: 'Them', ar: 'هم'}, {en: 'Then', ar: 'ثم'}, 
-                {en: 'There', ar: 'هناك'}, {en: 'They', ar: 'هم'}, {en: 'Thing', ar: 'شيء'}, 
-                {en: 'Think', ar: 'يفكر'}, {en: 'Third', ar: 'الثالث'}, {en: 'Thirsty', ar: 'عطشان'}, 
-                {en: 'Thirteen', ar: 'ثلاثة عشر'}, {en: 'Thirty', ar: 'ثلاثون'}, {en: 'This', ar: 'هذا'}, 
-                {en: 'Thousand', ar: 'ألف'}, {en: 'Three', ar: 'ثلاثة'}, {en: 'Through', ar: 'خلال'}, 
-                {en: 'Thursday', ar: 'الخميس'}, {en: 'Ticket', ar: 'تذكرة'}, {en: 'Time', ar: 'وقت'}, 
-                {en: 'Tired', ar: 'متعب'}, {en: 'To', ar: 'إلى'}, {en: 'Today', ar: 'اليوم'}, 
-                {en: 'Together', ar: 'معاً'}, {en: 'Toilet', ar: 'مرحاض'}, {en: 'Tomato', ar: 'طماطم'}, 
-                {en: 'Tomorrow', ar: 'غداً'}, {en: 'Tonight', ar: 'الليلة'}, {en: 'Too', ar: 'أيضاً'}, 
-                {en: 'Tooth', ar: 'سن'}, {en: 'Top', ar: 'قمة'}, {en: 'Topic', ar: 'موضوع'}, 
-                {en: 'Tourist', ar: 'سائح'}, {en: 'Town', ar: 'بلدة'}, {en: 'Traffic', ar: 'حركة المرور'}, 
-                {en: 'Train', ar: 'قطار'}, {en: 'Travel', ar: 'يسافر'}, {en: 'Tree', ar: 'شجرة'}, 
-                {en: 'Trip', ar: 'رحلة'}, {en: 'Trousers', ar: 'بنطال'}, {en: 'True', ar: 'صحيح'}, 
-                {en: 'Try', ar: 'يحاول'}, {en: 'Tuesday', ar: 'الثلاثاء'}, {en: 'Turn', ar: 'يستدير'}, 
-                {en: 'Twelve', ar: 'اثنا عشر'}, {en: 'Twenty', ar: 'عشرون'}, {en: 'Two', ar: 'اثنان'}, 
+                {en: 'Table', ar: 'طاولة'}, {en: 'Take', ar: 'يأخذ'}, {en: 'Talk', ar: 'يتحدث'},
+                {en: 'Tall', ar: 'طويل'}, {en: 'Tea', ar: 'شاي'}, {en: 'Teach', ar: 'يدرس'},
+                {en: 'Teacher', ar: 'معلم'}, {en: 'Team', ar: 'فريق'}, {en: 'Telephone', ar: 'هاتف'},
+                {en: 'Television', ar: 'تلفاز'}, {en: 'Tell', ar: 'يخبر'}, {en: 'Ten', ar: 'عشرة'},
+                {en: 'Tennis', ar: 'تنس'}, {en: 'Terrible', ar: 'فظيع'}, {en: 'Test', ar: 'اختبار'},
+                {en: 'Than', ar: 'من (للمقارنة)'}, {en: 'Thank', ar: 'يشكر'}, {en: 'Thanks', ar: 'شكراً'},
+                {en: 'That', ar: 'ذلك'}, {en: 'The', ar: 'الـ'}, {en: 'Theatre', ar: 'مسرح'},
+                {en: 'Their', ar: 'لهم'}, {en: 'Them', ar: 'هم'}, {en: 'Then', ar: 'ثم'},
+                {en: 'There', ar: 'هناك'}, {en: 'They', ar: 'هم'}, {en: 'Thing', ar: 'شيء'},
+                {en: 'Think', ar: 'يفكر'}, {en: 'Third', ar: 'الثالث'}, {en: 'Thirsty', ar: 'عطشان'},
+                {en: 'Thirteen', ar: 'ثلاثة عشر'}, {en: 'Thirty', ar: 'ثلاثون'}, {en: 'This', ar: 'هذا'},
+                {en: 'Thousand', ar: 'ألف'}, {en: 'Three', ar: 'ثلاثة'}, {en: 'Through', ar: 'خلال'},
+                {en: 'Thursday', ar: 'الخميس'}, {en: 'Ticket', ar: 'تذكرة'}, {en: 'Time', ar: 'وقت'},
+                {en: 'Tired', ar: 'متعب'}, {en: 'To', ar: 'إلى'}, {en: 'Today', ar: 'اليوم'},
+                {en: 'Together', ar: 'معاً'}, {en: 'Toilet', ar: 'مرحاض'}, {en: 'Tomato', ar: 'طماطم'},
+                {en: 'Tomorrow', ar: 'غداً'}, {en: 'Tonight', ar: 'الليلة'}, {en: 'Too', ar: 'أيضاً'},
+                {en: 'Tooth', ar: 'سن'}, {en: 'Top', ar: 'قمة'}, {en: 'Topic', ar: 'موضوع'},
+                {en: 'Tourist', ar: 'سائح'}, {en: 'Town', ar: 'بلدة'}, {en: 'Traffic', ar: 'حركة المرور'},
+                {en: 'Train', ar: 'قطار'}, {en: 'Travel', ar: 'يسافر'}, {en: 'Tree', ar: 'شجرة'},
+                {en: 'Trip', ar: 'رحلة'}, {en: 'Trousers', ar: 'بنطال'}, {en: 'True', ar: 'صحيح'},
+                {en: 'Try', ar: 'يحاول'}, {en: 'Tuesday', ar: 'الثلاثاء'}, {en: 'Turn', ar: 'يستدير'},
+                {en: 'Twelve', ar: 'اثنا عشر'}, {en: 'Twenty', ar: 'عشرون'}, {en: 'Two', ar: 'اثنان'},
                 {en: 'Type', ar: 'نوع'}
             ],
             'U': [
-                {en: 'Umbrella', ar: 'مظلة'}, {en: 'Uncle', ar: 'عم/خال'}, {en: 'Under', ar: 'تحت'}, 
-                {en: 'Understand', ar: 'يفهم'}, {en: 'University', ar: 'جامعة'}, {en: 'Until', ar: 'حتى'}, 
-                {en: 'Up', ar: 'للأعلى'}, {en: 'Us', ar: 'نحن'}, {en: 'Use', ar: 'يستخدم'}, 
+                {en: 'Umbrella', ar: 'مظلة'}, {en: 'Uncle', ar: 'عم/خال'}, {en: 'Under', ar: 'تحت'},
+                {en: 'Understand', ar: 'يفهم'}, {en: 'University', ar: 'جامعة'}, {en: 'Until', ar: 'حتى'},
+                {en: 'Up', ar: 'للأعلى'}, {en: 'Us', ar: 'نحن'}, {en: 'Use', ar: 'يستخدم'},
                 {en: 'Useful', ar: 'مفيد'}, {en: 'Usually', ar: 'عادة'}
             ],
             'V': [
-                {en: 'Vegetable', ar: 'خضار'}, {en: 'Very', ar: 'جداً'}, {en: 'Video', ar: 'فيديو'}, 
+                {en: 'Vegetable', ar: 'خضار'}, {en: 'Very', ar: 'جداً'}, {en: 'Video', ar: 'فيديو'},
                 {en: 'Visit', ar: 'يزور'}, {en: 'Visitor', ar: 'زائر'}
             ],
             'W': [
-                {en: 'Wait', ar: 'ينتظر'}, {en: 'Waiter', ar: 'نادل'}, {en: 'Wake', ar: 'يستيقظ'}, 
-                {en: 'Walk', ar: 'يمشي'}, {en: 'Wall', ar: 'جدار'}, {en: 'Want', ar: 'يريد'}, 
-                {en: 'Warm', ar: 'دافئ'}, {en: 'Wash', ar: 'يغسل'}, {en: 'Watch', ar: 'يشاهد'}, 
-                {en: 'Water', ar: 'ماء'}, {en: 'Way', ar: 'طريق'}, {en: 'We', ar: 'نحن'}, 
-                {en: 'Wear', ar: 'يرتدي'}, {en: 'Weather', ar: 'طقس'}, {en: 'Website', ar: 'موقع إلكتروني'}, 
-                {en: 'Wednesday', ar: 'الأربعاء'}, {en: 'Week', ar: 'أسبوع'}, {en: 'Weekend', ar: 'عطلة نهاية الأسبوع'}, 
-                {en: 'Welcome', ar: 'مرحباً'}, {en: 'Well', ar: 'جيداً'}, {en: 'West', ar: 'غرب'}, 
-                {en: 'What', ar: 'ماذا'}, {en: 'When', ar: 'متى'}, {en: 'Where', ar: 'أين'}, 
-                {en: 'Which', ar: 'أي'}, {en: 'White', ar: 'أبيض'}, {en: 'Who', ar: 'مَن'}, 
-                {en: 'Why', ar: 'لماذا'}, {en: 'Wife', ar: 'زوجة'}, {en: 'Will', ar: 'سوف'}, 
-                {en: 'Win', ar: 'يفوز'}, {en: 'Window', ar: 'نافذة'}, {en: 'Wine', ar: 'نبيذ'}, 
-                {en: 'Winter', ar: 'شتاء'}, {en: 'With', ar: 'مع'}, {en: 'Without', ar: 'بدون'}, 
-                {en: 'Woman', ar: 'امرأة'}, {en: 'Wonderful', ar: 'رائع'}, {en: 'Word', ar: 'كلمة'}, 
-                {en: 'Work', ar: 'يعمل'}, {en: 'Worker', ar: 'عامل'}, {en: 'World', ar: 'عالَم'}, 
-                {en: 'Would', ar: 'هل (للطلب)'}, {en: 'Write', ar: 'يكتب'}, {en: 'Writer', ar: 'كاتب'}, 
+                {en: 'Wait', ar: 'ينتظر'}, {en: 'Waiter', ar: 'نادل'}, {en: 'Wake', ar: 'يستيقظ'},
+                {en: 'Walk', ar: 'يمشي'}, {en: 'Wall', ar: 'جدار'}, {en: 'Want', ar: 'يريد'},
+                {en: 'Warm', ar: 'دافئ'}, {en: 'Wash', ar: 'يغسل'}, {en: 'Watch', ar: 'يشاهد'},
+                {en: 'Water', ar: 'ماء'}, {en: 'Way', ar: 'طريق'}, {en: 'We', ar: 'نحن'},
+                {en: 'Wear', ar: 'يرتدي'}, {en: 'Weather', ar: 'طقس'}, {en: 'Website', ar: 'موقع إلكتروني'},
+                {en: 'Wednesday', ar: 'الأربعاء'}, {en: 'Week', ar: 'أسبوع'}, {en: 'Weekend', ar: 'عطلة نهاية الأسبوع'},
+                {en: 'Welcome', ar: 'مرحباً'}, {en: 'Well', ar: 'جيداً'}, {en: 'West', ar: 'غرب'},
+                {en: 'What', ar: 'ماذا'}, {en: 'When', ar: 'متى'}, {en: 'Where', ar: 'أين'},
+                {en: 'Which', ar: 'أي'}, {en: 'White', ar: 'أبيض'}, {en: 'Who', ar: 'مَن'},
+                {en: 'Why', ar: 'لماذا'}, {en: 'Wife', ar: 'زوجة'}, {en: 'Will', ar: 'سوف'},
+                {en: 'Win', ar: 'يفوز'}, {en: 'Window', ar: 'نافذة'}, {en: 'Wine', ar: 'نبيذ'},
+                {en: 'Winter', ar: 'شتاء'}, {en: 'With', ar: 'مع'}, {en: 'Without', ar: 'بدون'},
+                {en: 'Woman', ar: 'امرأة'}, {en: 'Wonderful', ar: 'رائع'}, {en: 'Word', ar: 'كلمة'},
+                {en: 'Work', ar: 'يعمل'}, {en: 'Worker', ar: 'عامل'}, {en: 'World', ar: 'عالَم'},
+                {en: 'Would', ar: 'هل (للطلب)'}, {en: 'Write', ar: 'يكتب'}, {en: 'Writer', ar: 'كاتب'},
                 {en: 'Writing', ar: 'كتابة'}, {en: 'Wrong', ar: 'خاطئ'}
             ],
             'Y': [
-                {en: 'Yeah', ar: 'نعم'}, {en: 'Year', ar: 'عام'}, {en: 'Yellow', ar: 'أصفر'}, 
-                {en: 'Yes', ar: 'نعم'}, {en: 'Yesterday', ar: 'أمس'}, {en: 'You', ar: 'أنت'}, 
+                {en: 'Yeah', ar: 'نعم'}, {en: 'Year', ar: 'عام'}, {en: 'Yellow', ar: 'أصفر'},
+                {en: 'Yes', ar: 'نعم'}, {en: 'Yesterday', ar: 'أمس'}, {en: 'You', ar: 'أنت'},
                 {en: 'Young', ar: 'شاب'}, {en: 'Your', ar: 'لك'}
             ],
             'Z': [
@@ -1109,100 +1177,469 @@
             ]
         };
 
-        let currentLevel = '';
+        // App State
+        let currentPage = 'levels';
         let currentLetter = '';
+        let quizMode = 'en-ar';
         let currentQuiz = [];
-        let currentQuestion = 0;
+        let currentQuestionIndex = 0;
         let correctAnswers = 0;
         let wrongAnswers = 0;
+        let userWords = [];
         let errorWords = [];
-        let customWords = [];
-        let quizMode = 'random'; // random, en-to-ar, ar-to-en
+        let allWords = [];
 
-        // Load saved data
-        function loadData() {
-            const saved = localStorage.getItem('easyAppData');
-            if (saved) {
-                const data = JSON.parse(saved);
-                errorWords = data.errorWords || [];
-                customWords = data.customWords || [];
+        // Initialize
+        function init() {
+            loadUserData();
+            generateLetterNav();
+            updateDictionary();
+            showPage('levels');
+        }
+
+        // Load user data from memory
+        function loadUserData() {
+            const stored = {
+                userWords: [],
+                errorWords: []
+            };
+            userWords = stored.userWords;
+            errorWords = stored.errorWords;
+            
+            // Combine all A1 words
+            allWords = [];
+            for (let letter in A1_WORDS) {
+                allWords = allWords.concat(A1_WORDS[letter].map(w => ({...w, level: 'A1', letter})));
             }
         }
 
-        function saveData() {
-            const data = {
-                errorWords: errorWords,
-                customWords: customWords
-            };
-            localStorage.setItem('easyAppData', JSON.stringify(data));
+        // Save user data to memory
+        function saveUserData() {
+            // Data stored in memory during session
         }
 
-        loadData();
-
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const container = document.getElementById('container');
-            sidebar.classList.toggle('open');
-            container.classList.toggle('sidebar-open');
-        }
-
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
+        // Toggle Dark Mode
+        function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
         }
 
-        function showHome() {
-            document.getElementById('home-view').classList.remove('hidden');
-            document.getElementById('level-view').classList.add('hidden');
-            document.getElementById('quiz-view').classList.add('hidden');
-            document.getElementById('errors-view').classList.add('hidden');
-            document.getElementById('my-words-view').classList.add('hidden');
-            
+        // Toggle Sidebar
+        function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            const container = document.getElementById('container');
-            sidebar.classList.remove('open');
-            container.classList.remove('sidebar-open');
+            const mainContent = document.getElementById('mainContent');
+            sidebar.classList.toggle('active');
+            mainContent.classList.toggle('sidebar-open');
         }
 
-        function showLevel(level) {
-            currentLevel = level;
-            document.getElementById('home-view').classList.add('hidden');
-            document.getElementById('level-view').classList.remove('hidden');
-            document.getElementById('level-title').textContent = `المستوى ${level} - اختر الحرف`;
+        // Show Page
+        function showPage(pageName) {
+            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+            document.getElementById('page-' + pageName).classList.remove('hidden');
             
-            const alphabetTests = document.getElementById('alphabet-tests');
-            alphabetTests.innerHTML = '';
+            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+            
+            currentPage = pageName;
+            
+            if (pageName === 'dictionary') {
+                updateDictionary();
+            } else if (pageName === 'my-words') {
+                updateMyWords();
+            } else if (pageName === 'errors') {
+                updateErrors();
+            }
+            
+            if (window.innerWidth <= 768) {
+                toggleSidebar();
+            }
+        }
+
+        // Show Level Tests
+        function showLevelTests(level) {
+            if (level !== 'A1') {
+                alert('هذا المستوى غير متاح حالياً');
+                return;
+            }
+            
+            const grid = document.getElementById('alphabetGrid');
+            grid.innerHTML = '';
             
             const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
             alphabet.forEach(letter => {
-                const btn = document.createElement('button');
-                btn.className = 'alphabet-btn';
-                btn.textContent = letter;
-                btn.onclick = () => startTest(letter);
-                alphabetTests.appendChild(btn);
+                const card = document.createElement('div');
+                card.className = 'alphabet-card';
+                card.innerHTML = `<div class="alphabet-letter">${letter}</div>`;
+                card.onclick = () => startLetterQuiz(letter);
+                grid.appendChild(card);
             });
+            
+            document.getElementById('page-levels').classList.add('hidden');
+            document.getElementById('page-level-tests').classList.remove('hidden');
         }
 
-        function startTest(letter) {
+        // Start Letter Quiz
+        function startLetterQuiz(letter) {
             currentLetter = letter;
-            const words = wordsA1[letter] || [];
+            const words = A1_WORDS[letter] || [];
             
             if (words.length === 0) {
                 alert('لا توجد كلمات لهذا الحرف');
                 return;
             }
             
-            currentQuiz = shuffleArray([...words]);
-            currentQuestion = 0;
+            currentQuiz = [...words];
+            shuffleArray(currentQuiz);
+            currentQuestionIndex = 0;
             correctAnswers = 0;
             wrongAnswers = 0;
             
-            document.getElementById('level-view').classList.add('hidden');
-            document.getElementById('quiz-view').classList.remove('hidden');
+            document.getElementById('quizTitle').textContent = `اختبار المستوى A1 للحرف ${letter}`;
+            document.getElementById('page-level-tests').classList.add('hidden');
+            document.getElementById('page-quiz').classList.remove('hidden');
+            document.getElementById('quizContent').classList.remove('hidden');
+            document.getElementById('resultsContent').classList.add('hidden');
+            document.getElementById('modeSelector').classList.remove('hidden');
             
-            showQuestion();
+            loadQuestion();
         }
 
+        // Start Custom Quiz
+        function startCustomQuiz() {
+            if (userWords.length === 0) {
+                alert('لم تقم بإضافة أي كلمات بعد');
+                return;
+            }
+            
+            currentQuiz = [...userWords];
+            shuffleArray(currentQuiz);
+            currentQuestionIndex = 0;
+            correctAnswers = 0;
+            wrongAnswers = 0;
+            
+            document.getElementById('quizTitle').textContent = 'اختبار كلماتي';
+            document.getElementById('page-my-words').classList.add('hidden');
+            document.getElementById('page-quiz').classList.remove('hidden');
+            document.getElementById('quizContent').classList.remove('hidden');
+            document.getElementById('resultsContent').classList.add('hidden');
+            document.getElementById('modeSelector').classList.remove('hidden');
+            
+            loadQuestion();
+        }
+
+        // Start Errors Quiz
+        function startErrorsQuiz() {
+            if (errorWords.length === 0) {
+                alert('لا توجد أخطاء لمراجعتها');
+                return;
+            }
+            
+            currentQuiz = [...errorWords];
+            shuffleArray(currentQuiz);
+            currentQuestionIndex = 0;
+            correctAnswers = 0;
+            wrongAnswers = 0;
+            
+            document.getElementById('quizTitle').textContent = 'اختبار الأخطاء';
+            document.getElementById('page-errors').classList.add('hidden');
+            document.getElementById('page-quiz').classList.remove('hidden');
+            document.getElementById('quizContent').classList.remove('hidden');
+            document.getElementById('resultsContent').classList.add('hidden');
+            document.getElementById('modeSelector').classList.remove('hidden');
+            
+            loadQuestion();
+        }
+
+        // Set Quiz Mode
+        function setQuizMode(mode) {
+            quizMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Load Question
+        function loadQuestion() {
+            if (currentQuestionIndex >= currentQuiz.length) {
+                showResults();
+                return;
+            }
+            
+            const word = currentQuiz[currentQuestionIndex];
+            const mode = quizMode === 'random' ? (Math.random() > 0.5 ? 'en-ar' : 'ar-en') : quizMode;
+            
+            const questionText = document.getElementById('questionText');
+            if (mode === 'en-ar') {
+                questionText.textContent = word.en;
+            } else {
+                questionText.textContent = word.ar;
+            }
+            
+            document.getElementById('answerInput').value = '';
+            document.getElementById('feedback').classList.add('hidden');
+            document.getElementById('quizProgress').textContent = `السؤال ${currentQuestionIndex + 1} من ${currentQuiz.length}`;
+            
+            const progress = ((currentQuestionIndex) / currentQuiz.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // Check Answer
+        function checkAnswer() {
+            const word = currentQuiz[currentQuestionIndex];
+            const mode = quizMode === 'random' ? 
+                (document.getElementById('questionText').textContent === word.en ? 'en-ar' : 'ar-en') : 
+                quizMode;
+            
+            const userAnswer = document.getElementById('answerInput').value.trim().toLowerCase();
+            const correctAnswer = mode === 'en-ar' ? word.ar : word.en;
+            
+            const feedback = document.getElementById('feedback');
+            feedback.classList.remove('hidden');
+            
+            if (normalizeText(userAnswer) === normalizeText(correctAnswer)) {
+                feedback.className = 'feedback correct';
+                feedback.textContent = '✅ إجابة صحيحة! ممتاز!';
+                correctAnswers++;
+                
+                // Remove from errors if exists
+                errorWords = errorWords.filter(w => w.en !== word.en);
+            } else {
+                feedback.className = 'feedback wrong';
+                feedback.textContent = `❌ خطأ! الإجابة الصحيحة: ${correctAnswer}`;
+                wrongAnswers++;
+                
+                // Add to errors if not exists
+                if (!errorWords.find(w => w.en === word.en)) {
+                    errorWords.push(word);
+                }
+            }
+            
+            saveUserData();
+            
+            setTimeout(() => {
+                currentQuestionIndex++;
+                loadQuestion();
+            }, 2000);
+        }
+
+        // Skip Question
+        function skipQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        // End Quiz
+        function endQuiz() {
+            if (confirm('هل أنت متأكد من إنهاء الاختبار؟')) {
+                showResults();
+            }
+        }
+
+        // Restart Quiz
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            correctAnswers = 0;
+            wrongAnswers = 0;
+            shuffleArray(currentQuiz);
+            document.getElementById('quizContent').classList.remove('hidden');
+            document.getElementById('resultsContent').classList.add('hidden');
+            document.getElementById('modeSelector').classList.remove('hidden');
+            loadQuestion();
+        }
+
+        // Show Results
+        function showResults() {
+            document.getElementById('quizContent').classList.add('hidden');
+            document.getElementById('resultsContent').classList.remove('hidden');
+            document.getElementById('modeSelector').classList.add('hidden');
+            
+            const total = correctAnswers + wrongAnswers;
+            const percentage = total > 0 ? Math.round((correctAnswers / total) * 100) : 0;
+            
+            document.getElementById('finalScore').textContent = percentage + '%';
+            document.getElementById('correctCount').textContent = correctAnswers;
+            document.getElementById('wrongCount').textContent = wrongAnswers;
+            document.getElementById('totalQuestions').textContent = total;
+            
+            const messageEl = document.getElementById('resultsMessage');
+            if (percentage >= 90) {
+                messageEl.textContent = '🎉 ممتاز جداً! أنت متقن لهذه الكلمات!';
+            } else if (percentage >= 70) {
+                messageEl.textContent = '👏 جيد جداً! استمر في التدريب!';
+            } else if (percentage >= 50) {
+                messageEl.textContent = '💪 جيد! لكن تحتاج المزيد من المراجعة';
+            } else {
+                messageEl.textContent = '📚 يحتاج المزيد من الدراسة، لا تستسلم!';
+            }
+        }
+
+        // Add Custom Word
+        function addCustomWord() {
+            const en = document.getElementById('newWordEn').value.trim();
+            const ar = document.getElementById('newWordAr').value.trim();
+            const level = document.getElementById('newWordLevel').value;
+            
+            if (!en || !ar) {
+                alert('الرجاء إدخال الكلمة والمعنى');
+                return;
+            }
+            
+            const newWord = { en, ar, level, custom: true };
+            userWords.push(newWord);
+            allWords.push(newWord);
+            
+            saveUserData();
+            
+            document.getElementById('newWordEn').value = '';
+            document.getElementById('newWordAr').value = '';
+            
+            alert('✅ تم إضافة الكلمة بنجاح!');
+            updateDictionary();
+        }
+
+        // Update Dictionary
+        function updateDictionary() {
+            document.getElementById('totalWordsCount').textContent = allWords.length;
+            
+            const list = document.getElementById('dictionaryList');
+            list.innerHTML = '';
+            
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+            alphabet.forEach(letter => {
+                const letterWords = allWords.filter(w => w.en.toUpperCase().startsWith(letter));
+                
+                if (letterWords.length > 0) {
+                    const letterHeader = document.createElement('h3');
+                    letterHeader.textContent = `حرف ${letter}`;
+                    letterHeader.style.marginTop = '30px';
+                    letterHeader.style.color = 'var(--accent)';
+                    list.appendChild(letterHeader);
+                    
+                    letterWords.forEach(word => {
+                        const item = createWordItem(word);
+                        list.appendChild(item);
+                    });
+                }
+            });
+        }
+
+        // Update My Words
+        function updateMyWords() {
+            const list = document.getElementById('myWordsList');
+            list.innerHTML = '';
+            
+            if (userWords.length === 0) {
+                list.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📝</div><p>لم تقم بإضافة أي كلمات بعد</p></div>';
+                return;
+            }
+            
+            userWords.forEach(word => {
+                const item = createWordItem(word, true);
+                list.appendChild(item);
+            });
+        }
+
+        // Update Errors
+        function updateErrors() {
+            const list = document.getElementById('errorsList');
+            list.innerHTML = '';
+            
+            if (errorWords.length === 0) {
+                list.innerHTML = '<div class="empty-state"><div class="empty-state-icon">✅</div><p>لا توجد أخطاء! عمل رائع!</p></div>';
+                return;
+            }
+            
+            errorWords.forEach(word => {
+                const item = createWordItem(word);
+                list.appendChild(item);
+            });
+        }
+
+        // Create Word Item
+        function createWordItem(word, showDelete = false) {
+            const item = document.createElement('div');
+            item.className = `word-item ${word.level.toLowerCase()}`;
+            
+            item.innerHTML = `
+                <div class="word-content">
+                    <div class="word-english">${word.en}</div>
+                    <div class="word-arabic">${word.ar}</div>
+                </div>
+                <div class="word-actions">
+                    <span class="level-badge ${word.level.toLowerCase()}">${word.level}</span>
+                    <button class="speak-btn" onclick="speakWord('${word.en}')">🔊</button>
+                    ${showDelete ? `<button class="speak-btn" style="background: var(--error-color)" onclick="deleteWord('${word.en}')">🗑️</button>` : ''}
+                </div>
+            `;
+            
+            return item;
+        }
+
+        // Delete Word
+        function deleteWord(en) {
+            if (confirm('هل أنت متأكد من حذف هذه الكلمة؟')) {
+                userWords = userWords.filter(w => w.en !== en);
+                allWords = allWords.filter(w => !(w.en === en && w.custom));
+                saveUserData();
+                updateMyWords();
+                updateDictionary();
+            }
+        }
+
+        // Speak Word
+        function speakWord(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.8;
+                speechSynthesis.speak(utterance);
+            } else {
+                alert('عذراً، متصفحك لا يدعم النطق');
+            }
+        }
+
+        // Generate Letter Navigation
+        function generateLetterNav() {
+            const nav = document.getElementById('letterNav');
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+            
+            alphabet.forEach(letter => {
+                const btn = document.createElement('button');
+                btn.className = 'letter-btn';
+                btn.textContent = letter;
+                btn.onclick = () => scrollToLetter(letter);
+                nav.appendChild(btn);
+            });
+        }
+
+        // Scroll to Letter
+        function scrollToLetter(letter) {
+            const list = document.getElementById('dictionaryList');
+            const headers = list.querySelectorAll('h3');
+            
+            headers.forEach(h => {
+                if (h.textContent.includes(letter)) {
+                    h.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+            
+            document.querySelectorAll('.letter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent === letter) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Normalize Text for Comparison
+        function normalizeText(text) {
+            return text.toLowerCase()
+                .trim()
+                .replace(/\s+/g, ' ')
+                .replace(/[أإآ]/g, 'ا')
+                .replace(/[ى]/g, 'ي')
+                .replace(/ة/g, 'ه')
+                .replace(/[^\w\s]/gi, '');
+        }
+
+        // Shuffle Array
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -1211,254 +1648,19 @@
             return array;
         }
 
-        function showQuestion() {
-            if (currentQuestion >= currentQuiz.length) {
-                showResults();
-                return;
-            }
+        // Handle Enter Key in Quiz
+        document.addEventListener('DOMContentLoaded', () => {
+            init();
             
-            const word = currentQuiz[currentQuestion];
-            const mode = Math.random() > 0.5 ? 'en-to-ar' : 'ar-to-en';
-            
-            document.getElementById('quiz-question').classList.remove('hidden');
-            document.getElementById('quiz-results').classList.add('hidden');
-            document.getElementById('result-message').classList.add('hidden');
-            document.getElementById('answer-input').value = '';
-            document.getElementById('question-number').textContent = `${currentQuestion + 1}/${currentQuiz.length}`;
-            document.getElementById('correct-count').textContent = correctAnswers;
-            document.getElementById('wrong-count').textContent = wrongAnswers;
-            
-            if (mode === 'en-to-ar') {
-                document.getElementById('quiz-word').textContent = word.en;
-                document.getElementById('answer-input').placeholder = 'اكتب المعنى بالعربية...';
-            } else {
-                document.getElementById('quiz-word').textContent = word.ar;
-                document.getElementById('answer-input').placeholder = 'اكتب الكلمة بالإنجليزية...';
-            }
-            
-            document.getElementById('answer-input').focus();
-        }
-
-        function checkAnswer() {
-            const answer = document.getElementById('answer-input').value.trim().toLowerCase();
-            const word = currentQuiz[currentQuestion];
-            const quizWord = document.getElementById('quiz-word').textContent;
-            
-            let isCorrect = false;
-            let correctAnswer = '';
-            
-            if (quizWord === word.en) {
-                correctAnswer = word.ar;
-                isCorrect = answer === word.ar.toLowerCase();
-            } else {
-                correctAnswer = word.en;
-                isCorrect = answer === word.en.toLowerCase();
-            }
-            
-            const resultDiv = document.getElementById('result-message');
-            resultDiv.classList.remove('hidden');
-            
-            if (isCorrect) {
-                correctAnswers++;
-                resultDiv.className = 'result-message correct';
-                resultDiv.innerHTML = `<h3>✓ إجابة صحيحة!</h3>`;
-            } else {
-                wrongAnswers++;
-                resultDiv.className = 'result-message incorrect';
-                resultDiv.innerHTML = `<h3>✗ إجابة خاطئة</h3><p>الإجابة الصحيحة: <strong>${correctAnswer}</strong></p>`;
-                
-                errorWords.push({en: word.en, ar: word.ar});
-                saveData();
-            }
-            
-            document.getElementById('correct-count').textContent = correctAnswers;
-            document.getElementById('wrong-count').textContent = wrongAnswers;
-            
-            setTimeout(() => {
-                currentQuestion++;
-                showQuestion();
-            }, 2000);
-        }
-
-        function skipQuestion() {
-            currentQuestion++;
-            showQuestion();
-        }
-
-        function showResults() {
-            document.getElementById('quiz-question').classList.add('hidden');
-            document.getElementById('quiz-results').classList.remove('hidden');
-            
-            const percentage = Math.round((correctAnswers / currentQuiz.length) * 100);
-            document.getElementById('final-score').textContent = `${percentage}%`;
-        }
-
-        function restartQuiz() {
-            startTest(currentLetter);
-        }
-
-        function exitQuiz() {
-            if (currentLevel) {
-                showLevel(currentLevel);
-            } else {
-                showHome();
-            }
-        }
-
-        function showErrors() {
-            document.getElementById('home-view').classList.add('hidden');
-            document.getElementById('errors-view').classList.remove('hidden');
-            
-            const container = document.getElementById('errors-container');
-            
-            if (errorWords.length === 0) {
-                container.innerHTML = '<p style="text-align: center; opacity: 0.6;">لا توجد أخطاء حتى الآن! 🎉</p>';
-            } else {
-                container.innerHTML = '';
-                errorWords.forEach((word, index) => {
-                    const div = document.createElement('div');
-                    div.className = 'error-word';
-                    div.innerHTML = `
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <strong>${word.en}</strong> → ${word.ar}
-                            </div>
-                            <button class="delete-btn" onclick="removeError(${index})">حذف</button>
-                        </div>
-                    `;
-                    container.appendChild(div);
+            const answerInput = document.getElementById('answerInput');
+            if (answerInput) {
+                answerInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        checkAnswer();
+                    }
                 });
-            }
-            
-            const sidebar = document.getElementById('sidebar');
-            const container2 = document.getElementById('container');
-            sidebar.classList.remove('open');
-            container2.classList.remove('sidebar-open');
-        }
-
-        function removeError(index) {
-            errorWords.splice(index, 1);
-            saveData();
-            showErrors();
-        }
-
-        function testErrors() {
-            if (errorWords.length === 0) {
-                alert('لا توجد أخطاء للاختبار!');
-                return;
-            }
-            
-            currentQuiz = shuffleArray([...errorWords]);
-            currentQuestion = 0;
-            correctAnswers = 0;
-            wrongAnswers = 0;
-            currentLevel = '';
-            currentLetter = '';
-            
-            document.getElementById('errors-view').classList.add('hidden');
-            document.getElementById('quiz-view').classList.remove('hidden');
-            
-            showQuestion();
-        }
-
-        function showMyWords() {
-            document.getElementById('home-view').classList.add('hidden');
-            document.getElementById('my-words-view').classList.remove('hidden');
-            
-            displayMyWords();
-            
-            const sidebar = document.getElementById('sidebar');
-            const container = document.getElementById('container');
-            sidebar.classList.remove('open');
-            container.classList.remove('sidebar-open');
-        }
-
-        function displayMyWords() {
-            const container = document.getElementById('my-words-list');
-            
-            if (customWords.length === 0) {
-                container.innerHTML = '<p style="text-align: center; opacity: 0.6;">لم تضف أي كلمات بعد!</p>';
-            } else {
-                container.innerHTML = '<h3 style="margin-bottom: 15px;">📚 كلماتي (' + customWords.length + ' كلمة)</h3>';
-                customWords.forEach((word, index) => {
-                    const div = document.createElement('div');
-                    div.className = 'word-item';
-                    div.innerHTML = `
-                        <div>
-                            <strong>${word.en}</strong> → ${word.ar}
-                        </div>
-                        <button class="delete-btn" onclick="removeCustomWord(${index})">حذف</button>
-                    `;
-                    container.appendChild(div);
-                });
-            }
-        }
-
-        function addCustomWord() {
-            const enWord = document.getElementById('new-word-en').value.trim();
-            const arWord = document.getElementById('new-word-ar').value.trim();
-            
-            if (!enWord || !arWord) {
-                alert('الرجاء إدخال الكلمة والترجمة!');
-                return;
-            }
-            
-            customWords.push({en: enWord, ar: arWord});
-            saveData();
-            
-            document.getElementById('new-word-en').value = '';
-            document.getElementById('new-word-ar').value = '';
-            
-            displayMyWords();
-            
-            // Animation
-            const list = document.getElementById('my-words-list');
-            list.style.animation = 'none';
-            setTimeout(() => {
-                list.style.animation = 'fadeIn 0.5s ease';
-            }, 10);
-        }
-
-        function removeCustomWord(index) {
-            customWords.splice(index, 1);
-            saveData();
-            displayMyWords();
-        }
-
-        function testMyWords() {
-            if (customWords.length === 0) {
-                alert('لا توجد كلمات للاختبار! أضف كلمات أولاً.');
-                return;
-            }
-            
-            currentQuiz = shuffleArray([...customWords]);
-            currentQuestion = 0;
-            correctAnswers = 0;
-            wrongAnswers = 0;
-            currentLevel = '';
-            currentLetter = '';
-            
-            document.getElementById('my-words-view').classList.add('hidden');
-            document.getElementById('quiz-view').classList.remove('hidden');
-            
-            showQuestion();
-        }
-
-        function showSettings() {
-            alert('⚙️ الإعدادات قريباً!\n\nميزات قادمة:\n- تخصيص الألوان\n- تغيير حجم الخط\n- إعدادات الصوت\n- مزامنة البيانات');
-        }
-
-        // Enter key support
-        document.getElementById('answer-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                checkAnswer();
             }
         });
-
-        // Initialize theme
-        if (!document.body.classList.contains('dark-mode')) {
-            document.body.classList.add('light-mode');
-        }
     </script>
 </body>
 </html>
