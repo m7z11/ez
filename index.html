@@ -1636,7 +1636,7 @@
                 .replace(/[أإآ]/g, 'ا')
                 .replace(/[ى]/g, 'ي')
                 .replace(/ة/g, 'ه')
-                .replace(/[^\w\s]/gi, '');
+                .replace(/[^\u0600-\u06FFa-zA-Z0-9\s]/g, '')
         }
 
         // Shuffle Array
