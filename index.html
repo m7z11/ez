@@ -1586,10 +1586,16 @@
         // Speak Word
         function speakWord(text) {
             if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.8;
-                speechSynthesis.speak(utterance);
+                // Cancel any ongoing speech
+                speechSynthesis.cancel();
+                
+                // Small delay to ensure cancel completes
+                setTimeout(() => {
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.lang = 'en-US';
+                    utterance.rate = 0.8;
+                    speechSynthesis.speak(utterance);
+                }, 50);
             } else {
                 alert('عذراً، متصفحك لا يدعم النطق');
             }
@@ -1663,4 +1669,4 @@
         });
     </script>
 </body>
-</html>
+    </html>
