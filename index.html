@@ -192,7 +192,7 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:'Tajawal
     <div id="confirmMsg" style="font-size:15px;color:var(--text-secondary);margin-bottom:26px;line-height:1.6"></div>
     <div style="display:flex;gap:12px;justify-content:center">
       <button id="confirmCancel" style="flex:1;padding:13px;border-radius:10px;border:2px solid var(--border-color);background:var(--bg-secondary);color:var(--text-primary);font-size:16px;font-weight:700;cursor:pointer;font-family:Tajawal,sans-serif" onclick="closeConfirm()">✕ غير موافق</button>
-      <button id="confirmOk" style="flex:1;padding:13px;border-radius:10px;border:none;background:var(--error-color);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:Tajawal,sans-serif;box-shadow:0 4px 14px rgba(224,49,49,.35)">✓ موافق</button>
+      <button id="confirmOk" onclick="doConfirm()" style="flex:1;padding:13px;border-radius:10px;border:none;background:var(--error-color);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:Tajawal,sans-serif;box-shadow:0 4px 14px rgba(224,49,49,.35)">✓ موافق</button>
     </div>
   </div>
 </div>
@@ -809,21 +809,18 @@ function showConfirm(icon,title,msg,onOk){
   document.getElementById('confirmIcon').textContent=icon;
   document.getElementById('confirmTitle').textContent=title;
   document.getElementById('confirmMsg').textContent=msg;
-  const overlay=document.getElementById('confirmOverlay');
-  overlay.style.display='flex';
-  // re-trigger animation
+  document.getElementById('confirmOverlay').style.display='flex';
   const box=document.getElementById('confirmBox');
   box.style.animation='none';
   box.offsetHeight;
   box.style.animation='popIn .25s cubic-bezier(.34,1.56,.64,1)';
-  document.getElementById('confirmOk').onclick=()=>{
-    closeConfirm();
-    if(_confirmCallback)_confirmCallback();
-  };
 }
 function closeConfirm(){
   document.getElementById('confirmOverlay').style.display='none';
-  _confirmCallback=null;
+}
+function doConfirm(){
+  document.getElementById('confirmOverlay').style.display='none';
+  if(_confirmCallback){ _confirmCallback(); _confirmCallback=null; }
 }
 
 // ===== SPEAK — Fixed =====
